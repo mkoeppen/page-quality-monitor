@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "nuxt:dev": "nuxt",
+    "nuxt:build": "nuxt build",
+    "nuxt:start": "nuxt start",
+    "nuxt:generate": "nuxt generate"
   },
   "repository": {
     "type": "git",
@@ -22,6 +25,12 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "lighthouse": "^6.3.0",
-    "puppeteer": "^5.3.0"
+    "nuxt": "^2.14.5",
+    "puppeteer": "^5.3.0",
+    "@nuxtjs/axios": "^5.12.2",
+    "core-js": "^3.6.5"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.11.2"
   }
 }
