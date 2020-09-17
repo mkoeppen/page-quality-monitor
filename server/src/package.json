@@ -23,6 +23,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "add": "^2.0.6",
+    "body-parser": "^1.19.0",
     "chrome-launcher": "^0.13.4",
     "core-js": "^3.6.5",
     "express": "^4.17.1",

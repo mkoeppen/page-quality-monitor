@@ -11,9 +11,13 @@
           <v-btn class="mr-4" type="submit">submit</v-btn>
         </v-form>
       </div>
-      <div>
-        {{response}}
-      </div>
+      <iframe 
+        v-if="show"
+        :src="html"
+        :height="600"
+        :width="'100%'"
+        frameborder="0"
+      ></iframe>
     </v-col>
   </v-row>
 </template>
@@ -30,7 +34,8 @@ export default {
   data() {
     return {
       website: '',
-      response: '-------'
+      html: '-------',
+      show: false
     }
   },
   methods: {
@@ -38,8 +43,8 @@ export default {
       e.preventDefault();
 
       this.$axios
-      .get(`/generate-report/${this.website}`)
-      .then(response => (this.response = response));
+      .post(`/generate-report`, { website: this.website })
+      .then(response => (this.html = `data:text/html;charset=utf-8,${escape(response.data.html)}`, this.show = true ));
     }
   },
 }
