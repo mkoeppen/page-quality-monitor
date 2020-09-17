@@ -1,0 +1,27 @@
+{
+  "name": "page-quality-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkoeppen/page-quality-monitor.git"
+  },
+  "author": "Markus Koeppen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkoeppen/page-quality-monitor/issues"
+  },
+  "homepage": "https://github.com/mkoeppen/page-quality-monitor#readme",
+  "dependencies": {
+    "chrome-launcher": "^0.13.4",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "lighthouse": "^6.3.0",
+    "puppeteer": "^5.3.0"
+  }
+}

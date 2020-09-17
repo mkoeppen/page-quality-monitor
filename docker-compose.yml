@@ -1,0 +1,20 @@
+version: '2.0'
+services:
+    server:
+        image: 'reg.unitb.com/unitb-cs/twig-and-resources:1.0'
+        build: 
+          context: .
+          dockerfile: server/Dockerfile
+        container_name: "${PROJECT_NAME}_server"
+        ports:
+          - "16661:8080"
+        # links:
+        # - elasticsearch
+
+    elasticsearch:
+        container_name: '${PROJECT_NAME}_elasticsearch'
+        image: elasticsearch:7.9.1
+        ports:
+        - '16662:9200'
+        environment:
+            - discovery.type=single-node
