@@ -7,7 +7,7 @@ services:
           dockerfile: server/Dockerfile
         container_name: "${PROJECT_NAME}_server"
         ports:
-          - "16661:8080"
+          - "16661:3000"
         # links:
         # - elasticsearch
 

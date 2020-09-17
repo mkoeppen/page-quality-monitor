@@ -15,5 +15,5 @@ RUN useradd -ms /bin/bash pqm
 # Change User
 USER pqm
 
-EXPOSE 8080
+EXPOSE 3000
 CMD [ "node", "server.js" ]

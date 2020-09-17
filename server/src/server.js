@@ -4,7 +4,7 @@ const express = require('express');
 
 // Constants
 const isDev = process.env.NODE_ENV !== 'production'
-const port = 8080;
+const port = 3000;
 const host = '0.0.0.0';
 
 // App
