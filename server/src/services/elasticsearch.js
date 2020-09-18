@@ -1,0 +1,1 @@
+http://www.andrekolell.de/blog/running-nodejs-express-app-with-elasticsearch-on-docker-on-mac

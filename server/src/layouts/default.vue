@@ -102,9 +102,9 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-calendar-clock',
+          title: 'Automatische Tests',
+          to: '/automatedtests'
         }
       ],
       miniVariant: false,

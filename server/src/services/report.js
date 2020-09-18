@@ -11,7 +11,6 @@ module.exports = {
     generate: async function(url) {
 
         const opts = {
-            chromeFlags: ['--headless'],
             logLevel: 'info',
             output: 'json',
             disableDeviceEmulation: true,
@@ -19,7 +18,7 @@ module.exports = {
                 width: 1200,
                 height: 900
             },
-            chromeFlags: ['--disable-mobile-emulation']
+            chromeFlags: ['--headless'],
         };
 
         // Launch chrome using chrome-launcher
