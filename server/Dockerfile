@@ -10,10 +10,10 @@ COPY ./server/src ./
 RUN npm install
 
 # Create new User
-RUN useradd -ms /bin/bash pqm
+# RUN useradd -ms /bin/bash pqm
 
 # Change User
-USER pqm
+# USER pqm
 
 EXPOSE 3000
 CMD [ "node", "server.js" ]

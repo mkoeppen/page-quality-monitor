@@ -1,1 +1,8 @@
-http://www.andrekolell.de/blog/running-nodejs-express-app-with-elasticsearch-on-docker-on-mac
+var elasticsearch = require('elasticsearch');
+
+var client = new elasticsearch.Client({
+    host: 'http://localhost:16662/',
+    log: 'info'
+});
+
+module.exports = client;

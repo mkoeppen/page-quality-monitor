@@ -8,12 +8,14 @@ services:
         container_name: "${PROJECT_NAME}_server"
         ports:
           - "16661:3000"
-        # links:
-        # - elasticsearch
+        links:
+        - elasticsearch
 
     elasticsearch:
         container_name: '${PROJECT_NAME}_elasticsearch'
-        image: elasticsearch:7.9.1
+        build: 
+          context: .
+          dockerfile: docker/elasticsearch/Dockerfile
         ports:
         - '16662:9200'
         environment:

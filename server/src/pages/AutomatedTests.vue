@@ -16,40 +16,76 @@
 
         <v-card>
           <v-card-title>
-            <span class="headline">Add Identifier</span>
+            <span class="headline">Add Automated Test</span>
           </v-card-title>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat v-on:click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat v-on:click="save">Save</v-btn>
-          </v-card-actions>
 
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
+                  <v-text-field v-model="editedItem.name" label="Name"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
+                  <v-text-field v-model="editedItem.url" label="Url"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
+                  <v-combobox
+                        v-model="editedItem.tags"
+                        :items="existingTags"
+                        chips
+                        clearable
+                        label="Tags"
+                        multiple
+                        solo
+                    >
+                        <template v-slot:selection="{ attrs, item, select, selected }">
+                        <v-chip
+                            v-bind="attrs"
+                            :input-value="selected"
+                            close
+                            @click="select"
+                            @click:close="removeTag(item)"
+                        >
+                            <strong>{{ item }}</strong>&nbsp;
+                            <span>(interest)</span>
+                        </v-chip>
+                        </template>
+                    </v-combobox>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
+                  <v-text-field v-model="editedItem.interval" label="Interval"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
+                    <v-text-field v-model="editedItem.color" hide-details class="ma-0 pa-0" solo label="Color">
+                        <template v-slot:append>
+                            <v-menu v-model="colorMenu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
+                                <template v-slot:activator="{ on }">
+                                    <div :style="swatchStyle" v-on="on" />
+                                </template>
+                                <v-card>
+                                    <v-card-text class="pa-0">
+                                        <v-color-picker v-model="editedItem.color" text />
+                                    </v-card-text>
+                                </v-card>
+                            </v-menu>
+                        </template>
+                    </v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
           </v-card-text>
 
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text v-on:click="close">Cancel</v-btn>
+            <v-btn color="blue darken-1" text v-on:click="save">Save</v-btn>
+          </v-card-actions>
+
 
         </v-card>
       </v-dialog>
+
+        <v-btn color="primary" @click="addDummy">Dummy Test</v-btn>
 
     </v-toolbar>
 
@@ -77,9 +113,14 @@
 </template>
 
 <script>
+    const automatedTestService = require('../services/automatedTestsService');
+    var elasticsearch = require('elasticsearch');
+
   export default {
     data: () => ({
       dialog: false,
+      colorMenu: false,
+      colorMask: '!#XXXXXXXX',
       headers: [{
           text: 'Dessert (100g serving)',
           align: 'left',
@@ -109,27 +150,38 @@
         }
       ],
       desserts: [],
+      existingTags: ['internal', 'external'],
       editedIndex: -1,
       editedItem: {
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
+        url: '',
+        tags: [],
+        interval: 0,
+        color: '#000000FF'
       },
       defaultItem: {
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
+        url: '',
+        tags: [],
+        interval: 0,
+        color: ''
       }
     }),
 
     computed: {
       formTitle() {
         return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      }
+      },
+      swatchStyle() {
+        return {
+            backgroundColor: this.editedItem.color,
+            cursor: 'pointer',
+            height: '30px',
+            width: '30px',
+            borderRadius: this.editedItem.menu ? '50%' : '4px',
+            transition: 'border-radius 200ms ease-in-out'
+        }
+        }
     },
 
     watch: {
@@ -217,6 +269,11 @@
         ]
       },
 
+      removeTag(item) {
+        this.editedItem.tags.splice(this.editedItem.tags.indexOf(item), 1)
+        this.editedItem.tags = [...this.editedItem.tags]
+      },
+
       editItem(item) {
         this.editedIndex = this.desserts.indexOf(item)
         this.editedItem = Object.assign({}, item)
@@ -236,11 +293,40 @@
         }, 300)
       },
 
-      save() {
+      async addDummy() {
+          const id = new Date().getTime();
+        //   const result = await automatedTestService.create({
+        //     name: `Test Project ${id}`,
+        //     url: `url.de?t=${id}`,
+        //     tags: `tag_${id}`,
+        //     interval: 30000,
+        //     color: '#00FF00FF'
+        // });
+
+
+        var client = new elasticsearch.Client({
+            host: 'http://localhost:16662/',
+            log: 'info'
+        });
+        const result = await client.index({
+            index: 'automated_tests',
+            body: {
+              name: `Test Project ${id}`,
+              url: `url.de?t=${id}`,
+              tags: `tag_${id}`,
+              interval: 30000,
+              color: '#00FF00FF'
+          }
+        });
+        console.log(result);
+      },
+
+      async save() {
+        
         if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
+          await automatedTestService.update(this.editedIndex, this.editedItem);
         } else {
-          this.desserts.push(this.editedItem)
+          await automatedTestService.create(this.editedItem);
         }
         this.close()
       }
