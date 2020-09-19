@@ -104,7 +104,7 @@
         </td>
       </template>
       <template slot="no-data">
-        <v-btn color="primary" @click="initialize">Reset</v-btn>
+        No Data
       </template>
     </v-data-table>
   </div>
@@ -212,6 +212,12 @@
       },
 
       async save() {
+        this.$axios
+        .post(`/api/automated-tests/create`, this.editedItem)
+        .then(response => {
+          debugger;
+          console.log(response);
+        });
         
         // if (this.editedIndex > -1) {
         //   await automatedTestService.update(this.editedIndex, this.editedItem);

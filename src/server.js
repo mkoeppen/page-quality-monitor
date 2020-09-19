@@ -46,4 +46,6 @@ async function start() {
       .listen(port, () => console.log(`Server ready on port ${port}`));
 }
 
-start()
+module.exports = {
+  start
+}

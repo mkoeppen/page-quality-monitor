@@ -2,24 +2,16 @@ const { esclient, index: automatedTestsIndex, type: automatedTestsType } = requi
 
 async function getAutomatedTests(req = {}) {
 
-  const query = {
-    query: {
-      match: {
-        automated_test: {
-          query: req.text,
-          operator: "and",
-          fuzziness: "auto"
-        }
-      }
-    }
-  }
-
   const { body: { hits } } = await esclient.search({
     from:  req.page  || 0,
     size:  req.limit || 100,
     index: automatedTestsIndex, 
     type:  automatedTestsType,
-    body:  query
+    body:  {
+      match: {
+        "match_all": {}
+      }
+    }
   });
 
   const results = hits.total.value;

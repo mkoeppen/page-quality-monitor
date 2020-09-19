@@ -8,17 +8,6 @@ const model = require("../models");
  */
 
 async function getAutomatedTests(req, res) {
-  const query  = req.query;
-
-  if (!query.text) {
-    res.status(422).json({
-      error: true,
-      data: "Missing required parameter: text"
-    });
-
-    return;
-  }
-
   try {
 
     const result = await model.getAutomatedTests(req.query);
