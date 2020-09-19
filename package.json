@@ -4,11 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "nuxt:dev": "nuxt",
-    "nuxt:build": "nuxt build",
-    "nuxt:start": "nuxt start",
-    "nuxt:generate": "nuxt generate"
+    "start": "pm2-runtime start ./src/main.js --name node_app",
+    "stop": "pm2-runtime stop node_app "
   },
   "repository": {
     "type": "git",
@@ -31,7 +28,10 @@
     "fs": "0.0.1-security",
     "lighthouse": "^6.3.0",
     "nuxt": "^2.14.5",
-    "puppeteer": "^5.3.0"
+    "puppeteer": "^5.3.0",
+    "@elastic/elasticsearch": "^7.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2"

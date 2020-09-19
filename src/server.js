@@ -1,13 +1,14 @@
 'use strict';
 const { loadNuxt, build } = require('nuxt');
 const express = require('express');
+const cors         = require("cors");
 const bodyParser = require('body-parser');
-const generateReport = require('./services/report').generate;
+require("dotenv").config();
+const api       = require("./api");
 
 // Constants
 const isDev = process.env.NODE_ENV !== 'production'
-const port = 3000;
-const host = '0.0.0.0';
+const port = process.env.NODE_PORT || 3000;
 
 // App
 const app = express();
@@ -30,23 +31,19 @@ async function start() {
   // We get Nuxt instance
   const nuxt = await loadNuxt(isDev ? 'dev' : 'start')
 
-  app.use(bodyParser.json());
-
-  app.post('/generate-report', async (req, res) => {
-    const response = await generateReport(req.body.website);
-    res.send(response);
-  });
-
-  // Render every route with Nuxt.js
-  app.use(nuxt.render)
+  app.use(cors())
+      .use(bodyParser.urlencoded({ extended: false }))
+      .use(bodyParser.json())
+      .use("/api", api)
+      .use(nuxt.render)
 
   // Build only in dev mode with hot-reloading
   if (isDev) {
     build(nuxt)
   }
   // Listen the server
-  app.listen(port, '0.0.0.0')
-  console.log('Server listening on `localhost:' + port + '`.')
+  app.use((_req, res) => res.status(404).json({ success: false,error: "Route not found" }))
+      .listen(port, () => console.log(`Server ready on port ${port}`));
 }
 
 start()
