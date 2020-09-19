@@ -111,8 +111,6 @@
 </template>
 
 <script>
-    const automatedTestService = require('../services/automatedTestsService');
-    var elasticsearch = require('elasticsearch');
 
   export default {
     data: () => ({
