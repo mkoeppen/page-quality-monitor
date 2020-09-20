@@ -15,8 +15,8 @@ services:
       - ES_HOST=elasticsearch
       - NODE_PORT=3000
       - ELASTIC_URL=http://elasticsearch:9200
-    volumes:
-      - ./src:/usr/src/app/src
+    # volumes:
+    #   - ./src:/usr/src/app/src
     command: npm run start
     links:
       - elasticsearch

@@ -89,19 +89,11 @@
 
     <v-data-table :headers="headers" :items="automatedTests" class="elevation-1">
       <template slot="items" slot-scope="props">
+        <td>{{ props.item.color }}</td>
         <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-        <td class="text-xs-right">{{ props.item.fat }}</td>
-        <td class="text-xs-right">{{ props.item.carbs }}</td>
-        <td class="text-xs-right">{{ props.item.protein }}</td>
-        <td class="justify-center layout px-0">
-          <v-icon small class="mr-2" @click="editItem(props.item)">
-            edit
-          </v-icon>
-          <v-icon small @click="deleteItem(props.item)">
-            delete
-          </v-icon>
-        </td>
+        <td>{{ props.item.url }}</td>
+        <td>{{ props.item.tags.join() }}</td>
+        <td>{{ props.item.interval }}</td>
       </template>
       <template slot="no-data">
         No Data
@@ -118,31 +110,28 @@
       colorMenu: false,
       colorMask: '!#XXXXXXXX',
       headers: [{
-          text: 'Dessert (100g serving)',
+          text: '',
+          value: 'color'
+        },{
+          text: 'Name',
           align: 'left',
           sortable: false,
           value: 'name'
-        },
-        {
-          text: 'Calories',
-          value: 'calories'
-        },
-        {
-          text: 'Fat (g)',
-          value: 'fat'
-        },
-        {
-          text: 'Carbs (g)',
-          value: 'carbs'
-        },
-        {
-          text: 'Protein (g)',
-          value: 'protein'
-        },
-        {
-          text: 'Actions',
-          value: 'name',
-          sortable: false
+        },{
+          text: 'Url',
+          align: 'left',
+          sortable: false,
+          value: 'url'
+        },{
+          text: 'Tags',
+          align: 'left',
+          sortable: false,
+          value: 'tags'
+        },{
+          text: 'Interval',
+          align: 'left',
+          sortable: false,
+          value: 'interval'
         }
       ],
       automatedTests: [],
@@ -177,7 +166,7 @@
             borderRadius: this.editedItem.menu ? '50%' : '4px',
             transition: 'border-radius 200ms ease-in-out'
         }
-        }
+      }
     },
 
     watch: {
@@ -186,7 +175,19 @@
       }
     },
 
+    mounted() {
+      this.loadAutomatedTests();
+    },
+
     methods: {
+      loadAutomatedTests() {
+        this.$axios
+        .get(`/api/automated-tests`)
+        .then(response => {
+          // TODO: fix if wrong nesting:
+          this.automatedTests = response.data.data.values;
+        });
+      },
       removeTag(item) {
         this.editedItem.tags.splice(this.editedItem.tags.indexOf(item), 1)
         this.editedItem.tags = [...this.editedItem.tags]
@@ -214,8 +215,10 @@
       async save() {
         this.$axios
         .post(`/api/automated-tests/create`, this.editedItem)
-        .then(response => {
-          debugger;
+        .then(response => {       
+          this.$nextTick(() => {
+            this.loadAutomatedTests();
+          })   
           console.log(response);
         });
         

@@ -2,8 +2,9 @@ FROM node:10.15.3-alpine
 
 WORKDIR /usr/src/app
 
-COPY ./package.json /usr/src/app/package.json
+# COPY ./package.json /usr/src/app/package.json
 
+COPY ./src /usr/src/app
 RUN npm install
 RUN npm install -g pm2
 

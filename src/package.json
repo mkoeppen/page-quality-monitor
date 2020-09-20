@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2-runtime start ./src/main.js --name node_app",
+    "start": "pm2-runtime start ./main.js --name node_app",
     "stop": "pm2-runtime stop node_app "
   },
   "repository": {

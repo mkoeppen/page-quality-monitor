@@ -9,12 +9,12 @@ const model = require("../models");
 
 async function getAutomatedTests(req, res) {
   try {
-
-    const result = await model.getAutomatedTests(req.query);
+    console.log('request get all');
+    const result = await model.getAutomatedTests();
     res.json({ success: true, data: result });
 
   } catch (err) {
-    res.status(500).json({ success: false, error: "Unknown error."});
+    res.status(500).json({ success: false, error: err});
   }
 }
 
@@ -38,7 +38,6 @@ async function addAutomatedTest(req, res) {
   }
 
   try {
-
     const result = await model.insertNewAutomatedTest(body);
     res.json({ 
       success: true, 
@@ -53,7 +52,7 @@ async function addAutomatedTest(req, res) {
     });
 
   } catch (err) {
-    res.status(500).json({ success: false, error: "Unknown error."});
+    res.status(500).json({ success: false, error: err});
   }
 
 }

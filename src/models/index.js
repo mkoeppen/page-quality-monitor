@@ -1,17 +1,12 @@
-const { esclient, index: automatedTestsIndex, type: automatedTestsType } = require("../elastic");
+const { esclient, automatedTestsIndex, automatedTestsType } = require("../elastic");
 
 async function getAutomatedTests(req = {}) {
-
+  console.log('test', automatedTestsIndex);
   const { body: { hits } } = await esclient.search({
     from:  req.page  || 0,
     size:  req.limit || 100,
     index: automatedTestsIndex, 
     type:  automatedTestsType,
-    body:  {
-      match: {
-        "match_all": {}
-      }
-    }
   });
 
   const results = hits.total.value;

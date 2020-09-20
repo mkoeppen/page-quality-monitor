@@ -104,6 +104,6 @@ module.exports = {
   setAutomatedTestsMapping,
   checkConnection,
   createIndex,
-  automatedTestsIndex: automatedTestsIndex,
-  automatedTestsType: automatedTestsType
+  automatedTestsIndex,
+  automatedTestsType
 };
