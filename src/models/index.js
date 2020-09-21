@@ -43,7 +43,34 @@ async function insertNewAutomatedTest(body) {
   })
 }
 
+async function updateAutomatedTest(body) {
+  return esclient.update({
+    index: automatedTestsIndex,
+    type: automatedTestsType,
+    id: body.id,
+    body: {
+      doc: {
+        name: body.name,
+        url: body.url,
+        tags: body.tags,
+        interval: body.interval,
+        color: body.color,
+      }
+    }
+  })
+}
+
+async function deleteNewAutomatedTest(id) {
+  return esclient.delete({
+    index: automatedTestsIndex,
+    type: automatedTestsType,
+    id: id
+  })
+}
+
 module.exports = {
   getAutomatedTests,
-  insertNewAutomatedTest
+  insertNewAutomatedTest,
+  updateAutomatedTest,
+  deleteNewAutomatedTest
 }

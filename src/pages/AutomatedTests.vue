@@ -3,15 +3,12 @@
     <v-toolbar flat color="white">
 
       <v-dialog v-model="dialog" max-width="50%">
-        
+
 
         <template v-slot:activator="{ on, attrs }">
-            <v-btn
-            v-bind="attrs"
-            v-on="on"
-            >
-                <v-icon color="teal" dark>mdi-plus</v-icon>
-            </v-btn>
+          <v-btn v-bind="attrs" v-on="on">
+            <v-icon color="teal" dark>mdi-plus</v-icon>
+          </v-btn>
         </template>
 
         <v-card>
@@ -29,47 +26,36 @@
                   <v-text-field v-model="editedItem.url" label="Url"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-combobox
-                        v-model="editedItem.tags"
-                        :items="existingTags"
-                        chips
-                        clearable
-                        label="Tags"
-                        multiple
-                        solo
-                    >
-                        <template v-slot:selection="{ attrs, item, select, selected }">
-                        <v-chip
-                            v-bind="attrs"
-                            :input-value="selected"
-                            close
-                            @click="select"
-                            @click:close="removeTag(item)"
-                        >
-                            <strong>{{ item }}</strong>&nbsp;
-                            <span>(interest)</span>
-                        </v-chip>
-                        </template>
-                    </v-combobox>
+                  <v-combobox v-model="editedItem.tags" :items="existingTags" chips clearable label="Tags" multiple
+                    solo>
+                    <template v-slot:selection="{ attrs, item, select, selected }">
+                      <v-chip v-bind="attrs" :input-value="selected" close @click="select"
+                        @click:close="removeTag(item)">
+                        <strong>{{ item }}</strong>&nbsp;
+                        <span>(interest)</span>
+                      </v-chip>
+                    </template>
+                  </v-combobox>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.interval" label="Interval"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.color" hide-details class="ma-0 pa-0" solo label="Color">
-                        <template v-slot:append>
-                            <v-menu v-model="colorMenu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
-                                <template v-slot:activator="{ on }">
-                                    <div :style="swatchStyle" v-on="on" />
-                                </template>
-                                <v-card>
-                                    <v-card-text class="pa-0">
-                                        <v-color-picker v-model="editedItem.color" text />
-                                    </v-card-text>
-                                </v-card>
-                            </v-menu>
+                  <v-text-field v-model="editedItem.color" hide-details class="ma-0 pa-0" solo label="Color">
+                    <template v-slot:append>
+                      <v-menu v-model="colorMenu" top nudge-bottom="105" nudge-left="16"
+                        :close-on-content-click="false">
+                        <template v-slot:activator="{ on }">
+                          <div :style="swatchStyle" v-on="on" />
                         </template>
-                    </v-text-field>
+                        <v-card>
+                          <v-card-text class="pa-0">
+                            <v-color-picker v-model="editedItem.color" text />
+                          </v-card-text>
+                        </v-card>
+                      </v-menu>
+                    </template>
+                  </v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -91,6 +77,10 @@
       <template v-slot:item.color="{ item }">
         <v-icon :style="{ color: item.color }">mdi-square-rounded</v-icon>
       </template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
       <template slot="no-data">
         No Data
       </template>
@@ -99,7 +89,6 @@
 </template>
 
 <script>
-
   export default {
     data: () => ({
       dialog: false,
@@ -108,32 +97,37 @@
       headers: [{
           text: '',
           value: 'color'
-        },{
+        }, {
           text: 'Name',
           align: 'left',
           sortable: false,
           value: 'name'
-        },{
+        }, {
           text: 'Url',
           align: 'left',
           sortable: false,
           value: 'url'
-        },{
+        }, {
           text: 'Tags',
           align: 'left',
           sortable: false,
           value: 'tags'
-        },{
+        }, {
           text: 'Interval',
           align: 'left',
           sortable: false,
           value: 'interval'
-        }
+        },
+        {
+          text: 'Actions',
+          value: 'actions',
+          sortable: false
+        },
       ],
       automatedTests: [],
       existingTags: ['internal', 'external'],
-      editedIndex: -1,
       editedItem: {
+        id: -1,
         name: '',
         url: '',
         tags: [],
@@ -141,6 +135,7 @@
         color: '#000000FF'
       },
       defaultItem: {
+        id: -1,
         name: '',
         url: '',
         tags: [],
@@ -151,16 +146,16 @@
 
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedItem.id === -1 ? 'New Item' : 'Edit Item'
       },
       swatchStyle() {
         return {
-            backgroundColor: this.editedItem.color,
-            cursor: 'pointer',
-            height: '30px',
-            width: '30px',
-            borderRadius: this.editedItem.menu ? '50%' : '4px',
-            transition: 'border-radius 200ms ease-in-out'
+          backgroundColor: this.editedItem.color,
+          cursor: 'pointer',
+          height: '30px',
+          width: '30px',
+          borderRadius: this.editedItem.menu ? '50%' : '4px',
+          transition: 'border-radius 200ms ease-in-out'
         }
       }
     },
@@ -178,11 +173,11 @@
     methods: {
       loadAutomatedTests() {
         this.$axios
-        .get(`/api/automated-tests`)
-        .then(response => {
-          // TODO: fix if wrong nesting:
-          this.automatedTests = response.data.data.values;
-        });
+          .get(`/api/automated-tests`)
+          .then(response => {
+            // TODO: fix if wrong nesting:
+            this.automatedTests = response.data.data.values;
+          });
       },
       removeTag(item) {
         this.editedItem.tags.splice(this.editedItem.tags.indexOf(item), 1)
@@ -190,40 +185,51 @@
       },
 
       editItem(item) {
-        // this.editedIndex = this.automatedTests.indexOf(item)
-        // this.editedItem = Object.assign({}, item)
-        // this.dialog = true
+        this.editedItem = Object.assign({}, item)
+        this.dialog = true
       },
 
       deleteItem(item) {
-        // const index = this.automatedTests.indexOf(item)
-        // confirm('Are you sure you want to delete this item?') && this.automatedTests.splice(index, 1)
+        debugger;
+        this.$axios
+          .delete(`/api/automated-tests/${item.id}`)
+          .then(response => {
+            this.automatedTests
+
+            for (var i = 0; i < this.automatedTests.length; i++) {
+              var obj = this.automatedTests[i];
+
+              if (obj.id == item.id) {
+                this.automatedTests.splice(i, 1);
+              }
+            }
+
+          });
       },
 
       close() {
         this.dialog = false
         setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
         }, 300)
       },
 
       async save() {
-        this.$axios
-        .post(`/api/automated-tests/create`, this.editedItem)
-        .then(response => {       
-          this.automatedTests.push(response.data.data)
-          console.log(response);
-        });
-        
-        // if (this.editedIndex > -1) {
-        //   await automatedTestService.update(this.editedIndex, this.editedItem);
-        // } else {
-        //   await automatedTestService.create(this.editedItem);
-          
-        //   const result = await model.insertNewAutomatedTest(body);
-        //   console.log(result);
-        // }
+        if (this.editedItem.id === -1) {
+          // create element
+          this.$axios
+            .post(`/api/automated-tests`, this.editedItem)
+            .then(response => {
+              this.automatedTests.push(response.data.data)
+            });
+        } else {
+          // update element
+          this.$axios
+            .put(`/api/automated-tests`, this.editedItem)
+            .then(response => {
+              this.automatedTests.push(response.data.data)
+            });
+        }
         this.close()
       }
     }
