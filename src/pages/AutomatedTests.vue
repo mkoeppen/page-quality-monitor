@@ -88,12 +88,8 @@
     </v-toolbar>
 
     <v-data-table :headers="headers" :items="automatedTests" class="elevation-1">
-      <template slot="items" slot-scope="props">
-        <td>{{ props.item.color }}</td>
-        <td>{{ props.item.name }}</td>
-        <td>{{ props.item.url }}</td>
-        <td>{{ props.item.tags.join() }}</td>
-        <td>{{ props.item.interval }}</td>
+      <template v-slot:item.color="{ item }">
+        <v-icon :style="{ color: item.color }">mdi-square-rounded</v-icon>
       </template>
       <template slot="no-data">
         No Data
@@ -216,9 +212,7 @@
         this.$axios
         .post(`/api/automated-tests/create`, this.editedItem)
         .then(response => {       
-          this.$nextTick(() => {
-            this.loadAutomatedTests();
-          })   
+          this.automatedTests.push(response.data.data)
           console.log(response);
         });
         
