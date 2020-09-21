@@ -105,6 +105,11 @@ export default {
           icon: 'mdi-calendar-clock',
           title: 'Automatische Tests',
           to: '/automatedtests'
+        },
+        {
+          icon: 'mdi-calendar-clock',
+          title: 'Reports',
+          to: '/reports'
         }
       ],
       miniVariant: false,

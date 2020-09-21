@@ -16,6 +16,13 @@ const server  = require("./server");
       await elastic.setAutomatedTestsMapping();
     }
 
+    const elasticReportsIndex = await elastic.esclient.indices.exists({index: elastic.reportsIndex});
+
+    if (!elasticReportsIndex.body) {
+      await elastic.createIndex(elastic.reportsIndex);
+      await elastic.setReportsMapping();
+    }
+
     server.start();
 
   }

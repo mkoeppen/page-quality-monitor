@@ -5,6 +5,8 @@ const elasticUrl = process.env.ELASTIC_URL || "http://localhost:9200";
 const esclient   = new Client({ node: elasticUrl });
 const automatedTestsIndex      = "automated_tests";
 const automatedTestsType       = "automated_tests";
+const reportsIndex      = "reports";
+const reportsType       = "reports";
 
 /**
  * @function createIndex
@@ -70,6 +72,51 @@ async function setAutomatedTestsMapping () {
 }
 
 /**
+ * @function setReportsMapping,
+ * @returns {void}
+ * @description Sets the reports mapping to the database.
+ */
+
+async function setReportsMapping () {
+  try {
+    const schema = {
+      automatedTestId: {
+        type: "text" 
+      },
+      url: {
+        type: "text" 
+      },
+      createdDateTime: {
+        type: "date"
+      },
+      completedDateTime: {
+        type: "date"
+      },
+      resultHtml: {
+        type: "text" 
+      },
+      resultJson: {
+        type: "text" 
+      },
+    };
+  
+    await esclient.indices.putMapping({ 
+      index: reportsIndex, 
+      type: reportsType,
+      include_type_name: true,
+      body: { 
+        properties: schema 
+      } 
+    })
+    
+    console.log("Reports mapping created successfully");
+  } catch (err) {
+    console.error("An error occurred while setting the automated reports:");
+    console.error(err);
+  }
+}
+
+/**
  * @function checkConnection
  * @returns {Promise<Boolean>}
  * @description Checks if the client is connected to ElasticSearch
@@ -102,8 +149,11 @@ function checkConnection() {
 module.exports = {
   esclient,
   setAutomatedTestsMapping,
+  setReportsMapping,
   checkConnection,
   createIndex,
   automatedTestsIndex,
-  automatedTestsType
+  automatedTestsType,
+  reportsIndex,
+  reportsType
 };
