@@ -17,7 +17,7 @@
           </v-card-title>
 
           <v-card-text>
-            <v-container grid-list-md>
+            <v-container grid-list-md fluid>
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.name" label="Name"></v-text-field>
@@ -191,7 +191,6 @@
       },
 
       deleteItem(item) {
-        debugger;
         this.$axios
           .delete(`/api/automated-tests/${item.id}`)
           .then(response => {

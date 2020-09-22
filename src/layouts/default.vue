@@ -58,7 +58,7 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container fluid fill-height pa-0>
         <nuxt />
       </v-container>
     </v-main>

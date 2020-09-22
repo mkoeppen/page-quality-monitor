@@ -28,14 +28,22 @@ async function getReports(req = {}) {
 }
 
 
-async function getById(id) {
-  const { body: { hit } } = await esclient.get({
+async function getDetails(id) {
+  const result = await esclient.get({
     index: reportsIndex, 
     type:  reportsType,
     id: id
   });
+  const data = {
+    id: result.body._id,
+    automatedTestId:  result.body._source.automatedTestId,
+    url:  result.body._source.url,
+    createdDateTime: result.body._source.createdDateTime,
+    completedDateTime: result.body._source.completedDateTime,
+    filepath: result.body._source.filepath
+  };
 
-  return hit
+  return data;
 }
 
 async function getNextTest(req = {}) {
@@ -100,6 +108,7 @@ async function updateReport(body) {
         url: body.url,
         createdDateTime: body.createdDateTime,
         completedDateTime: body.completedDateTime,
+        filepath: body.filepath
       }
     }
   })
@@ -119,5 +128,5 @@ module.exports = {
   updateReport,
   deleteReport,
   getNextTest,
-  getById
+  getDetails
 }

@@ -65,7 +65,6 @@
           });
       },
       deleteItem(item) {
-        debugger;
         this.$axios
           .delete(`/api/reports/${item.id}`)
           .then(response => {

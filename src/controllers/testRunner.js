@@ -6,6 +6,8 @@ const config = require('lighthouse/lighthouse-core/config/lr-desktop-config.js')
 const reportGenerator = require('lighthouse/lighthouse-core/report/report-generator');
 const request = require('request');
 const util = require('util');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
 
 module.exports = class {
     constructor() {
@@ -31,8 +33,31 @@ module.exports = class {
             nextTest = nextTestResponse.values[0];
 
             const report = await this.generate(nextTest.url);
-            nextTest.html = report.html;
-            nextTest.json = report.json;
+            const currentDate = new Date();
+            const reportBasePath = `../reports/`;
+            const reportSubPath = `${currentDate.getFullYear()}/${currentDate.getMonth() + 1}/${currentDate.getDate()}/`;
+            const reportFileName = `report.${nextTest.id}`;
+
+            if (!fs.existsSync(`${reportBasePath}${reportSubPath}`)){
+                mkdirp(`${reportBasePath}${reportSubPath}`);
+            }
+            nextTest.filepath = `${reportSubPath}${reportFileName}`;
+            await reportsModel.updateReport(nextTest);
+
+            //Write report html to the file
+            fs.writeFile(`${reportBasePath}${reportSubPath}${reportFileName}.html`, report.html, (err) => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+
+            //Write report json to the file
+            fs.writeFile(`${reportBasePath}${reportSubPath}${reportFileName}.json`, report.json, (err) => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+
             nextTest.completedDateTime = new Date().getTime();
             await reportsModel.updateReport(nextTest);
         }

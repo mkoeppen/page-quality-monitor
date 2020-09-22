@@ -7,6 +7,7 @@ const api       = require("./api");
 const cron = require("node-cron");
 const TestRunnerClass = require('./controllers/testRunner');
 const testRunner = new TestRunnerClass();
+const serveStatic = require('serve-static');
 
 // Constants
 const isDev = process.env.NODE_ENV !== 'production'
@@ -37,6 +38,9 @@ async function start() {
       .use(bodyParser.urlencoded({ extended: false }))
       .use(bodyParser.json())
       .use("/api", api)
+      .use('/static/reports/*', function(req, res){
+        res.sendFile(req.params[0], {root: '../reports'});
+      })
       .get('/control/run', function(req, res) {
         testRunner.start();
         res.send('Test Runner started')
