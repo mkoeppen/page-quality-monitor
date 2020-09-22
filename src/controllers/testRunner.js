@@ -1,3 +1,4 @@
+const reportsModel = require("../models/reports");
 const chromeLauncher = require('chrome-launcher');
 const puppeteer = require('puppeteer');
 const lighthouse = require('lighthouse');
@@ -5,10 +6,45 @@ const config = require('lighthouse/lighthouse-core/config/lr-desktop-config.js')
 const reportGenerator = require('lighthouse/lighthouse-core/report/report-generator');
 const request = require('request');
 const util = require('util');
-const fs = require('fs');
 
-module.exports = {
-    generate: async function(url) {
+module.exports = class {
+    constructor() {
+        this.initDate = new Date();
+        this.isRunning = false;
+        console.log('TestRunner Init', this.initDate);
+    }
+    async start() {
+        if(this.isRunning) {
+            return false;
+        }
+        this.isRunning = true;
+        console.log('TestRunner Start', this.initDate);
+
+        let nextTest;
+        let nextTestResponse;
+        while(true) {
+            nextTestResponse = await reportsModel.getNextTest();
+            if(nextTestResponse.results === 0) {
+                break;
+            }
+
+            nextTest = nextTestResponse.values[0];
+
+            const report = await this.generate(nextTest.url);
+            nextTest.html = report.html;
+            nextTest.json = report.json;
+            nextTest.completedDateTime = new Date().getTime();
+            await reportsModel.updateReport(nextTest);
+        }
+
+        
+        this.isRunning = false;
+        return true;
+    }
+    async generate(url) {
+
+        if(!url) return;
+        console.log('Generate Report start', url);
 
         const opts = {
             logLevel: 'info',
@@ -32,7 +68,7 @@ module.exports = {
 
 
         //Puppeteer
-        page = (await browser.pages())[0];
+        const page = (await browser.pages())[0];
         await page.setViewport({ width: 1600, height: 1200});
         await page.goto(url);
 
@@ -57,6 +93,7 @@ module.exports = {
         await browser.disconnect();
         await chrome.kill();
 
+        console.log('Generate Report end', url);
         return { html, json };
     }
 }

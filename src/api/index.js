@@ -18,6 +18,7 @@ const reportsController = require("../controllers/reports");
 routes.route("/reports").get(reportsController.getReports);
 routes.route("/reports").post(reportsController.addReport);
 routes.route("/reports").put(reportsController.updateReport);
+routes.route("/getNextTest").get(reportsController.getNextTest);
 routes.route("/reports/:id").delete(reportsController.deleteReport);
 
 

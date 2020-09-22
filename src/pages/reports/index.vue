@@ -4,8 +4,13 @@
       <template v-slot:item.createdDateTime="{ item }">
         <span>{{ new Date(item.createdDateTime).toLocaleString('de-DE') }}</span>
       </template>      
+      <template v-slot:item.completedDateTime="{ item }">
+        <span>{{ new Date(item.completedDateTime).toLocaleString('de-DE') }}</span>
+      </template>      
       <template v-slot:item.actions="{ item }">
         <!-- <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon> -->
+        
+        <a :href="`/reports/${item.id}`"><v-icon small>mdi-file-search</v-icon></a>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
       </template>
       <template slot="no-data">
@@ -31,6 +36,11 @@
           align: 'left',
           sortable: false,
           value: 'createdDateTime'
+        },{
+          text: 'completedDateTime',
+          align: 'left',
+          sortable: false,
+          value: 'completedDateTime'
         },
         {
           text: 'Actions',

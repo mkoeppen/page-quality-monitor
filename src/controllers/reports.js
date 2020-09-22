@@ -7,10 +7,28 @@ const model = require("../models/reports");
  * @returns {void}
  */
 
-async function getReports(req, res) {
+ async function getReports(req, res) {
   try {
     console.log('request get all');
     const result = await model.getReports();
+    res.json({ success: true, data: result });
+
+  } catch (err) {
+    res.status(500).json({ success: false, error: err});
+  }
+}
+
+/**
+ * @function getNextTest
+ * @param {Object} req Express request object
+ * @param {Object} res Express response object
+ * @returns {void}
+ */
+
+async function getNextTest(req, res) {
+  try {
+    console.log('request get next text');
+    const result = await model.getNextTest();
     res.json({ success: true, data: result });
 
   } catch (err) {
@@ -120,6 +138,7 @@ async function deleteReport(req, res) {
 
 module.exports = {
   getReports,
+  getNextTest,
   addReport,
   updateReport,
   deleteReport,

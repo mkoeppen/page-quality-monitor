@@ -27,6 +27,56 @@ async function getReports(req = {}) {
 
 }
 
+
+async function getById(id) {
+  const { body: { hit } } = await esclient.get({
+    index: reportsIndex, 
+    type:  reportsType,
+    id: id
+  });
+
+  return hit
+}
+
+async function getNextTest(req = {}) {
+  const { body: { hits } } = await esclient.search({
+    from:  0,
+    size:  1,
+    index: reportsIndex, 
+    type:  reportsType,
+    body: {
+      query: {
+        bool: {
+          must_not: {
+            exists: {
+              field: "completedDateTime"
+            }
+          }
+        }
+      },
+      sort: [{"createdDateTime": "asc"}]
+    }
+  });
+
+  const results = hits.total.value;
+  const values  = hits.hits.map((hit) => {
+    return {
+      id: hit._id,
+      automatedTestId:  hit._source.automatedTestId,
+      url:  hit._source.url,
+      createdDateTime: hit._source.createdDateTime,
+      completedDateTime: hit._source.completedDateTime,
+      score: hit._score
+    }
+  });
+
+  return {
+    results,
+    values
+  }
+
+}
+
 async function insertReport(body) {
   return esclient.index({
     index: reportsIndex,
@@ -67,5 +117,7 @@ module.exports = {
   getReports,
   insertReport,
   updateReport,
-  deleteReport
+  deleteReport,
+  getNextTest,
+  getById
 }

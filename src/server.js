@@ -3,8 +3,10 @@ const { loadNuxt, build } = require('nuxt');
 const express = require('express');
 const cors         = require("cors");
 const bodyParser = require('body-parser');
-require("dotenv").config();
 const api       = require("./api");
+const cron = require("node-cron");
+const TestRunnerClass = require('./controllers/testRunner');
+const testRunner = new TestRunnerClass();
 
 // Constants
 const isDev = process.env.NODE_ENV !== 'production'
@@ -35,12 +37,23 @@ async function start() {
       .use(bodyParser.urlencoded({ extended: false }))
       .use(bodyParser.json())
       .use("/api", api)
+      .get('/control/run', function(req, res) {
+        testRunner.start();
+        res.send('Test Runner started')
+      })
       .use(nuxt.render)
 
   // Build only in dev mode with hot-reloading
   if (isDev) {
     build(nuxt)
   }
+
+  // Cron Job
+  cron.schedule("*/10 * * * * *", function() {
+    console.log("running a task 10 seconds");
+    testRunner.start();
+  });
+
   // Listen the server
   app.use((_req, res) => res.status(404).json({ success: false,error: "Route not found" }))
       .listen(port, () => console.log(`Server ready on port ${port}`));

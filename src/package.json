@@ -18,19 +18,18 @@
   },
   "homepage": "https://github.com/mkoeppen/page-quality-monitor#readme",
   "dependencies": {
+    "@elastic/elasticsearch": "^7.3.0",
     "@nuxtjs/axios": "^5.12.2",
     "add": "^2.0.6",
     "body-parser": "^1.19.0",
     "chrome-launcher": "^0.13.4",
     "core-js": "^3.6.5",
-    "@elastic/elasticsearch": "^7.3.0",
-    "express": "^4.17.1",
-    "fs": "0.0.1-security",
-    "lighthouse": "^6.3.0",
-    "nuxt": "^2.14.5",
-    "puppeteer": "^5.3.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.0.0"
+    "express": "^4.17.1",
+    "lighthouse": "^6.3.0",
+    "node-cron": "^2.0.3",
+    "nuxt": "^2.14.5",
+    "puppeteer": "^5.3.0"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2"
