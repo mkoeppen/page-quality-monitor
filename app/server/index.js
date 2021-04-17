@@ -30,20 +30,20 @@ async function start () {
    */
 
   app.get("/api/pages", (req, res) => {
-    db.getpages().then((data) => {
+    db.getPages().then((data) => {
         res.end(JSON.stringify(data));
     });
   })
 
   app.post("/api/page", (req, res) => {
-    db.savepage(req.body).then((data) => {
+    db.savePage(req.body).then((data) => {
         res.end(JSON.stringify({
           id: data.insertId
         }));
     });
   })
   app.delete("/api/page/:id", (req, res) => {
-    db.deletepage(req.params.id).then((data) => {
+    db.deletePage(req.params.id).then((data) => {
         res.end(JSON.stringify({}));
     });
   })

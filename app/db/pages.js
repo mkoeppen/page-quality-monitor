@@ -2,9 +2,9 @@ exports.insertOrUpdate = function(db, page) {
 
     const pageDetails = {
         id: page.id,
+        url: page.url,
         pagename: page.pagename,
-        pageId: page.pageId,
-        color: page.color,
+        parentId: page.parentId,
     }
 
     return new Promise((resolve, reject) => {

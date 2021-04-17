@@ -32,9 +32,9 @@ CREATE TABLE `pages` (
   `id` int(11) NOT NULL,
   `url` varchar(255) CHARACTER SET utf32 NOT NULL,
   `pagename` varchar(255) CHARACTER SET utf32 NOT NULL,
-  `parentId` int(11) NOT NULL,
+  `parentId` int(11) DEFAULT NULL,
   `lastReportDate` date DEFAULT NULL,
-  `forceReport` tinyint(1) NOT NULL
+  `forceReport` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

@@ -33,17 +33,20 @@
               <v-card-text>
                 <v-container>
                   <v-text-field
-                    v-model="editedItem.pageId"
-                    label="pageId"
-                  ></v-text-field>
-                  <v-text-field
                     v-model="editedItem.pagename"
                     label="Name"
                   ></v-text-field>
-                  <v-color-picker
-                    v-model="editedItem.color"
-                    dot-size="25"
-                  ></v-color-picker>
+                  <v-text-field
+                    v-model="editedItem.url"
+                    label="url"
+                  ></v-text-field>
+                  <v-select
+                    :items="possibleParents"
+                    item-text="pagename"
+                    item-value="id"
+                    v-model="editedItem.parentId"
+                    label="Standard"
+                  ></v-select>
                 </v-container>
               </v-card-text>
 
@@ -94,9 +97,6 @@
           mdi-delete
         </v-icon>
       </template>
-      <template v-slot:item.color="{ item }">
-        <span class="m-page__color" :style="`background-color: #${item.color}`"></span>
-      </template>
     </v-data-table>
   </div>
 </template>
@@ -107,7 +107,7 @@ export default {
   props: {
     items: {
       type: Array,
-      default: null
+      default: []
     }
   },
 
@@ -116,23 +116,23 @@ export default {
       dialog: false,
       dialogDelete: false,
       headers: [
-        { text: 'pageId', value: 'pageId' },
         { text: 'Name', value: 'pagename' },
-        { text: 'Color', value: 'color' },
+        { text: 'Url', value: 'url' },
+        { text: 'Parent', value: 'parentId' },
         { text: 'Actions', value: 'actions' }
       ],
       editedIndex: -1,
       editedItem: {
         id: undefined,
-        pageId: 0,
+        url: '',
         pagename: '',
-        color: '000000',
+        parentId: null
       },
       defaultItem: {
         id: undefined,
-        pageId: 0,
+        url: '',
         pagename: '',
-        color: '000000',
+        parentId: null
       },
       pages: JSON.parse(JSON.stringify(this.items))
     }
@@ -142,6 +142,12 @@ export default {
     formTitle () {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
+    
+    possibleParents: function () {
+      return this.items.filter((item) => {
+        return item.parentId === null && item.id !== this.editedItem.id; 
+      })
+    }
   },
   
   watch: {
@@ -195,11 +201,11 @@ export default {
     },
 
     async save () {      
-      const savedId = await this.$axios.$post(`/api/page`, {
+      await this.$axios.$post(`/api/page`, {
         id: this.editedItem.id,
-        pageId: this.editedItem.pageId,
+        url: this.editedItem.url,
         pagename: this.editedItem.pagename,
-        color: this.editedItem.color.toString().match(/#[a-zA-Z0-9]{8}/) ? this.editedItem.color.toString().substr(1, 6) : this.editedItem.color,
+        parentId: this.editedItem.parentId
       });
       this.pages = await this.$axios.$get(`/api/pages`);
 
@@ -211,11 +217,5 @@ export default {
 </script>
 
 <style>
-
-  .m-page__color {
-    width: 24px;
-    height: 24px;
-    display: inline-block;
-  }
 
 </style>
