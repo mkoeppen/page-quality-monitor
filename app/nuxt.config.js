@@ -1,8 +1,10 @@
-export default {
+const colors = require('vuetify/es5/util/colors');
+
+module.exports = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - pqm',
-    title: 'pqm',
+    titleTemplate: '%s - page-quality-monitor',
+    title: 'page-quality-monitor',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -43,18 +45,24 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
+      dark: true,
       themes: {
-        light: {
-          primary: '#3f51b5',
-          secondary: '#b0bec5',
-          accent: '#8c9eff',
-          error: '#b71c1c',
-        },
+        dark: {
+          primary: 'blue',
+          accent: 'red',
+          secondary: 'green',
+          info: 'yellow',
+          warning: 'orange',
+          error: 'red',
+          success: 'green'
+        }
       }
     }
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  }
+  },
+
+  telemetry: false
 }
