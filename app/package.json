@@ -11,12 +11,20 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "body-parser": "^1.19.0",
+    "chrome-launcher": "^0.13.4",
     "consola": "^2.15.1",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "lighthouse": "^7.3.0",
+    "mkdirp": "^1.0.4",
     "mysql": "^2.18.1",
-    "nuxt": "^2.14.6"
+    "node-cron": "^3.0.0",
+    "nuxt": "^2.14.6",
+    "puppeteer": "^9.0.0",
+    "request": "^2.88.2",
+    "util": "^0.12.3"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2"

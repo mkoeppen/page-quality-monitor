@@ -34,7 +34,7 @@ CREATE TABLE `pages` (
   `pagename` varchar(255) CHARACTER SET utf32 NOT NULL,
   `parentId` int(11) DEFAULT NULL,
   `lastReportDate` date DEFAULT NULL,
-  `forceReport` tinyint(1) NOT NULL DEFAULT '0'
+  `forceReport` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

@@ -25,6 +25,22 @@ exports.insertOrUpdate = function(db, page) {
     })    
 }
   
+exports.setReportGenerated = function(db, id, currentDate) {
+
+    const pageDetails = {
+        id: id,
+        forceReport: 0,
+        lastReportDate: currentDate.getTime()
+    }
+
+    return new Promise((resolve, reject) => {
+        db.query(`UPDATE pages SET ? WHERE id = '${ pageDetails.id }'`, pageDetails, (err, res) => {
+            if(err) throw err;
+            resolve(res)
+        }); 
+    })    
+}
+  
 exports.get = function(db) {
     return new Promise((resolve, reject) => {
         db.query(`SELECT * FROM pages`, (err, res) => {
@@ -46,3 +62,11 @@ exports.delete = function(db, id) {
     })    
 }
   
+exports.getNextTest = function(db) {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM `pages` WHERE `forceReport` = 1 LIMIT 1', (err, res) => {
+            if(err) throw err;
+            resolve(res)
+        });
+    })    
+}

@@ -2,6 +2,23 @@ version: "3"
 
 services:      
 
+  server:
+    image: node:12.13.0-alpine
+    container_name: "${PROJECT_NAME}_server"
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=local
+      - NODE_PORT=3000
+    command: npm run start
+    depends_on:
+      - db
+    networks: 
+      - appnetwork
+
   db:
     image: mysql:5.7
     container_name: "${PROJECT_NAME}_db"
@@ -14,7 +31,7 @@ services:
     volumes:
       - ./mysql/:/mnt/
     ports:
-      - '3406:3306'
+      - '3306:3306'
     networks:
       - appnetwork
 
