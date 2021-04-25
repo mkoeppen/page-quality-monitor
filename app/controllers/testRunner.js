@@ -79,7 +79,7 @@ module.exports = class {
                 width: 1200,
                 height: 900
             },
-            chromeFlags: ['--headless'],
+            chromeFlags: ['--headless', '--disable-gpu', '--no-sandbox'],
         };
 
         // Launch chrome using chrome-launcher
