@@ -9,12 +9,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - ./reports:/usr/share/reports
     environment:
-      - NODE_ENV=local
+      - NODE_ENV=prod
       - NODE_PORT=3000
+      - HOST=0.0.0.0
     command: npm run start
     depends_on:
       - db
