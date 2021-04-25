@@ -30,7 +30,7 @@ exports.setReportGenerated = function(db, id, currentDate) {
     const pageDetails = {
         id: id,
         forceReport: 0,
-        lastReportDate: currentDate.getTime()
+        lastReportDate: currentDate.toISOString().slice(0, 19).replace('T', ' ')
     }
 
     return new Promise((resolve, reject) => {

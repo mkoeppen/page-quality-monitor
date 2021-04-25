@@ -10,6 +10,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    volumes:
+      - ./reports:/usr/share/reports
     environment:
       - NODE_ENV=local
       - NODE_PORT=3000

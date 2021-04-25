@@ -6,6 +6,9 @@ RUN apk update && \
 
 ENV CHROME_BIN=/usr/bin/chromium-browser
 
+RUN mkdir -p /usr/share/reports
+RUN chown -R node.node /usr/share/reports
+
 WORKDIR /usr/src/app
 
 # COPY ./package.json /usr/src/app/package.json

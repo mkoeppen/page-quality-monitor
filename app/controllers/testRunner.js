@@ -35,12 +35,12 @@ module.exports = class {
 
             const report = await this.generate(nextTest.url);
             const currentDate = new Date();
-            const reportBasePath = `../reports/`;
+            const reportBasePath = `/usr/share/reports/`;
             const reportSubPath = `${currentDate.getFullYear()}/${currentDate.getMonth() + 1}/${currentDate.getDate()}/`;
             const reportFileName = `report.${nextTest.id}`;
 
             if (!fs.existsSync(`${reportBasePath}${reportSubPath}`)){
-                mkdirp(`${reportBasePath}${reportSubPath}`);
+                await mkdirp(`${reportBasePath}${reportSubPath}`);
             }
             // nextTest.filepath = `${reportSubPath}${reportFileName}`;
             // await db.setReportGenerated(nextTest.id, currentDate);
