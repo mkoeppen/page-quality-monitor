@@ -64,6 +64,11 @@ async function start () {
         res.end(JSON.stringify({}));
     });
   })
+  app.get("/api/page/:id/last-report", (req, res) => {
+    db.getLastReportByPageId(req.params.id).then((data) => {
+        res.end(JSON.stringify(data));
+    });
+  })
 
   app.get('/control/run', function(req, res) {
     testRunner.start();
