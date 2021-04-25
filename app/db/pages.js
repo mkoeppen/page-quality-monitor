@@ -48,6 +48,14 @@ exports.get = function(db) {
             resolve(res)
         });
     })    
+}  
+exports.getById = function(db, id) {
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT * FROM pages WHERE id = ${id}`, (err, res) => {
+            if(err) throw err;
+            resolve(res)
+        });
+    })    
 }
   
 exports.delete = function(db, id) {

@@ -3,7 +3,7 @@ const pages = require('./pages');
 const reports = require('./reports');
 
 const db = mysql.createConnection({
-  host: "db",
+  host: process.env.NODE_ENV === 'development' ? 'localhost' : "db",
   port: "3306",
   user: "pagequalitymonitor",
   password: "qpmpass",
@@ -22,6 +22,10 @@ exports.get = function() {
 
 exports.getPages = function() {
   return pages.get(db);
+}
+
+exports.getPageById = function(id) {
+  return pages.getById(db, id);
 }
 
 exports.savePage = function(data) {

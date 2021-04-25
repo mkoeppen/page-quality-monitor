@@ -5,6 +5,7 @@
       :headers="headers"
       :items="pages"
       class="m-pages__table"
+      @click:row="handleClick"
     >
       <template v-slot:top>
         <v-toolbar
@@ -198,6 +199,10 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
       })
+    },
+
+    handleClick(clickedPage) {
+      this.$router.push({ path: `/page/${clickedPage.id}` })
     },
 
     async save () {      

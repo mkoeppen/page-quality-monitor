@@ -14,12 +14,17 @@ config.dev = process.env.NODE_ENV !== 'production'
 
 async function start () {
   // Init Nuxt.js
-  const nuxt = new Nuxt(config)
+  const nuxt = new Nuxt(config);
 
-  const {
-    host = process.env.HOST || '127.0.0.1',
-    port = process.env.PORT || 3000
-  } = nuxt.options.server
+  let host, port;
+
+  if(config.dev) {
+    host = 'localhost';
+    port = 3001;
+  } else {
+    host = nuxt.options.server.host || process.env.HOST || '127.0.0.1';
+    port = nuxt.options.server.port || process.env.PORT || 3000;
+  }
 
   // Build only in dev mode
   if (config.dev) {
@@ -37,6 +42,12 @@ async function start () {
 
   app.get("/api/pages", (req, res) => {
     db.getPages().then((data) => {
+        res.end(JSON.stringify(data));
+    });
+  })
+
+  app.get("/api/page/:id", (req, res) => {
+    db.getPageById(req.params.id).then((data) => {
         res.end(JSON.stringify(data));
     });
   })
