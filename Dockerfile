@@ -1,8 +1,8 @@
-FROM node:12.13.0-alpine
+# FROM node:12.13.0-alpine
+FROM node:16-buster
 
-RUN apk update && \
-    apk add --no-cache \
-      chromium
+RUN apt-get update && \
+    apt-get install -y chromium
 
 ENV CHROME_BIN=/usr/bin/chromium-browser
 
