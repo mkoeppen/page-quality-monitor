@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Erstellungszeit: 17. Apr 2021 um 12:16
+-- Erstellungszeit: 02. Mai 2021 um 18:55
 -- Server-Version: 5.7.29
 -- PHP-Version: 7.4.1
 
@@ -38,6 +38,27 @@ CREATE TABLE `pages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Daten für Tabelle `pages`
+--
+
+INSERT INTO `pages` (`id`, `url`, `pagename`, `parentId`, `lastReportDate`, `forceReport`) VALUES
+(1, 'https://www.unitb.de/', 'Unitb', NULL, '2021-05-02 18:41:29', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `reports`
+--
+
+CREATE TABLE `reports` (
+  `id` int(11) NOT NULL,
+  `page_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `html_path` varchar(255) NOT NULL,
+  `json_path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Indizes der exportierten Tabellen
 --
 
@@ -48,6 +69,12 @@ ALTER TABLE `pages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indizes für die Tabelle `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT für exportierte Tabellen
 --
 
@@ -55,6 +82,12 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT für Tabelle `pages`
 --
 ALTER TABLE `pages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT für Tabelle `reports`
+--
+ALTER TABLE `reports`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
