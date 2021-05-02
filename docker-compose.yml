@@ -12,6 +12,7 @@ services:
       - '3000:3000'
     volumes:
       - ./reports:/usr/share/reports
+      - lighthouse-shm:/dev/shm
     environment:
       - NODE_ENV=prod
       - NODE_PORT=3000
@@ -53,3 +54,6 @@ services:
   
 networks:
   appnetwork:
+
+volumes:
+  lighthouse-shm:

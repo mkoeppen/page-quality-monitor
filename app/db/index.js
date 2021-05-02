@@ -20,6 +20,10 @@ exports.get = function() {
   return db;
 }
 
+/**
+ * PAGES
+ */
+
 exports.getPages = function() {
   return pages.get(db);
 }
@@ -42,4 +46,24 @@ exports.getNextTest = function() {
 
 exports.setReportGenerated = function(id, currentDate) {
   return pages.setReportGenerated(db, id, currentDate);
+}
+
+/**
+ * REPORTS
+ */
+
+exports.getReports = function() {
+  return reports.get(db);
+}
+
+exports.getReportById = function(id) {
+  return reports.getById(db, id);
+}
+
+exports.saveReport = function(data) {
+  return reports.insertOrUpdate(db, data);
+}
+
+exports.deleteReport = function(id) {
+  return reports.delete(db, id);
 }

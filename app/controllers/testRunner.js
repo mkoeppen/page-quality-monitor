@@ -45,15 +45,25 @@ module.exports = class {
             // nextTest.filepath = `${reportSubPath}${reportFileName}`;
             // await db.setReportGenerated(nextTest.id, currentDate);
 
+            const html_path = `${reportBasePath}${reportSubPath}${reportFileName}.html`;
+            const json_path = `${reportBasePath}${reportSubPath}${reportFileName}.json`;
+
+            await db.saveReport({
+                page_id: nextTest.id,
+                date: currentDate,
+                html_path: html_path,
+                json_path: json_path,
+            })
+
             //Write report html to the file
-            fs.writeFile(`${reportBasePath}${reportSubPath}${reportFileName}.html`, report.html, (err) => {
+            fs.writeFile(html_path, report.html, (err) => {
                 if (err) {
                     console.error(err);
                 }
             });
 
             //Write report json to the file
-            fs.writeFile(`${reportBasePath}${reportSubPath}${reportFileName}.json`, report.json, (err) => {
+            fs.writeFile(json_path, report.json, (err) => {
                 if (err) {
                     console.error(err);
                 }
@@ -79,7 +89,8 @@ module.exports = class {
                 width: 1200,
                 height: 900
             },
-            chromeFlags: ['--headless', '--disable-gpu', '--no-sandbox', '--max-wait-for-fcp=4500'],
+            chromeFlags: ['--headless', '--disable-gpu', '--no-sandbox', '--disable-storage-reset',
+            '--emulated-form-factor', '--max-wait-for-fcp=45000', '--disable-dev-shm-usag'],
         };
 
         // Launch chrome using chrome-launcher
