@@ -1,12 +1,14 @@
 <template>
   <div>
 
+    <h1>{{  }}</h1>
+
     <div>
-      <a :href="reportUrl">Report</a>
-      <a :href="todoUrl">Todos</a>
+      <NuxtLink :to="reportUrl">Report</NuxtLink>
+      <NuxtLink :to="todoUrl">Todos</NuxtLink>
     </div>
 
-
+    <NuxtChild />
 
   </div>
 </template>
@@ -16,7 +18,6 @@ export default {
 
   data: function() {
     return {
-      id: -1,
     }
   },
 
@@ -32,13 +33,16 @@ export default {
 
   created() {
     this.$store.commit('CHANGE_PAGE_TITLE',"Page");
-    this.id = this.$route.params.id;
   },
 
-  async asyncData({ $axios, $config }) {
-    const page = await $axios.$get(`/api/page/${this.id}`);
-    console.log('#############page', page);
-    return { page }
+  async asyncData({ $axios, $config, route }) {
+    const { id } = route.params
+    const page = await $axios.$get(`/api/page/${id}`);
+    return {
+      id: id,
+      pagename: page.pagename,
+      url: page.url,
+    }
   }
 }
 </script>

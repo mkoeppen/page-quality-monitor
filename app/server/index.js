@@ -20,7 +20,7 @@ async function start () {
 
   if(config.dev) {
     host = 'localhost';
-    port = 3001;
+    port = 3000;
   } else {
     host = nuxt.options.server.host || process.env.HOST || '127.0.0.1';
     port = nuxt.options.server.port || process.env.PORT || 3000;
