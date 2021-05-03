@@ -60,6 +60,10 @@ exports.getReportById = function(id) {
   return reports.getById(db, id);
 }
 
+exports.getLastReportForPage = function(id) {
+  return reports.getLastReportForPage(db, id);
+}
+
 exports.saveReport = function(data) {
   return reports.insertOrUpdate(db, data);
 }

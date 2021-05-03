@@ -1,33 +1,28 @@
 <template>
   <div>
 
-    report
+    <iframe class="m-report__iframe" :src="reportHtml"></iframe>
 
   </div>
 </template>
 
 <script>
 export default {
-
-  // data: function() {
-  //   return {
-  //     id: -1,
-  //   }
-  // },
-
-  // computed: {
-  //    reportUrl() {
-  //        return `/page/${this.id}`;
-  //    },
-  //    todoUrl() {
-  //        return `/page/${this.id}/todos`;
-  //    }
-  // },
-
-
-  // created() {
-  //   this.$store.commit('CHANGE_PAGE_TITLE',"Page");
-  //   this.id = this.$route.params.id;
-  // },
+ async asyncData({ $axios, $config, route }) {
+    const { id } = route.params
+    const reportHtml = await $axios.$get(`/api/last-report-for-page/${id}`);
+    return {
+      reportHtml: "data:text/html;charset=utf-8," + encodeURIComponent(reportHtml)
+    }
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+  .m-report__iframe {
+    width: 100%;
+    min-height: 80vh;
+    border: 0;  
+  }
+  
+</style>

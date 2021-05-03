@@ -7,6 +7,7 @@ const db = require('../db');
 const cron = require("node-cron");
 const TestRunnerClass = require('../controllers/testRunner');
 const testRunner = new TestRunnerClass();
+const path = require('path');
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
@@ -49,6 +50,23 @@ async function start () {
   app.get("/api/page/:id", (req, res) => {
     db.getPageById(req.params.id).then((data) => {
         res.end(JSON.stringify(data));
+    });
+  })
+
+  app.get("/api/last-report-for-page/:id", (req, res) => {
+    db.getLastReportForPage(req.params.id).then((data) => {
+      let filepath = '';
+      if(data && data[0].html_path) {
+        if (config.dev) {
+          // fix path for dev mode
+          filepath = data[0].html_path.replace('/usr/share/reports', `${__dirname }/../../reports`);
+        }
+        res.sendFile(path.resolve(filepath));
+        return;
+      }
+
+      // res.status(404).send('Not found');
+      res.status(404).send(path.resolve(filepath));
     });
   })
 

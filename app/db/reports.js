@@ -44,6 +44,15 @@ exports.getById = function(db, id) {
   })    
 }
 
+exports.getLastReportForPage = function(db, id) {
+  return new Promise((resolve, reject) => {
+      db.query(`SELECT * FROM reports WHERE page_id = ${id} ORDER BY date DESC LIMIT 1;`, (err, res) => {
+          if(err) throw err;
+          resolve(res)
+      });
+  })    
+}
+
 exports.delete = function(db, id) {
   return new Promise((resolve, reject) => {
 
