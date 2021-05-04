@@ -1,11 +1,22 @@
 exports.insertOrUpdate = function(db, report) {
 
   const reportDetails = {
-      id: report.id,
-      page_id: report.page_id,
-      date: report.date,
-      html_path: report.html_path,
-      json_path: report.json_path,
+    id: report.id,
+    page_id: report.page_id,
+    date: report.date,
+    html_path: report.html_path,
+    json_path: report.json_path,
+    score_performance: report.score_performance,
+    score_accessibility: report.score_accessibility,
+    score_best_practices: report.score_best_practices,
+    score_seo: report.score_seo,
+    score_pwa: report.score_pwa,
+    lcp_display_value: report.lcp_display_value,
+    fid_display_value: report.fid_display_value,
+    cls_display_value: report.cls_display_value,
+    lcp_score: report.lcp_score,
+    fid_score: report.fid_score,
+    cls_score: report.cls_score,
   }
 
   return new Promise((resolve, reject) => {
