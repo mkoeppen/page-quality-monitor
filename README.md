@@ -1,6 +1,5 @@
 # alpha
 
-- save important data on report object
 - show important report data
 - add generate report button to table
 - style page table
