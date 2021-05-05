@@ -46,6 +46,11 @@ async function start () {
         res.end(JSON.stringify(data));
     });
   })
+  app.get("/api/pages-with-scores", (req, res) => {
+    db.getPagesWithScores().then((data) => {
+        res.end(JSON.stringify(data));
+    });
+  })
 
   app.get("/api/page/:id", (req, res) => {
     db.getPageById(req.params.id).then((data) => {

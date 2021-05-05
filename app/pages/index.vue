@@ -19,7 +19,7 @@ export default {
   },
 
   async asyncData({ $axios, $config }) {
-    const pages = await $axios.$get(`/api/pages`);
+    const pages = await $axios.$get(`/api/pages-with-scores`);
     return { pages }
   }
 }

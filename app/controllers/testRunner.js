@@ -61,10 +61,10 @@ module.exports = class {
                 score_seo: reportJson.categories.seo.score,
                 score_pwa: reportJson.categories.pwa.score,
                 lcp_display_value: reportJson.audits["largest-contentful-paint"].displayValue,
-                fid_display_value: reportJson.audits["max-potential-fid"].displayValue,
+                fid_display_value: reportJson.audits["total-blocking-time"].displayValue,
                 cls_display_value: reportJson.audits["cumulative-layout-shift"].displayValue,
                 lcp_score: reportJson.audits["largest-contentful-paint"].score,
-                fid_score: reportJson.audits["max-potential-fid"].score,
+                fid_score: reportJson.audits["total-blocking-time"].score,
                 cls_score: reportJson.audits["cumulative-layout-shift"].score,
             })
 

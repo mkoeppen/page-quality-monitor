@@ -49,6 +49,51 @@ exports.get = function(db) {
         });
     })    
 }  
+exports.getPagesWithScores = function(db) {
+    return new Promise((resolve, reject) => {
+
+        const sql = `
+            SELECT
+                pages.*,
+                last_report.score_performance,
+                last_report.score_accessibility,
+                last_report.score_best_practices,
+                last_report.score_seo,
+                last_report.score_pwa,
+                last_report.lcp_display_value,
+                last_report.lcp_score,
+                last_report.fid_display_value,
+                last_report.fid_score,
+                last_report.cls_display_value,
+                last_report.cls_score
+            FROM
+                pages
+            LEFT JOIN(
+                SELECT reports.*
+                FROM
+                    reports,
+                    (
+                    SELECT
+                        page_id,
+                        MAX(DATE) AS max_date
+                    FROM
+                        reports
+                    GROUP BY
+                        page_id
+                ) last_page
+            WHERE
+                reports.page_id = last_page.page_id AND reports.date = max_date
+            ) AS last_report
+            ON
+                last_report.page_id = pages.id;
+        `;
+
+        db.query(sql, (err, res) => {
+            if(err) throw err;
+            resolve(res)
+        });
+    })    
+}  
 exports.getById = function(db, id) {
     return new Promise((resolve, reject) => {
         db.query(`SELECT * FROM pages WHERE id = ${id}`, (err, res) => {

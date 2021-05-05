@@ -56,17 +56,17 @@ CREATE TABLE `reports` (
   `date` datetime NOT NULL,
   `html_path` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `json_path` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `score_performance` decimal(10,0) DEFAULT NULL,
-  `score_accessibility` decimal(10,0) DEFAULT NULL,
-  `score_best_practices` decimal(10,0) DEFAULT NULL,
-  `score_seo` decimal(10,0) DEFAULT NULL,
-  `score_pwa` decimal(10,0) DEFAULT NULL,
+  `score_performance` decimal(10,2) DEFAULT NULL,
+  `score_accessibility` decimal(10,2) DEFAULT NULL,
+  `score_best_practices` decimal(10,2) DEFAULT NULL,
+  `score_seo` decimal(10,2) DEFAULT NULL,
+  `score_pwa` decimal(10,2) DEFAULT NULL,
   `lcp_display_value` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
   `fid_display_value` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
   `cls_display_value` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-  `lcp_score` decimal(10,0) DEFAULT NULL,
-  `fid_score` decimal(10,0) DEFAULT NULL,
-  `cls_score` decimal(10,0) DEFAULT NULL
+  `lcp_score` decimal(10,2) DEFAULT NULL,
+  `fid_score` decimal(10,2) DEFAULT NULL,
+  `cls_score` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

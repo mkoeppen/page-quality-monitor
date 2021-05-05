@@ -83,6 +83,17 @@
           </v-dialog>
         </v-toolbar>
       </template>
+      
+      <template v-slot:item.lcp_score="props">
+        <span>{{props.item.lcp_display_value}}</span>
+      </template>
+      <template v-slot:item.fid_score="props">
+        <span>{{props.item.fid_display_value}}</span>
+      </template>
+      <template v-slot:item.cls_score="props">
+        <span>{{props.item.cls_display_value}}</span>
+      </template>
+
       <template v-slot:item.actions="{ item }">
         <v-icon
           small
@@ -120,6 +131,14 @@ export default {
         { text: 'Name', value: 'pagename' },
         { text: 'Url', value: 'url' },
         { text: 'Parent', value: 'parentId' },
+        { text: 'Performance', value: 'score_performance' },
+        { text: 'Accessibility', value: 'score_accessibility' },
+        { text: 'Best Practices', value: 'score_best_practices' },
+        { text: 'Seo', value: 'score_seo' },
+        { text: 'PWA', value: 'score_pwa' },
+        { text: 'LCP', value: 'lcp_score' },
+        { text: 'FID', value: 'fid_score' },
+        { text: 'CLS', value: 'cls_score' },
         { text: 'Actions', value: 'actions' }
       ],
       editedIndex: -1,

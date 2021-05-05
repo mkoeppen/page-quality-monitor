@@ -28,6 +28,10 @@ exports.getPages = function() {
   return pages.get(db);
 }
 
+exports.getPagesWithScores = function() {
+  return pages.getPagesWithScores(db);
+}
+
 exports.getPageById = function(id) {
   return pages.getById(db, id);
 }
