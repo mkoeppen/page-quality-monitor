@@ -58,6 +58,12 @@ async function start () {
     });
   })
 
+  app.get("/api/page/:id/generate-report", (req, res) => {
+    db.generatePageReport(req.params.id).then((data) => {
+        res.end(JSON.stringify(data));
+    });
+  })
+
   app.get("/api/last-report-for-page/:id", (req, res) => {
     db.getLastReportForPage(req.params.id).then((data) => {
       let filepath = '';

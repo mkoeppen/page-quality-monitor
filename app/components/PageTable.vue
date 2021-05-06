@@ -6,7 +6,6 @@
       :headers="headers"
       :items="pages"
       class="m-pages__table"
-      @click:row="handleClick"
     >
 
       <template v-slot:top>
@@ -87,7 +86,7 @@
       </template>
             
       <template v-slot:item.pagename="props">
-        <div class="m-page__name-wrapper">
+        <div class="m-page__name-wrapper" @click="handleClick(props.item)">
           <strong class="m-page__name">{{props.item.pagename}}</strong>
           <span class="m-page__url" :title="props.item.url">{{props.item.url}}</span>
         </div>
@@ -119,19 +118,9 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-          small
-          @click="deleteItem(item)"
-        >
-          mdi-delete
-        </v-icon>
+        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        <v-icon small @click="generateReport(item)">mdi-reload-alert</v-icon>
       </template>
     </v-data-table>
   </div>
@@ -231,6 +220,10 @@ export default {
       this.closeDelete()
     },
 
+    async generateReport(item) {
+      await this.$axios.$get(`/api/page/${item.id}/generate-report`);
+    },
+
     close () {
       this.dialog = false
       this.$nextTick(() => {
@@ -266,7 +259,7 @@ export default {
       return score === null ? '-' : `${score * 100}%`;
     },
 
-    handleClick(clickedPage) {
+    handleClick(clickedPage, options) {
       this.$router.push({ path: `/page/${clickedPage.id}` })
     },
 
@@ -320,7 +313,7 @@ export default {
   }
 
   
-  .v-chip.theme--light {
+  .v-chip.theme--light:not(.v-chip--active) {
     color: #000000;
     font-weight: bold;
 

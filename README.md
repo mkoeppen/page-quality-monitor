@@ -2,11 +2,6 @@
 
 ## 0.1.0
 - change FID in TBT 
-- show important report data
-  - 0 to 49 (red): Poor
-    50 to 89 (orange): Needs Improvement
-    90 to 100 (green): Good
-- add generate report button to table
 - fix page parent relations
 - style page table
 - pin page rows

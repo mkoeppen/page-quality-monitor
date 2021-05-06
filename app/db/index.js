@@ -36,6 +36,10 @@ exports.getPageById = function(id) {
   return pages.getById(db, id);
 }
 
+exports.generatePageReport = function(id) {
+  return pages.generatePageReport(db, id);
+}
+
 exports.savePage = function(data) {
   return pages.insertOrUpdate(db, data);
 }

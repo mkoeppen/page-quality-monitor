@@ -24,6 +24,21 @@ exports.insertOrUpdate = function(db, page) {
         })  
     })    
 }
+
+exports.generatePageReport = function(db, pageId) {
+
+    const pageDetails = {
+        id: pageId,
+        forceReport: 1
+    }
+
+    return new Promise((resolve, reject) => {
+        db.query(`UPDATE pages SET ? WHERE id = '${ pageDetails.id }'`, pageDetails, (err, res) => {
+            if(err) throw err;
+            resolve(res)
+        }); 
+    })    
+}
   
 exports.setReportGenerated = function(db, id, currentDate) {
 
