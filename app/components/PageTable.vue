@@ -2,11 +2,13 @@
   <div>
     <h1>Pages</h1>
     <v-data-table
+      dense
       :headers="headers"
       :items="pages"
       class="m-pages__table"
       @click:row="handleClick"
     >
+
       <template v-slot:top>
         <v-toolbar
           flat
@@ -83,15 +85,37 @@
           </v-dialog>
         </v-toolbar>
       </template>
-      
+            
+      <template v-slot:item.pagename="props">
+        <div class="m-page__name-wrapper">
+          <strong class="m-page__name">{{props.item.pagename}}</strong>
+          <span class="m-page__url" :title="props.item.url">{{props.item.url}}</span>
+        </div>
+      </template>
+
+      <template v-slot:item.score_performance="props">
+        <ScoreCircle :percentage="props.item.score_performance"></ScoreCircle>
+      </template>      
+      <template v-slot:item.score_accessibility="props">
+        <ScoreCircle :percentage="props.item.score_accessibility"></ScoreCircle>
+      </template>      
+      <template v-slot:item.score_best_practices="props">
+        <ScoreCircle :percentage="props.item.score_best_practices"></ScoreCircle>
+      </template>      
+      <template v-slot:item.score_seo="props">
+        <ScoreCircle :percentage="props.item.score_seo"></ScoreCircle>
+      </template>      
+      <template v-slot:item.score_pwa="props">
+        <ScoreCircle :percentage="props.item.score_pwa"></ScoreCircle>
+      </template>
       <template v-slot:item.lcp_score="props">
-        <span>{{props.item.lcp_display_value}}</span>
+        <v-chip :class="getCwvClass(props.item.lcp_score)">{{props.item.lcp_display_value === null ? '-' : props.item.lcp_display_value}}</v-chip>
       </template>
       <template v-slot:item.fid_score="props">
-        <span>{{props.item.fid_display_value}}</span>
+        <v-chip :class="getCwvClass(props.item.fid_score)">{{props.item.fid_display_value === null ? '-' : props.item.fid_display_value}}</v-chip>
       </template>
       <template v-slot:item.cls_score="props">
-        <span>{{props.item.cls_display_value}}</span>
+        <v-chip :class="getCwvClass(props.item.cls_score)">{{props.item.cls_display_value === null ? '-' : props.item.cls_display_value}}</v-chip>
       </template>
 
       <template v-slot:item.actions="{ item }">
@@ -114,7 +138,12 @@
 </template>
 
 <script>
+import ScoreCircle from '~/components/ScoreCircle.vue'
+
 export default {
+  components: {
+    ScoreCircle
+  },
 
   props: {
     items: {
@@ -129,16 +158,14 @@ export default {
       dialogDelete: false,
       headers: [
         { text: 'Name', value: 'pagename' },
-        { text: 'Url', value: 'url' },
-        { text: 'Parent', value: 'parentId' },
-        { text: 'Performance', value: 'score_performance' },
-        { text: 'Accessibility', value: 'score_accessibility' },
-        { text: 'Best Practices', value: 'score_best_practices' },
-        { text: 'Seo', value: 'score_seo' },
-        { text: 'PWA', value: 'score_pwa' },
-        { text: 'LCP', value: 'lcp_score' },
-        { text: 'FID', value: 'fid_score' },
-        { text: 'CLS', value: 'cls_score' },
+        { text: 'Perform- ance', value: 'score_performance', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
+        { text: 'Access- ibility', value: 'score_accessibility', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
+        { text: 'Best Practices', value: 'score_best_practices', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
+        { text: 'Seo', value: 'score_seo', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
+        { text: 'PWA', value: 'score_pwa', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
+        { text: 'LCP', value: 'lcp_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
+        { text: 'FID', value: 'fid_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
+        { text: 'CLS', value: 'cls_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
         { text: 'Actions', value: 'actions' }
       ],
       editedIndex: -1,
@@ -220,6 +247,25 @@ export default {
       })
     },
 
+    getCwvClass: function(score) {
+      let resultClass = 'm-cwv--unknown';
+
+      if(score === null) {
+        resultClass = 'm-cwv--unknown';
+      } else if(score < 0.50) {
+        resultClass = 'm-cwv--fail';
+      } else if(score < 0.90) {
+        resultClass = 'm-cwv--average';
+      } else if(score >= 0.90) {
+        resultClass = 'm-cwv--pass';
+      } 
+      return resultClass;
+    },
+
+    getScorePercentage(score) {
+      return score === null ? '-' : `${score * 100}%`;
+    },
+
     handleClick(clickedPage) {
       this.$router.push({ path: `/page/${clickedPage.id}` })
     },
@@ -240,6 +286,58 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scope>
+  $c-average:  #FFA400;
+  $c-pass:  #0CCE6B;
+  $c-fail:  #FF4E42;
+
+  .m-score-header {
+    padding: 0;
+  }
+
+  .m-score-header > * {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-score-header span {
+    text-align: center;
+  }
+
+  .m-page__name-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-page__name {
+    font-size: 20px;
+  }
+
+  .m-page__url {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  
+  .v-chip.theme--light {
+    color: #000000;
+    font-weight: bold;
+
+    &.m-cwv--pass {
+      background: $c-pass;
+      color: #ffffff;
+    }
+
+    &.m-cwv--average {
+      background: $c-average;
+      color: #ffffff;
+    }
+
+    &.m-cwv--fail {
+      background: $c-fail;
+      color: #ffffff;
+    }    
+  }
 
 </style>
