@@ -1,7 +1,6 @@
 # alpha
 
 ## 0.1.0
-- change FID in TBT 
 - fix page parent relations
 - style page table
 - pin page rows
