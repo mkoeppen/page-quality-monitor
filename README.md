@@ -14,7 +14,9 @@
 - Docker Hub Image
 - create dev documentation
 - create better readme
+- cronjob should get reports every week (setting on page)
 
 # beta
 - report clean up job
 - first automated checked todo
+- show throbber on rows with active report generation
