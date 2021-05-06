@@ -9,6 +9,7 @@
 - add generate report button to table
 - fix page parent relations
 - style page table
+- pin page rows
 - fix page edit popup
 - fix node dev mode
 - tabs for report and todo
