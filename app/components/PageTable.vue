@@ -1,17 +1,17 @@
 <template>
   <div>
-    <h1>Pages</h1>
     <v-data-table
       dense
+      :single-expand="false"
+      :expanded.sync="expanded"
+      :show-expand="!isNested"
       :headers="headers"
       :items="pages"
       class="m-pages__table"
     >
 
       <template v-slot:top>
-        <v-toolbar
-          flat
-        >
+        <v-toolbar flat v-if="!isNested">
           <v-dialog
             v-model="dialog"
             max-width="500px"
@@ -92,6 +92,17 @@
         </div>
       </template>
 
+      <template v-slot:expanded-item="{ headers, item }">
+        <td :colspan="headers.length" v-if="item.children && item.children.length > 0">
+          <PageTable :pages="item.children" :isNested="true" />       
+        </td>
+      </template>
+
+      <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
+        <v-btn @click="expand(true)" v-if="item.children && item.children.length > 0 && !isExpanded">Expand</v-btn>
+        <v-btn @click="expand(false)" v-if="item.children && item.children.length > 0 && isExpanded">close</v-btn>
+      </template>
+
       <template v-slot:item.score_performance="props">
         <ScoreCircle :percentage="props.item.score_performance"></ScoreCircle>
       </template>      
@@ -128,16 +139,24 @@
 
 <script>
 import ScoreCircle from '~/components/ScoreCircle.vue'
+import PageTable from '~/components/PageTable.vue'
 
 export default {
+  name: 'page-table-component',
+
   components: {
-    ScoreCircle
+    ScoreCircle,
+    PageTable: () => import('~/components/PageTable.vue')
   },
 
   props: {
-    items: {
+    pages: {
       type: Array,
       default: []
+    },
+    isNested: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -145,6 +164,7 @@ export default {
     return {
       dialog: false,
       dialogDelete: false,
+      expanded: [],
       headers: [
         { text: 'Name', value: 'pagename' },
         { text: 'Perform- ance', value: 'score_performance', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
@@ -155,7 +175,8 @@ export default {
         { text: 'LCP', value: 'lcp_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
         { text: 'FID', value: 'fid_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
         { text: 'CLS', value: 'cls_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'Actions', value: 'actions' }
+        { text: 'Actions', value: 'actions' },
+        { text: '', value: 'data-table-expand' },
       ],
       editedIndex: -1,
       editedItem: {
@@ -170,7 +191,6 @@ export default {
         pagename: '',
         parentId: null
       },
-      pages: JSON.parse(JSON.stringify(this.items))
     }
   },
 
@@ -180,9 +200,9 @@ export default {
     },
     
     possibleParents: function () {
-      return this.items.filter((item) => {
+      return [{ id: null, pagename: '-' }, ...this.pages.filter((item) => {
         return item.parentId === null && item.id !== this.editedItem.id; 
-      })
+      })]
     }
   },
   
