@@ -1,7 +1,6 @@
 # alpha
 
 ## 0.1.0
-- combined score column
 - style page table
 - mark page rows with star and hide all other on "show only marked items" 
 - fix node dev mode

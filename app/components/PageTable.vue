@@ -6,7 +6,7 @@
       :expanded.sync="expanded"
       :show-expand="!isNested"
       :headers="headers"
-      :items="pages"
+      :items="preparedPages"
       class="m-pages__table"
     >
 
@@ -103,6 +103,9 @@
         <v-btn @click="expand(false)" v-if="item.children && item.children.length > 0 && isExpanded">close</v-btn>
       </template>
 
+      <template v-slot:item.score_average="props">
+        <ScoreCircle :percentage="props.item.score_average"></ScoreCircle>
+      </template>      
       <template v-slot:item.score_performance="props">
         <ScoreCircle :percentage="props.item.score_performance"></ScoreCircle>
       </template>      
@@ -139,7 +142,6 @@
 
 <script>
 import ScoreCircle from '~/components/ScoreCircle.vue'
-import PageTable from '~/components/PageTable.vue'
 
 export default {
   name: 'page-table-component',
@@ -167,6 +169,7 @@ export default {
       expanded: [],
       headers: [
         { text: 'Name', value: 'pagename' },
+        { text: 'Average', value: 'score_average', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
         { text: 'Perform- ance', value: 'score_performance', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
         { text: 'Access- ibility', value: 'score_accessibility', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
         { text: 'Best Practices', value: 'score_best_practices', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
@@ -203,6 +206,23 @@ export default {
       return [{ id: null, pagename: '-' }, ...this.pages.filter((item) => {
         return item.parentId === null && item.id !== this.editedItem.id; 
       })]
+    },
+
+    preparedPages() {
+      return this.pages.map((page) => {
+
+        const scoreValues = [
+          page.score_performance,
+          page.score_accessibility,
+          page.score_best_practices,
+          page.score_seo,
+          page.score_pwa,
+        ];
+
+        page.score_average = Math.round(scoreValues.reduce((a,b) => a + b) / scoreValues.length * 100) / 100;
+
+        return page;
+      })
     }
   },
   
