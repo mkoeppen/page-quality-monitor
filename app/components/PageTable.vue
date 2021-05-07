@@ -103,6 +103,9 @@
         <v-btn @click="expand(false)" v-if="item.children && item.children.length > 0 && isExpanded">close</v-btn>
       </template>
 
+      <template v-slot:item.marked="props">
+        <MarkedPageStarInput v-model="props.item.marked" :pageId="props.item.id" @change="markedPageChange"></MarkedPageStarInput>        
+      </template>      
       <template v-slot:item.score_average="props">
         <ScoreCircle :percentage="props.item.score_average"></ScoreCircle>
       </template>      
@@ -142,12 +145,14 @@
 
 <script>
 import ScoreCircle from '~/components/ScoreCircle.vue'
+import MarkedPageStarInput from '~/components/MarkedPageStarInput.vue'
 
 export default {
   name: 'page-table-component',
 
   components: {
     ScoreCircle,
+    MarkedPageStarInput,
     PageTable: () => import('~/components/PageTable.vue')
   },
 
@@ -168,6 +173,7 @@ export default {
       dialogDelete: false,
       expanded: [],
       headers: [
+        { text: '', value: 'marked' },
         { text: 'Name', value: 'pagename' },
         { text: 'Average', value: 'score_average', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
         { text: 'Perform- ance', value: 'score_performance', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
@@ -194,7 +200,29 @@ export default {
         pagename: '',
         parentId: null
       },
+      preparedPages: []
     }
+  },
+
+  mounted() {
+    const markedPages = JSON.parse(localStorage.getItem('markedPages') || '[]');
+    this.preparedPages = this.pages.map((page) => {
+
+        // AVERAGE SCORE
+        const scoreValues = [
+          page.score_performance,
+          page.score_accessibility,
+          page.score_best_practices,
+          page.score_seo,
+          page.score_pwa,
+        ];
+        page.score_average = Math.round(scoreValues.reduce((a,b) => a + b) / scoreValues.length * 100) / 100;
+
+        // MARKED
+        page.marked = markedPages.indexOf(page.id) >= 0;
+
+        return page;
+      })
   },
 
   computed: {
@@ -207,23 +235,6 @@ export default {
         return item.parentId === null && item.id !== this.editedItem.id; 
       })]
     },
-
-    preparedPages() {
-      return this.pages.map((page) => {
-
-        const scoreValues = [
-          page.score_performance,
-          page.score_accessibility,
-          page.score_best_practices,
-          page.score_seo,
-          page.score_pwa,
-        ];
-
-        page.score_average = Math.round(scoreValues.reduce((a,b) => a + b) / scoreValues.length * 100) / 100;
-
-        return page;
-      })
-    }
   },
   
   watch: {
@@ -252,6 +263,10 @@ export default {
       this.editedIndex = this.pages.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
+    },
+
+    markedPageChange: function(e, id) {
+      console.log('markedPageChange',e, id)
     },
 
     async deleteItemConfirm () {
