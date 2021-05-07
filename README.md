@@ -21,3 +21,4 @@
 - report clean up job
 - first automated checked todo
 - show throbber on rows with active report generation
+- paging through report history
