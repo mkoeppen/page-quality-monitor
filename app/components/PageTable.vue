@@ -94,7 +94,7 @@
 
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length" v-if="item.children && item.children.length > 0">
-          <PageTable :pages="item.children" :isNested="true" />       
+          <PageTable :pages="item.children" :isNested="true" :showOnlyMarked="showOnlyMarked" />       
         </td>
       </template>
 
@@ -164,6 +164,10 @@ export default {
     isNested: {
       type: Boolean,
       default: false
+    },
+    showOnlyMarked: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -205,24 +209,7 @@ export default {
   },
 
   mounted() {
-    const markedPages = JSON.parse(localStorage.getItem('markedPages') || '[]');
-    this.preparedPages = this.pages.map((page) => {
-
-        // AVERAGE SCORE
-        const scoreValues = [
-          page.score_performance,
-          page.score_accessibility,
-          page.score_best_practices,
-          page.score_seo,
-          page.score_pwa,
-        ];
-        page.score_average = Math.round(scoreValues.reduce((a,b) => a + b) / scoreValues.length * 100) / 100;
-
-        // MARKED
-        page.marked = markedPages.indexOf(page.id) >= 0;
-
-        return page;
-      })
+    this.preparedPages = this.generatePreparedPages();
   },
 
   computed: {
@@ -238,6 +225,9 @@ export default {
   },
   
   watch: {
+    pages () {
+      this.preparedPages = this.generatePreparedPages();
+    },
     dialog (val) {
       val || this.close()
     },
@@ -329,6 +319,28 @@ export default {
 
       this.close()
     },
+
+    generatePreparedPages() {
+      const markedPages = JSON.parse(localStorage.getItem('markedPages') || '[]');
+
+      return this.pages.map((page) => {
+
+        // AVERAGE SCORE
+        const scoreValues = [
+          page.score_performance,
+          page.score_accessibility,
+          page.score_best_practices,
+          page.score_seo,
+          page.score_pwa,
+        ];
+        page.score_average = Math.round(scoreValues.reduce((a,b) => a + b) / scoreValues.length * 100) / 100;
+
+        // MARKED
+        page.marked = markedPages.indexOf(page.id) >= 0;
+
+        return page;
+      }).filter((page) => !this.showOnlyMarked || this.showOnlyMarked && page.marked)
+    }
   },
 
 }

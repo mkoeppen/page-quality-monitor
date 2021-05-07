@@ -2,7 +2,6 @@
 
 ## 0.1.0
 - style page table
-- mark page rows with star and hide all other on "show only marked items" 
 - fix node dev mode
 - tabs for report and todo
 - add todo list to code
