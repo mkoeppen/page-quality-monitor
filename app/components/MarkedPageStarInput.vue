@@ -91,4 +91,10 @@ export default {
     }
   }
 
+  .m-marked-star__input:checked + .m-marked-star__label {
+    .m-marked-star__icon--star {
+      color: rgb(245, 190, 10);
+    }
+  }
+
 </style>
