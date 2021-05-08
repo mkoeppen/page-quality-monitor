@@ -2,6 +2,7 @@
 
 ## 0.1.0
 - style page table
+  - theme generator:https://theme-generator.vuetifyjs.com/
 - fix node dev mode
 - tabs for report and todo
 - add todo list to code
