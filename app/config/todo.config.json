@@ -1,0 +1,48 @@
+{
+    "head": {
+        "doctype": {
+            "title": "Doctype",
+            "description": "The Doctype is HTML5 and is at the top of all your HTML pages.",
+            "howto": "<code><!-- Doctype HTML5 -->\n<!doctype html></code>",
+            "tags": ["META TAG"],
+            "priority": "high"
+        },
+        "charset": {
+            "title": "Charset",
+            "description": "The charset declared (UTF-8) is declared correctly.",
+            "howto": "<code><!-- Set character encoding for the document -->\n<meta charset=\"utf-8\"></code>",
+            "tags": ["META TAG"],
+            "priority": "high"
+        },
+        "viewport": {
+            "title": "Viewport",
+            "description": "The viewport is declared correctly.",
+            "howto": "<code><!-- Viewport for responsive web design -->\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\"></code>",
+            "tags": ["META TAG"],
+            "priority": "high"
+        },
+        "description": {
+            "title": "Description",
+            "description": "A meta description is provided, it is unique and doesn't possess more than 150 characters.",
+            "howto": "<code><!-- Meta Description -->\n<meta name=\"description\" content=\"Description of the page less than 150 characters\"></code>",
+            "tags": ["META TAG"],
+            "priority": "high"
+        },
+        "favicons": {
+            "title": "Favicons",
+            "description": "Each favicon has been created and displays correctly.",
+            "howto": "<p>If you have only a favicon.ico, put it at the root of your site. Normally you won't need to use any markup. However, it's still good practice to link to it using the example below. Today, PNG format is recommended over .ico format (dimensions: 32x32px).</p><code><!-- Standard favicon -->\n<link rel=\"icon\" type=\"image/x-icon\" href=\"https://example.com/favicon.ico\">\n<!-- Recommended favicon format -->\n<link rel=\"icon\" type=\"image/png\" href=\"https://example.com/favicon.png\"></code>",
+            "tags": ["META TAG"],
+            "priority": "medium"
+        }
+    },
+    "html": {
+        "clean_up_comments": {
+            "title": "Clean up comments",
+            "description": "Unnecessary code needs to be removed before sending the page to production.",
+            "howto": "",
+            "tags": ["HTML", "BEST PRACTICES"],
+            "priority": "low"
+        }
+    }
+}

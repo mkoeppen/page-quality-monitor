@@ -81,6 +81,13 @@ async function start () {
     });
   })
 
+  app.get("/api/todo-list/:id", (req, res) => {
+    // db.getLastReportForPage(req.params.id).then((data) => {
+      let filepath = config.dev ? `${__dirname }/../config/todo.config.json` : '/usr/share/app/config/todo.config.json';
+      res.sendFile(path.resolve(filepath));
+    // });
+  })
+
   app.post("/api/page", (req, res) => {
     db.savePage(req.body).then((data) => {
         res.end(JSON.stringify({
