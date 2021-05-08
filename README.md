@@ -1,6 +1,7 @@
 # alpha
 
 ## 0.1.0
+- priority as select (high, medium, low, wont-do)
 - style page table
   - theme generator:https://theme-generator.vuetifyjs.com/
 - fix node dev mode
