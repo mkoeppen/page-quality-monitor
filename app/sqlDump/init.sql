@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Erstellungszeit: 04. Mai 2021 um 19:49
+-- Erstellungszeit: 09. Mai 2021 um 16:12
 -- Server-Version: 5.7.29
 -- PHP-Version: 7.4.1
 
@@ -42,7 +42,7 @@ CREATE TABLE `pages` (
 --
 
 INSERT INTO `pages` (`id`, `url`, `pagename`, `parentId`, `lastReportDate`, `forceReport`) VALUES
-(1, 'https://www.unitb.de/', 'Unitb', NULL, '2021-05-04 19:39:00', 0);
+(1, 'https://www.unitb.de/', 'Unitb', NULL, '2021-05-06 20:54:43', 0);
 
 -- --------------------------------------------------------
 
@@ -72,24 +72,16 @@ CREATE TABLE `reports` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `todos`
+-- Tabellenstruktur für Tabelle `tasks_page_relation`
 --
 
-CREATE TABLE `todos` (
-  `id` int(11) NOT NULL,
-  `title` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `default_priority` int(11) NOT NULL,
-  `description` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `category` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `code` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL
+CREATE TABLE `tasks_page_relation` (
+  `page_id` int(11) NOT NULL,
+  `task_id` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `checked` tinyint(1) NOT NULL DEFAULT '0',
+  `priority` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `todos`
---
-
-INSERT INTO `todos` (`id`, `title`, `default_priority`, `description`, `category`, `code`) VALUES
-(1, 'Doctype', 1, 'The Doctype is HTML5 and is at the top of all your HTML pages.', 'meta_tag', '<!doctype html> <!-- HTML5 -->');
 
 --
 -- Indizes der exportierten Tabellen
@@ -108,10 +100,10 @@ ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `todos`
+-- Indizes für die Tabelle `tasks_page_relation`
 --
-ALTER TABLE `todos`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `tasks_page_relation`
+  ADD UNIQUE KEY `unique_index` (`page_id`,`task_id`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -121,19 +113,13 @@ ALTER TABLE `todos`
 -- AUTO_INCREMENT für Tabelle `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT für Tabelle `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT für Tabelle `todos`
---
-ALTER TABLE `todos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
