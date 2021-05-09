@@ -81,16 +81,15 @@ export default {
     }
     
     return {
-      todos
+      todos,
+      pageId: id
     }
   },
 
   methods: {
-    onChecked(e,a,b,c,d) {
-      // const url = `/api/todo-list/check/${id}`
-      // await $axios.$post();
-      // await $axios.$post(`/api/todo-list/check/${id}`);
-      console.log('Checked', e,a,b,c,d);
+    async onChecked(data) {
+      const url = data.checked ? `/api/page/${this.pageId}/check-task/${data.id}` : `/api/page/${this.pageId}/uncheck-task/${data.id}`;
+      await this.$axios.$post(url);
     }
   },
 }

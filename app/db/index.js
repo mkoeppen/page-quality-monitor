@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const pages = require('./pages');
 const reports = require('./reports');
+const tasksPageRelations = require('./tasksPageRelations');
 
 const db = mysql.createConnection({
   host: process.env.NODE_ENV === 'development' ? 'localhost' : "db",
@@ -78,4 +79,12 @@ exports.saveReport = function(data) {
 
 exports.deleteReport = function(id) {
   return reports.delete(db, id);
+}
+
+/**
+ * TASK PAGE RELATION
+ */
+
+exports.changeCheckedState = function(pageId, taskId, checked) {
+  return tasksPageRelations.changeCheckedState(db, pageId, taskId, checked);
 }

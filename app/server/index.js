@@ -64,6 +64,18 @@ async function start () {
     });
   })
 
+  app.post("/api/page/:pageId/uncheck-task/:taskId", (req, res) => {
+    db.changeCheckedState(req.params.pageId, req.params.taskId, false).then((data) => {
+        res.end(JSON.stringify(data));
+    });
+  })
+
+  app.post("/api/page/:pageId/check-task/:taskId", (req, res) => {
+    db.changeCheckedState(req.params.pageId, req.params.taskId, true).then((data) => {
+        res.end(JSON.stringify(data));
+    });
+  })
+
   app.get("/api/last-report-for-page/:id", (req, res) => {
     db.getLastReportForPage(req.params.id).then((data) => {
       let filepath = '';
