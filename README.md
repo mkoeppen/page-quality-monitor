@@ -2,6 +2,8 @@
 
 ## 0.1.0
 - priority as select (high, medium, low, wont-do)
+- refactore todo to tasks
+- extend tasklist
 - style page table
   - theme generator:https://theme-generator.vuetifyjs.com/
 - fix node dev mode
