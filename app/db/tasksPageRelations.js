@@ -23,3 +23,12 @@ exports.changeCheckedState = function(db, pageId, taskId, checked) {
       })  
   })    
 }
+
+exports.getTasksRelationsForPageId = function(db, pageId) {    
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT * FROM tasks_page_relation WHERE page_id=${pageId};`, (err, res) => {
+            if(err) throw err;
+            resolve(res)
+        });
+    })    
+}

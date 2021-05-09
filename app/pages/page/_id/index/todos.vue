@@ -71,12 +71,16 @@ export default {
  async asyncData({ $axios, $config, route }) {
     const { id } = route.params
     const todoDefinitions = await $axios.$get(`/api/todo-list/${id}`);
+    const tasksOverwrite = await $axios.$get(`/api/todo-list-overwrites/${id}`) || [];
 
+    console.log('tasksOverwrite', tasksOverwrite);
     let todos = [];
 
     for (const [todoId, todo] of Object.entries(todoDefinitions)) {
+      const overwrite = tasksOverwrite.find((to) => to.task_id === todoId) || {};
       todo.id = todoId;
-      todo.checked = false;
+      todo.checked = overwrite.checked || false;
+      todo.priority = overwrite.priority !== null ? overwrite.priority : todo.priority;
       todos.push(todo);
     }
     
