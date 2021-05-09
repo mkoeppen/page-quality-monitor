@@ -27,6 +27,11 @@
       <template v-slot:item.priority="props">
         <span :class="`m-todos__priority-cell m-todos__priority-cell--${(props.item.priority||'low').toLowerCase()}`" :title="props.item.priority"></span>
       </template>
+
+      <template v-slot:item.checked="props">
+        <CheckedTodoInput v-model="props.item.checked" :todoId="props.item.id" @change="onChecked"></CheckedTodoInput>
+      </template>
+
       <template v-slot:item.title="props">
         <div class="m-todo__title-wrapper">
           <strong class="m-todo__title">{{props.item.title}}</strong>
@@ -43,7 +48,13 @@
 </template>
 
 <script>
+import CheckedTodoInput from '~/components/CheckedTodoInput.vue'
+
 export default {
+
+  components: {
+    CheckedTodoInput
+  },
 
   data: function () {
     return {
@@ -65,17 +76,27 @@ export default {
 
     for (const [todoId, todo] of Object.entries(todoDefinitions)) {
       todo.id = todoId;
+      todo.checked = false;
       todos.push(todo);
     }
     
     return {
       todos
     }
-  }
+  },
+
+  methods: {
+    onChecked(e,a,b,c,d) {
+      // const url = `/api/todo-list/check/${id}`
+      // await $axios.$post();
+      // await $axios.$post(`/api/todo-list/check/${id}`);
+      console.log('Checked', e,a,b,c,d);
+    }
+  },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .m-todos__priority-cell {
     width: 10px;
     height: 100%;
