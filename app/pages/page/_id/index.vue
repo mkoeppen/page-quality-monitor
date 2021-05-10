@@ -1,7 +1,25 @@
 <template>
   <div>
 
-    <h1>{{  }}</h1>
+    <h1>{{ pagename }}</h1>
+    
+<CircleChart :data="{
+  labels: [
+    'Red',
+    'Blue',
+    'Yellow'
+  ],
+  datasets: [{
+    data: [300, 50, 100],
+    borderWidth: 0,
+    backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)'
+    ],
+    hoverOffset: 4
+  }]
+}"></CircleChart>
 
     <div>
       <NuxtLink :to="reportUrl">Report</NuxtLink>
@@ -14,7 +32,14 @@
 </template>
 
 <script>
+
+import CircleChart from '~/components/CircleChart.vue'
+
 export default {
+
+  components: {
+    CircleChart
+  },
 
   data: function() {
     return {
