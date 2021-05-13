@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <v-container fluid class="pa-0" style="height: 100%">
+    <v-toolbar flat v-if="!isNested" dark>
+           <v-btn dark color="light-blue darken-4" :href="`/`" title="Pages"><v-icon class="mr-3">mdi-chevron-left</v-icon>Back</v-btn>
+
+            <v-spacer></v-spacer>
+        </v-toolbar>
 
     <h1>{{ pagename }}</h1>
     
@@ -28,7 +33,7 @@
 
     <NuxtChild />
 
-  </div>
+  </v-container>
 </template>
 
 <script>

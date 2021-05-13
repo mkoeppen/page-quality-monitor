@@ -14,8 +14,8 @@
       
 
       <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
-        <v-btn @click="expand(true)" v-if="item.howto">Expand</v-btn>
-        <v-btn @click="expand(false)" v-if="item.howto">close</v-btn>
+        <v-btn dark @click="expand(true)" v-if="item.howto && !isExpanded"><v-icon>mdi-chevron-down</v-icon></v-btn>
+        <v-btn dark @click="expand(false)" v-if="item.howto && isExpanded"><v-icon>mdi-chevron-up</v-icon></v-btn>
       </template>
 
       <template v-slot:expanded-item="{ headers, item }">

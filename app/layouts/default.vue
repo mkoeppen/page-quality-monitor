@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
+    <!-- <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped || $vuetify.breakpoint.lgAndUp"
@@ -42,7 +42,7 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
-    </v-app-bar>
+    </v-app-bar> -->
     <v-main>
       <v-container fluid class="pa-0 fill-height">
         <nuxt />
