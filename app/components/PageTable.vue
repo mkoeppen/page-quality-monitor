@@ -82,6 +82,11 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+
+          <div>
+            <v-switch v-model="nestedChilds" label="Nested Childs" @change="changeNestedChildSwitch"></v-switch>
+            <v-switch v-model="showOnlyMarked" label="Show Only Marked" @change="changeShowOnlyMarkedSwitch"></v-switch>
+          </div>
         </v-toolbar>
       </template>
             
@@ -165,20 +170,17 @@ export default {
       type: Boolean,
       default: false
     },
-    showOnlyMarked: {
-      type: Boolean,
-      default: false
-    }
   },
 
   data: function () {
     return {
       dialog: false,
       dialogDelete: false,
+      nestedChilds: false,
+      showOnlyMarked: false,
       expanded: [],
       headers: [
         { text: '', value: 'marked' },
-        { text: 'Name', value: 'pagename' },
         { text: 'Average', value: 'score_average', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
         { text: 'Perform- ance', value: 'score_performance', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
         { text: 'Access- ibility', value: 'score_accessibility', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
@@ -188,6 +190,7 @@ export default {
         { text: 'LCP', value: 'lcp_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
         { text: 'FID', value: 'fid_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
         { text: 'CLS', value: 'cls_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
+        { text: 'Name', value: 'pagename' },
         { text: 'Actions', value: 'actions' },
         { text: '', value: 'data-table-expand' },
       ],
@@ -209,6 +212,8 @@ export default {
   },
 
   mounted() {
+    this.nestedChilds = JSON.parse(localStorage.getItem('PageSetting.NestedChilds') || 'false');
+    this.showOnlyMarked = JSON.parse(localStorage.getItem('PageSetting.ShowOnlyMarked') || 'false');
     this.preparedPages = this.generatePreparedPages();
   },
 
@@ -233,15 +238,22 @@ export default {
     },
     dialogDelete (val) {
       val || this.closeDelete()
+    },    
+    nestedChilds (val) {
+      this.preparedPages = this.generatePreparedPages()
+    },
+    showOnlyMarked (val) {
+      this.preparedPages = this.generatePreparedPages()
     },
   },
 
-  // async asyncData({ $axios, $config }) {
-  //   const pages = await $axios.$get(`/api/pages`);
-  //   return { pages }
-  // },
-
   methods: {
+    changeNestedChildSwitch(e) {
+      localStorage.setItem('PageSetting.NestedChilds', this.nestedChilds);
+    },
+    changeShowOnlyMarkedSwitch(e) {
+      localStorage.setItem('PageSetting.ShowOnlyMarked', this.showOnlyMarked);
+    },
 
     editItem (item) {
       this.editedIndex = this.pages.indexOf(item)
@@ -321,9 +333,12 @@ export default {
     },
 
     generatePreparedPages() {
-      const markedPages = JSON.parse(localStorage.getItem('markedPages') || '[]');
 
-      return this.pages.map((page) => {
+      let preparedPages = this.pages || [];
+
+      // prepare pages
+      const markedPages = JSON.parse(localStorage.getItem('markedPages') || '[]');
+      preparedPages = preparedPages.map((page) => {
 
         // AVERAGE SCORE
         const scoreValues = [
@@ -340,6 +355,29 @@ export default {
 
         return page;
       }).filter((page) => !this.showOnlyMarked || this.showOnlyMarked && page.marked)
+
+
+      // created nested structure if needed
+      if (this.nestedChilds) {
+        preparedPages = preparedPages
+          // get only level 1 pages
+          .filter((page) => page.parentId === null)
+          // add childs
+          .map((page) => {
+            page.children = this.pages.filter((child) => child.parentId === page.id);
+            return page;
+          })
+      } else {
+        preparedPages = preparedPages         
+          .map((page) => {
+            page.children = [];
+            return page;
+          });
+      }
+
+      console.log('preparedPages', preparedPages.length);
+
+      return preparedPages;
     }
   },
 
