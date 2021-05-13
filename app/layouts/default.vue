@@ -3,7 +3,8 @@
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
-      :clipped="clipped"
+      :clipped="clipped || $vuetify.breakpoint.lgAndUp"
+      dark
       fixed
       app
     >
@@ -35,13 +36,15 @@
     <v-app-bar
       :clipped-left="clipped"
       fixed
+      v-if="$vuetify.breakpoint.mdAndDown"
+      dark
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
     </v-app-bar>
     <v-main>
-      <v-container fluid>
+      <v-container fluid class="pa-0 fill-height">
         <nuxt />
       </v-container>
     </v-main>    
@@ -56,14 +59,9 @@ export default {
       drawer: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Dashboard',
+          icon: 'mdi-format-list-bulleted',
+          title: 'Projekte',
           to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Settings',
-          to: '/settings'
         }
       ],
       miniVariant: false,
@@ -72,9 +70,9 @@ export default {
     }
   },
   computed: {
-     title() {
-         return this.$store.state.title;
-     }
+    title() {
+      return this.$store.state.title;
+    }
   },
   head() {
     return {

@@ -1,5 +1,4 @@
 <template>
-  <div>
     <v-data-table
       dense
       :single-expand="false"
@@ -7,105 +6,107 @@
       :show-expand="!isNested"
       :headers="headers"
       :items="preparedPages"
-      class="m-pages__table"
+      :items-per-page="100"
+      hide-default-footer
+      disable-pagination
+      class="m-pages__table fill-height"
+      :style="`width: 100%;${isNested ? 'background: #f8f8f8; border-radius: 0' : ''}`"
     >
 
       <template v-slot:top>
-        <v-toolbar flat v-if="!isNested">
-          <v-dialog
-            v-model="dialog"
-            max-width="500px"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="primary"
-                dark
-                class="mb-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                New Item
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-
-              <v-card-text>
-                <v-container>
-                  <v-text-field
-                    v-model="editedItem.pagename"
-                    label="Name"
-                  ></v-text-field>
-                  <v-text-field
-                    v-model="editedItem.url"
-                    label="url"
-                  ></v-text-field>
-                  <v-select
-                    :items="possibleParents"
-                    item-text="pagename"
-                    item-value="id"
-                    v-model="editedItem.parentId"
-                    label="Standard"
-                  ></v-select>
-                </v-container>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
+        <v-toolbar flat v-if="!isNested" dark>
+            <v-dialog
+              v-model="dialog"
+              max-width="500px"
+            >
+              <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="close"
+                  color="light-blue darken-4"
+                  v-bind="attrs"
+                  v-on="on"
                 >
-                  Cancel
+                  <v-icon class="pr-3">mdi-plus</v-icon> Add
                 </v-btn>
-                <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="save"
-                >
-                  Save
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="headline">{{ formTitle }}</span>
+                </v-card-title>
 
-          <div>
-            <v-switch v-model="nestedChilds" label="Nested Childs" @change="changeNestedChildSwitch"></v-switch>
-            <v-switch v-model="showOnlyMarked" label="Show Only Marked" @change="changeShowOnlyMarkedSwitch"></v-switch>
-          </div>
+                <v-card-text>
+                  <v-container>
+                    <v-text-field
+                      v-model="editedItem.pagename"
+                      label="Name"
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="editedItem.url"
+                      label="url"
+                    ></v-text-field>
+                    <v-select
+                      :items="possibleParents"
+                      item-text="pagename"
+                      item-value="id"
+                      v-model="editedItem.parentId"
+                      label="Standard"
+                    ></v-select>
+                  </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="close"
+                  >
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="save"
+                  >
+                    Save
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+            <v-dialog v-model="dialogDelete" max-width="500px">
+              <v-card>
+                <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+                  <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-spacer></v-spacer>
+
+              <v-switch dense v-model="nestedChilds" label="Nested Childs" @change="changeNestedChildSwitch"></v-switch>
+              <v-switch dense v-model="showOnlyMarked" label="Show Only Marked" @change="changeShowOnlyMarkedSwitch" class="pl-10"></v-switch>
         </v-toolbar>
       </template>
             
       <template v-slot:item.pagename="props">
-        <div class="m-page__name-wrapper" @click="handleClick(props.item)">
+        <div class="m-page__name-wrapper">
           <strong class="m-page__name">{{props.item.pagename}}</strong>
           <span class="m-page__url" :title="props.item.url">{{props.item.url}}</span>
         </div>
       </template>
 
       <template v-slot:expanded-item="{ headers, item }">
-        <td :colspan="headers.length" v-if="item.children && item.children.length > 0">
-          <PageTable :pages="item.children" :isNested="true" :showOnlyMarked="showOnlyMarked" />       
+        <td class="pl-7 pr-0" :colspan="headers.length" v-if="item.children && item.children.length > 0" style="background: #d3d3d3;">
+          <PageTable :pages="item.children" :isNested="true" :forceOnlyMarked="showOnlyMarked" />       
         </td>
       </template>
 
       <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
-        <v-btn @click="expand(true)" v-if="item.children && item.children.length > 0 && !isExpanded">Expand</v-btn>
-        <v-btn @click="expand(false)" v-if="item.children && item.children.length > 0 && isExpanded">close</v-btn>
+        <v-btn dark @click="expand(true)" v-if="item.children && item.children.length > 0 && !isExpanded"><v-icon>mdi-chevron-down</v-icon></v-btn>
+        <v-btn dark @click="expand(false)" v-if="item.children && item.children.length > 0 && isExpanded"><v-icon>mdi-chevron-up</v-icon></v-btn>
       </template>
 
       <template v-slot:item.marked="props">
@@ -140,12 +141,14 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-        <v-icon small @click="generateReport(item)">mdi-reload-alert</v-icon>
+        
+        <v-btn dark class="teal darken-4" :href="`/page/${item.id}`" title="Report"><v-icon>mdi-clipboard-text-search</v-icon></v-btn>
+        <v-btn dark class="orange darken-4" :href="`/page/${item.id}/todos`" title="Tasks"><v-icon>mdi-format-list-checks</v-icon></v-btn>
+        <v-btn dark @click="editItem(item)"><v-icon>mdi-pencil</v-icon></v-btn>
+        <v-btn dark @click="deleteItem(item)"><v-icon>mdi-delete</v-icon></v-btn>
+        <v-btn dark @click="generateReport(item)"><v-icon>mdi-reload-alert</v-icon></v-btn>
       </template>
     </v-data-table>
-  </div>
 </template>
 
 <script>
@@ -170,30 +173,41 @@ export default {
       type: Boolean,
       default: false
     },
+    forceOnlyMarked: {
+      type: Boolean,
+      default: false
+    },
   },
 
   data: function () {
+
+    let headers = [
+      { text: '', value: 'marked', width: 61 },
+      { text: 'Average', value: 'score_average', cellClass: 'pa-2', class: 'm-score-header', width: 80 },
+      { text: 'Perform- ance', value: 'score_performance', cellClass: 'pa-2', class: 'm-score-header', width: 80 },
+      { text: 'Access- ibility', value: 'score_accessibility', cellClass: 'pa-2', class: 'm-score-header', width: 80 },
+      { text: 'Best Practices', value: 'score_best_practices', cellClass: 'pa-2', class: 'm-score-header', width: 80 },
+      { text: 'Seo', value: 'score_seo', cellClass: 'pa-2', class: 'm-score-header', width: 80 },
+      { text: 'PWA', value: 'score_pwa', cellClass: 'pa-2', class: 'm-score-header', width: 80 },
+      { text: 'LCP', value: 'lcp_score', cellClass: 'pa-2 text-center', class: 'm-score-header', width: 80 },
+      { text: 'FID', value: 'fid_score', cellClass: 'pa-2 text-center', class: 'm-score-header', width: 80 },
+      { text: 'CLS', value: 'cls_score', cellClass: 'pa-2 text-center', class: 'm-score-header', width: 80 },
+      { text: 'Name', value: 'pagename' },
+      { text: 'Actions', value: 'actions', sortable: false, width: 400 },
+      { text: '', value: 'data-table-expand', sortable: false, width: 100 },
+    ];
+
+    if(!this.isNested) {
+      headers.unshift({ text: '', width: 30, cellClass: 'pa-0' ,sortable: false, class: 'pa-0' })
+    }
+
     return {
       dialog: false,
       dialogDelete: false,
       nestedChilds: false,
-      showOnlyMarked: false,
+      showOnlyMarked: this.forceOnlyMarked || false,
       expanded: [],
-      headers: [
-        { text: '', value: 'marked' },
-        { text: 'Average', value: 'score_average', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'Perform- ance', value: 'score_performance', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'Access- ibility', value: 'score_accessibility', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'Best Practices', value: 'score_best_practices', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'Seo', value: 'score_seo', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'PWA', value: 'score_pwa', cellClass: 'pa-2', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'LCP', value: 'lcp_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'FID', value: 'fid_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'CLS', value: 'cls_score', cellClass: 'pa-2 text-center', class: 'pa-0 m-score-header', width: 61 },
-        { text: 'Name', value: 'pagename' },
-        { text: 'Actions', value: 'actions' },
-        { text: '', value: 'data-table-expand' },
-      ],
+      headers: headers,
       editedIndex: -1,
       editedItem: {
         id: undefined,
@@ -212,7 +226,7 @@ export default {
   },
 
   mounted() {
-    this.nestedChilds = JSON.parse(localStorage.getItem('PageSetting.NestedChilds') || 'false');
+    this.nestedChilds = !this.isNested && JSON.parse(localStorage.getItem('PageSetting.NestedChilds') || 'false');
     this.showOnlyMarked = JSON.parse(localStorage.getItem('PageSetting.ShowOnlyMarked') || 'false');
     this.preparedPages = this.generatePreparedPages();
   },
@@ -244,6 +258,9 @@ export default {
     },
     showOnlyMarked (val) {
       this.preparedPages = this.generatePreparedPages()
+    },
+    forceOnlyMarked (val) {
+      this.showOnlyMarked = this.forceOnlyMarked;
     },
   },
 
@@ -316,10 +333,6 @@ export default {
       return score === null ? '-' : `${score * 100}%`;
     },
 
-    handleClick(clickedPage, options) {
-      this.$router.push({ path: `/page/${clickedPage.id}` })
-    },
-
     async save () {      
       await this.$axios.$post(`/api/page`, {
         id: this.editedItem.id,
@@ -335,6 +348,8 @@ export default {
     generatePreparedPages() {
 
       let preparedPages = this.pages || [];
+
+      console.log('prepare pages 1 ', this.isNested, preparedPages.length);
 
       // prepare pages
       const markedPages = JSON.parse(localStorage.getItem('markedPages') || '[]');
@@ -357,6 +372,8 @@ export default {
       }).filter((page) => !this.showOnlyMarked || this.showOnlyMarked && page.marked)
 
 
+      console.log('prepare pages 2 ', this.isNested, preparedPages.length);
+
       // created nested structure if needed
       if (this.nestedChilds) {
         preparedPages = preparedPages
@@ -364,7 +381,7 @@ export default {
           .filter((page) => page.parentId === null)
           // add childs
           .map((page) => {
-            page.children = this.pages.filter((child) => child.parentId === page.id);
+            page.children = preparedPages.filter((child) => child.parentId === page.id);
             return page;
           })
       } else {
@@ -374,8 +391,7 @@ export default {
             return page;
           });
       }
-
-      console.log('preparedPages', preparedPages.length);
+      console.log('prepare pages 3 ', this.isNested, preparedPages.length);
 
       return preparedPages;
     }
@@ -389,17 +405,32 @@ export default {
   $c-pass:  #0CCE6B;
   $c-fail:  #FF4E42;
 
+  .m-pages__table {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .v-data-table__wrapper {
+      flex-grow: 1;
+      height: 100%;
+    }
+  }
+
   .m-score-header {
-    padding: 0;
+    padding: 4px 5px!important;
   }
 
   .m-score-header > * {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
+    max-width: calc(100% - 18px);
   }
 
   .m-score-header span {
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 
   .m-page__name-wrapper {
@@ -412,9 +443,10 @@ export default {
   }
 
   .m-page__url {
-    max-width: 200px;
+    max-width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
+    white-space: nowrap;
   }
 
   
@@ -436,6 +468,13 @@ export default {
       background: $c-fail;
       color: #ffffff;
     }    
+  }
+
+  .v-input--switch .v-messages {
+    display: none;
+  }
+  .v-input--switch.v-input--dense > .v-input__control > .v-input__slot {
+    margin-bottom: 0;
   }
 
 </style>

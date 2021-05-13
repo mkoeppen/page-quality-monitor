@@ -1,9 +1,5 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="12" lg="6">
-      <PageTable :pages="pages" />
-    </v-col>
-  </v-row>
+  <PageTable :pages="pages" />
 </template>
 
 <script>
