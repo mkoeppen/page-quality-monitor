@@ -1,7 +1,6 @@
 # alpha
 
 ## 0.1.0
-- priority as select (high, medium, low, wont-do)
 - refactore todo to tasks
 - extend tasklist
 - fix node dev mode

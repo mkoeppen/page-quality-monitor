@@ -13,7 +13,7 @@ export default {
 
   props: {
     value: {
-      type: Boolean,
+      type: Boolean | Number,
       default: false
     },
     todoId: {

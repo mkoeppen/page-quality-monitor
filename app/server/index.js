@@ -76,6 +76,12 @@ async function start () {
     });
   })
 
+  app.post("/api/page/:pageId/change-task-priority/:taskId/:priority", (req, res) => {
+    db.changeTaskPriority(req.params.pageId, req.params.taskId, req.params.priority).then((data) => {
+        res.end(JSON.stringify(data));
+    });
+  })
+
   app.get("/api/last-report-for-page/:id", (req, res) => {
     db.getLastReportForPage(req.params.id).then((data) => {
       let filepath = '';

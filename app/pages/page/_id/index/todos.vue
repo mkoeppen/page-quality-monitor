@@ -1,6 +1,38 @@
 <template>
   <v-container fluid class="pa-0">
 
+    <v-dialog v-model="priorityChange" max-width="500px">
+      <v-card v-if="priorityChangeTaskItem">
+        <p>Change task priority for this project.</p>
+        <v-radio-group
+          v-model="priorityChangeTaskItem.priority"
+          column
+          @change="savePriorityChange"
+        >
+          <v-radio
+            label="high"
+            color="high"
+            value="high"
+          ></v-radio>
+          <v-radio
+            label="medium"
+            color="medium"
+            value="medium"
+          ></v-radio>
+          <v-radio
+            label="low"
+            color="low"
+            value="low"
+          ></v-radio>
+          <v-radio
+            label="ignore"
+            color="ignore"
+            value="ignore"
+          ></v-radio>
+        </v-radio-group>
+      </v-card>
+    </v-dialog>
+
     <v-data-table
       dense
       :single-expand="false"
@@ -10,9 +42,6 @@
       :items="todos"
       class="m-todos__table"
     >
-
-      
-
       <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
         <v-btn dark @click="expand(true)" v-if="item.howto && !isExpanded"><v-icon>mdi-chevron-down</v-icon></v-btn>
         <v-btn dark @click="expand(false)" v-if="item.howto && isExpanded"><v-icon>mdi-chevron-up</v-icon></v-btn>
@@ -24,8 +53,15 @@
         </td>
       </template>
 
-      <template v-slot:item.priority="props">
-        <span :class="`m-todos__priority-cell m-todos__priority-cell--${(props.item.priority||'low').toLowerCase()}`" :title="props.item.priority"></span>
+      <template v-slot:item.priority="props">        
+        <span 
+          :class="`m-todos__priority-cell m-todos__priority-cell--${(props.item.priority||'low').toLowerCase()}`" 
+          :title="props.item.priority" 
+          @click="openPriorityDialog(props.item)"
+          dark
+        >
+          <v-icon class="m-todos__priority-cell-icon" dark>mdi-pencil</v-icon>
+        </span>
       </template>
 
       <template v-slot:item.checked="props">
@@ -58,9 +94,12 @@ export default {
 
   data: function () {
     return {
+      priorityChange: false,
+      priorityChangeTaskItem: null,
+      priorityChangeTaskPriority: null,
       expanded: [],
       headers: [
-        { text: '', value: 'priority', cellClass: 'pa-0', width: 10 },
+        { text: '', value: 'priority', cellClass: 'pa-0', class: 'pa-0', width: 24 },
         { text: '', value: 'checked' },
         { text: 'Todo', value: 'title' },
         { text: '', value: 'data-table-expand' },
@@ -80,7 +119,9 @@ export default {
       const overwrite = tasksOverwrite.find((to) => to.task_id === todoId) || {};
       todo.id = todoId;
       todo.checked = overwrite.checked || false;
-      todo.priority = overwrite.priority !== null ? overwrite.priority : todo.priority;
+      if(overwrite.priority) {
+        todo.priority = overwrite.priority;
+      }
       todos.push(todo);
     }
     
@@ -91,6 +132,15 @@ export default {
   },
 
   methods: {
+    openPriorityDialog(item) {
+      this.priorityChangeTaskItem = item;
+      this.priorityChange = true;
+    },
+    async savePriorityChange() {
+      await this.$axios.$post(`/api/page/${this.pageId}/change-task-priority/${this.priorityChangeTaskItem.id}/${this.priorityChangeTaskItem.priority}`);
+      this.priorityChange = false;
+      this.priorityChangeTaskItem = null;
+    },
     async onChecked(data) {
       const url = data.checked ? `/api/page/${this.pageId}/check-task/${data.id}` : `/api/page/${this.pageId}/uncheck-task/${data.id}`;
       await this.$axios.$post(url);
@@ -100,11 +150,25 @@ export default {
 </script>
 
 <style lang="scss">
+  .v-icon.m-todos__priority-cell-icon {
+    display: none;
+    font-size: 18px;
+    margin: auto;
+  }
   .m-todos__priority-cell {
-    width: 10px;
+    width: 12px;
     height: 100%;
     display: flex;
     background: gray;
+
+    &:hover {
+      cursor: pointer;
+      width: 24px;
+
+      .v-icon.m-todos__priority-cell-icon {
+        display: inline-flex;
+      }
+    }
 
     &--high {
       background: red;

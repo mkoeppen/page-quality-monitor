@@ -88,6 +88,9 @@ exports.deleteReport = function(id) {
 exports.changeCheckedState = function(pageId, taskId, checked) {
   return tasksPageRelations.changeCheckedState(db, pageId, taskId, checked);
 }
+exports.changeTaskPriority = function(pageId, taskId, priority) {
+  return tasksPageRelations.changeTaskPriority(db, pageId, taskId, priority);
+}
 exports.getTasksRelationsForPageId = function(pageId) {
   return tasksPageRelations.getTasksRelationsForPageId(db, pageId);
 }

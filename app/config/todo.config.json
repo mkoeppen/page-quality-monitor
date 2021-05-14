@@ -1,6 +1,6 @@
 {
     "doctype": {
-        "title": "Doctype",
+        "title": "Doctype2",
         "description": "The Doctype is HTML5 and is at the top of all your HTML pages.",
         "howto": "<code><!-- Doctype HTML5 -->\n<!doctype html></code>",
         "tags": ["META TAG"],

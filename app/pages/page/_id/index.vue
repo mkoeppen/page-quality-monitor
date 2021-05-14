@@ -18,7 +18,7 @@
             <a :href="url" target="_blank" rel="noopener noreferrer">{{ url }}</a>
           </div>
         </v-col>
-        <v-col cols="3">
+        <!-- <v-col cols="3">
           <CircleChart :data="{
             labels: [
               'Red',
@@ -55,7 +55,7 @@
               hoverOffset: 4
             }]
           }"></CircleChart>
-        </v-col>
+        </v-col> -->
         <v-col cols="12" class="pb-0">
           <v-tabs grow dark>
             <v-tab :to="reportUrl" class="teal" ><v-icon class="mr-3">mdi-clipboard-text-search</v-icon>Report</v-tab>
