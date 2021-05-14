@@ -99,13 +99,13 @@ async function start () {
     });
   })
 
-  app.get("/api/todo-list/:id", (req, res) => {  
-    let filepath = config.dev ? `${__dirname }/../config/todo.config.json` : '/usr/share/app/config/todo.config.json';
+  app.get("/api/task-list/:id", (req, res) => {  
+    let filepath = config.dev ? `${__dirname }/../config/tasks.config.json` : '/usr/share/app/config/tasks.config.json';
 
     res.sendFile(path.resolve(filepath));
   })
 
-  app.get("/api/todo-list-overwrites/:id", (req, res) => {
+  app.get("/api/task-list-overwrites/:id", (req, res) => {
     db.getTasksRelationsForPageId(req.params.id).then((data) => {
       res.end(JSON.stringify(data));
     });

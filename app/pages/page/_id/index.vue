@@ -59,7 +59,7 @@
         <v-col cols="12" class="pb-0">
           <v-tabs grow dark>
             <v-tab :to="reportUrl" class="teal" ><v-icon class="mr-3">mdi-clipboard-text-search</v-icon>Report</v-tab>
-            <v-tab :to="todoUrl" class="orange" ><v-icon class="mr-3">mdi-format-list-checks</v-icon>Todos</v-tab>
+            <v-tab :to="taskUrl" class="orange" ><v-icon class="mr-3">mdi-format-list-checks</v-icon>Tasks</v-tab>
           </v-tabs>
         </v-col>
         <v-col cols="12" class="pt-0">
@@ -89,8 +89,8 @@ export default {
      reportUrl() {
          return `/page/${this.id}`;
      },
-     todoUrl() {
-         return `/page/${this.id}/todos`;
+     taskUrl() {
+         return `/page/${this.id}/tasks`;
      }
   },
 

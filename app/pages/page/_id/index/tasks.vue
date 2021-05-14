@@ -39,8 +39,8 @@
       :expanded.sync="expanded"
       :show-expand="true"
       :headers="headers"
-      :items="todos"
-      class="m-todos__table"
+      :items="tasks"
+      class="m-tasks__table"
     >
       <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
         <v-btn dark @click="expand(true)" v-if="item.howto && !isExpanded"><v-icon>mdi-chevron-down</v-icon></v-btn>
@@ -55,27 +55,27 @@
 
       <template v-slot:item.priority="props">        
         <span 
-          :class="`m-todos__priority-cell m-todos__priority-cell--${(props.item.priority||'low').toLowerCase()}`" 
+          :class="`m-tasks__priority-cell m-tasks__priority-cell--${(props.item.priority||'low').toLowerCase()}`" 
           :title="props.item.priority" 
           @click="openPriorityDialog(props.item)"
           dark
         >
-          <v-icon class="m-todos__priority-cell-icon" dark>mdi-pencil</v-icon>
+          <v-icon class="m-tasks__priority-cell-icon" dark>mdi-pencil</v-icon>
         </span>
       </template>
 
       <template v-slot:item.checked="props">
-        <CheckedTodoInput v-model="props.item.checked" :todoId="props.item.id" @change="onChecked"></CheckedTodoInput>
+        <CheckedTaskInput v-model="props.item.checked" :taskId="props.item.id" @change="onChecked"></CheckedTaskInput>
       </template>
 
       <template v-slot:item.title="props">
-        <div class="m-todo__title-wrapper">
-          <strong class="m-todo__title">{{props.item.title}}</strong>
-          <ul class="m-todos__tags">
-            <li v-for="(tag, index) in props.item.tags" :key="index" class="m-todos__tag">{{tag}}</li>
+        <div class="m-task__title-wrapper">
+          <strong class="m-task__title">{{props.item.title}}</strong>
+          <ul class="m-tasks__tags">
+            <li v-for="(tag, index) in props.item.tags" :key="index" class="m-tasks__tag">{{tag}}</li>
           </ul>
         </div>
-        <p class="m-todo__description">{{props.item.description}}</p>
+        <p class="m-task__description">{{props.item.description}}</p>
       </template>
 
     </v-data-table>
@@ -84,12 +84,12 @@
 </template>
 
 <script>
-import CheckedTodoInput from '~/components/CheckedTodoInput.vue'
+import CheckedTaskInput from '~/components/CheckedTaskInput.vue'
 
 export default {
 
   components: {
-    CheckedTodoInput
+    CheckedTaskInput
   },
 
   data: function () {
@@ -101,7 +101,7 @@ export default {
       headers: [
         { text: '', value: 'priority', cellClass: 'pa-0', class: 'pa-0', width: 24 },
         { text: '', value: 'checked' },
-        { text: 'Todo', value: 'title' },
+        { text: 'Task', value: 'title' },
         { text: '', value: 'data-table-expand' },
       ],
     }
@@ -109,24 +109,24 @@ export default {
 
  async asyncData({ $axios, $config, route }) {
     const { id } = route.params
-    const todoDefinitions = await $axios.$get(`/api/todo-list/${id}`);
-    const tasksOverwrite = await $axios.$get(`/api/todo-list-overwrites/${id}`) || [];
+    const taskDefinitions = await $axios.$get(`/api/task-list/${id}`);
+    const tasksOverwrite = await $axios.$get(`/api/task-list-overwrites/${id}`) || [];
 
     console.log('tasksOverwrite', tasksOverwrite);
-    let todos = [];
+    let tasks = [];
 
-    for (const [todoId, todo] of Object.entries(todoDefinitions)) {
-      const overwrite = tasksOverwrite.find((to) => to.task_id === todoId) || {};
-      todo.id = todoId;
-      todo.checked = overwrite.checked || false;
+    for (const [taskId, task] of Object.entries(taskDefinitions)) {
+      const overwrite = tasksOverwrite.find((to) => to.task_id === taskId) || {};
+      task.id = taskId;
+      task.checked = overwrite.checked || false;
       if(overwrite.priority) {
-        todo.priority = overwrite.priority;
+        task.priority = overwrite.priority;
       }
-      todos.push(todo);
+      tasks.push(task);
     }
     
     return {
-      todos,
+      tasks,
       pageId: id
     }
   },
@@ -150,12 +150,12 @@ export default {
 </script>
 
 <style lang="scss">
-  .v-icon.m-todos__priority-cell-icon {
+  .v-icon.m-tasks__priority-cell-icon {
     display: none;
     font-size: 18px;
     margin: auto;
   }
-  .m-todos__priority-cell {
+  .m-tasks__priority-cell {
     width: 12px;
     height: 100%;
     display: flex;
@@ -165,7 +165,7 @@ export default {
       cursor: pointer;
       width: 24px;
 
-      .v-icon.m-todos__priority-cell-icon {
+      .v-icon.m-tasks__priority-cell-icon {
         display: inline-flex;
       }
     }
@@ -183,7 +183,7 @@ export default {
     }
   }
 
-  .m-todos__tags {
+  .m-tasks__tags {
     display: flex;
     flex-wrap: wrap;
     padding: 4px 0;
@@ -191,7 +191,7 @@ export default {
     list-style-type: none;
   }
 
-  .m-todos__tag {
+  .m-tasks__tag {
     background: purple;
     padding: 4px 8px;
     font-size: 10px;
@@ -202,13 +202,13 @@ export default {
     margin-right: 4px;
   }
 
-  .m-todo__title-wrapper {
+  .m-task__title-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
   }
 
-  .m-todo__title {
+  .m-task__title {
     font-size: 20px;
   }
 </style>

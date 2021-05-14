@@ -1,7 +1,6 @@
 # alpha
 
 ## 0.1.0
-- refactore todo to tasks
 - extend tasklist
 - fix node dev mode
 - Docker Hub Image
@@ -15,7 +14,7 @@
 
 # beta
 - report clean up job
-- first automated checked todo
+- first automated checked tasks
 - show throbber on rows with active report generation
 - paging through report history
 - htaccess pages

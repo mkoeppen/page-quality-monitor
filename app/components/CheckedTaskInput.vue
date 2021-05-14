@@ -1,9 +1,9 @@
 <template>
-  <div class="m-checked-todo">
-    <input class="m-checked-todo__input" type="checkbox" :id="`todo_checked_${todoId}`" :checked="isChecked" @input="onInput">
-    <label class="m-checked-todo__label" :for="`todo_checked_${todoId}`">
-      <v-icon class="m-checked-todo__icon m-checked-todo__icon--checked">mdi-check-circle</v-icon>
-      <v-icon class="m-checked-todo__icon m-checked-todo__icon--unchecked">mdi-checkbox-blank-circle-outline</v-icon>
+  <div class="m-checked-task">
+    <input class="m-checked-task__input" type="checkbox" :id="`task_checked_${taskId}`" :checked="isChecked" @input="onInput">
+    <label class="m-checked-task__label" :for="`task_checked_${taskId}`">
+      <v-icon class="m-checked-task__icon m-checked-task__icon--checked">mdi-check-circle</v-icon>
+      <v-icon class="m-checked-task__icon m-checked-task__icon--unchecked">mdi-checkbox-blank-circle-outline</v-icon>
     </label>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
       type: Boolean | Number,
       default: false
     },
-    todoId: {
+    taskId: {
       type: String,
       default: null
     }
@@ -32,7 +32,7 @@ export default {
     onInput(e) {
       this.$emit('input', e.target.checked);
       this.$emit('change', {
-        id:  this.todoId,
+        id:  this.taskId,
         checked: e.target.checked
       });
     },
@@ -43,7 +43,7 @@ export default {
 
 <style lang="scss" scope>
 
- .m-checked-todo {
+ .m-checked-task {
    font-size: 0px;
    position: relative;
    overflow: hidden;
@@ -55,7 +55,7 @@ export default {
     }
  }
 
- .m-checked-todo__input {
+ .m-checked-task__input {
     width: 1px;
     height: 1px;
     appearance: none;
@@ -63,32 +63,32 @@ export default {
     position: absolute;
   }
 
-  .m-checked-todo__label {
+  .m-checked-task__label {
     cursor: pointer;
   }
 
-  .m-checked-todo__icon {
+  .m-checked-task__icon {
     position: absolute;
     top: 0;
     left: 0;
   }
 
-  .v-icon.m-checked-todo__icon--checked {
+  .v-icon.m-checked-task__icon--checked {
     display: none;
   }
 
-  .m-checked-todo__input + .m-checked-todo__label:hover,
-  .m-checked-todo__input:checked + .m-checked-todo__label {
-    .m-checked-todo__icon--checked {
+  .m-checked-task__input + .m-checked-task__label:hover,
+  .m-checked-task__input:checked + .m-checked-task__label {
+    .m-checked-task__icon--checked {
       display: flex;
     }
-    .m-checked-todo__icon--unchecked {
+    .m-checked-task__icon--unchecked {
       display: none;
     }
   }
 
-  .m-checked-todo__input:checked + .m-checked-todo__label {
-    .m-checked-todo__icon--checked {
+  .m-checked-task__input:checked + .m-checked-task__label {
+    .m-checked-task__icon--checked {
       color: rgb(245, 190, 10);
     }
   }

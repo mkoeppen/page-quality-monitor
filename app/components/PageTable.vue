@@ -143,7 +143,7 @@
       <template v-slot:item.actions="{ item }">
         
         <v-btn dark class="teal darken-4" :href="`/page/${item.id}`" title="Report"><v-icon>mdi-clipboard-text-search</v-icon></v-btn>
-        <v-btn dark class="orange darken-4" :href="`/page/${item.id}/todos`" title="Tasks"><v-icon>mdi-format-list-checks</v-icon></v-btn>
+        <v-btn dark class="orange darken-4" :href="`/page/${item.id}/tasks`" title="Tasks"><v-icon>mdi-format-list-checks</v-icon></v-btn>
         <v-btn dark @click="editItem(item)"><v-icon>mdi-pencil</v-icon></v-btn>
         <v-btn dark @click="deleteItem(item)"><v-icon>mdi-delete</v-icon></v-btn>
         <v-btn dark @click="generateReport(item)"><v-icon>mdi-reload-alert</v-icon></v-btn>
