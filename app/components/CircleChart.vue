@@ -24,24 +24,24 @@ export default {
 
 <style lang="scss" scoped>
     .m-circle-chart {
-        width: 200px;
-        height: 200px;
+        width: 120px;
+        height: 120px;
         position: relative;
         z-index: 1;
     }
 
     .m-circle-chart__inner-chart {
         position: absolute;
-        top: 1px;
-        left: 1px;
-        width: calc(100% - 2px);
-        height: calc(100% - 2px);
+        top: 4px;
+        left: 4px;
+        width: calc(100% - 8px);
+        height: calc(100% - 8px);
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 20px solid black;
-        background: #1d1d1d;
-        color: white;
+        border: 20px solid #e8e8e8;
+        background: #f8f8f8;
+        color: rgb(0, 0, 0);
         border-radius: 50%;
         box-sizing: border-box;
         z-index: 2;
@@ -62,6 +62,7 @@ export default {
         height: 100%;
         top: 0;
         left: 0;
-        filter: blur(10px) contrast(10);
+        opacity: .5;
+        filter: blur(5px) contrast(10);
     }
 </style>

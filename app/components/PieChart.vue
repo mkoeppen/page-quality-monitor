@@ -6,7 +6,7 @@ export default {
   props: ['data', 'options'],
   mounted () {
     this.renderChart(this.data, {
-      cutoutPercentage: 97,
+      cutoutPercentage: 90,
       legend: {
         display: false
       }

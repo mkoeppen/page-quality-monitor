@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app dark class="m-app">
     <!-- <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -81,3 +81,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+  .m-app {
+    font-family: 'Roboto', sans-serif;
+  }
+</style>

@@ -54,7 +54,7 @@ async function start () {
 
   app.get("/api/page/:id", (req, res) => {
     db.getPageById(req.params.id).then((data) => {
-        res.end(JSON.stringify(data));
+        res.end(JSON.stringify(data && data.length > 0 ? data[0] : data));
     });
   })
 
