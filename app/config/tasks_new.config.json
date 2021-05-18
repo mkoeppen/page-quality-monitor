@@ -1,0 +1,829 @@
+[
+    {
+        "name": "Doctype",
+        "category": "Head",
+        "tags": ["Meta tag"],
+        "level": "High",
+        "description": "The Doctype is HTML5 and is at the top of all your HTML pages.",
+        "html": [
+            "<!doctype html> <!-- HTML5 -->"
+        ],
+        "url": [{
+            "label": "Determining the character encoding - HTML5 W3C",
+            "url": "https://www.w3.org/TR/html5/syntax.html#determining-the-character-encoding"
+        }]
+    },
+    {
+        "name": "Charset",
+        "category": "Head",
+        "tags": ["Meta tag"],
+        "level": "High",
+        "description": "The charset (UTF-8) is declared correctly.",
+        "html": [
+            "<!-- Set character encoding for the document -->",
+            "<meta charset=\"utf-8\">"
+        ],
+        "url": [{
+            "label": "Determining the character encoding - HTML5 W3C",
+            "url": "https://www.w3.org/TR/html5/syntax.html#determining-the-character-encoding"
+        }]
+    },
+    {
+        "name": "Viewport",
+        "category": "Head",
+        "tags": ["Meta tag"],
+        "level": "High",
+        "description": "The viewport is declared correctly.",
+        "html": [
+            "<!-- Viewport for responsive web design -->",
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">"
+        ]
+    },
+    {
+        "name": "Title",
+        "level": "High",
+        "category": "Head",
+        "tags": ["Meta tag"],
+        "description": "A title is used on all pages (SEO: Google calculates the pixel width of the characters used in the title, and it cuts off between 472 and 482 pixels. The average character limit would be around 55-characters).",
+        "html": ["<!-- Document Title -->",
+            "<title>Page Title less than 55 characters</title>"
+        ],
+        "url": [{
+                "label": "Title - HTML - MDN",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title"
+            },
+            {
+                "label": "SERP Snippet Generator",
+                "url": "https://www.sistrix.com/serp-snippet-generator/"
+            }
+        ]
+    },
+    {
+        "name": "Description",
+        "level": "High",
+        "category": "Head",
+        "tags": ["Meta tag"],
+        "description": "A meta description is provided, it is unique and doesn't possess more than 150 characters.",
+        "html": ["<!-- Meta Description -->",
+            "<meta name=\"description\" content=\"Description of the page less than 150 characters\">"
+        ],
+        "url": [{
+            "label": "Meta Description - HTML - MDN",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML#Adding_an_author_and_description"
+        }]
+    },
+    {
+        "name": "Favicons",
+        "level": "Medium",
+        "category": "Head",
+        "tags": ["Meta tag"],
+        "description": "Each favicon has been created and displays correctly. If you have only a `favicon.ico`, put it at the root of your site. Normally you won't need to use any markup. However, it's still good practice to link to it using the example below. Today, **PNG format is recommended** over `.ico` format (dimensions: 32x32px).",
+        "html": [
+            "<!-- Standard favicon -->",
+            "<link rel=\"icon\" type=\"image/x-icon\" href=\"https://example.com/favicon.ico\">",
+            "<!-- Recommended favicon format -->",
+            "<link rel=\"icon\" type=\"image/png\" href=\"https://example.com/favicon.png\">"
+        ],
+        "url": [{
+                "label": "Favicon Generator",
+                "url": "https://www.favicon-generator.org/"
+            },
+            {
+                "label": "RealFaviconGenerator",
+                "url": "https://realfavicongenerator.net/"
+            },
+            {
+                "label": "Favicon Cheat Sheet",
+                "url": "https://github.com/audreyr/favicon-cheat-sheet"
+            },
+            {
+                "label": "Favicons, Touch Icons, Tile Icons, etc. Which Do You Need? - CSS Tricks",
+                "url": "https://css-tricks.com/favicon-quiz/"
+            },
+            {
+                "label": "PNG favicons - caniuse",
+                "url": "https://caniuse.com/#feat=link-icon-png"
+            }
+        ]
+    }, {
+        "name": "Apple Web App Meta",
+        "level": "Low",
+        "category": "Head",
+        "tags": ["Meta tag"],
+        "description": "Apple meta-tags are present.",
+        "html": [
+            "<!-- Apple Touch Icon (at least 200x200px) -->",
+            "<link rel=\"apple-touch-icon\" href=\"/custom-icon.png\">",
+            "<!-- To run web application in full-screen -->",
+            "<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">",
+            "<!-- Status Bar Style (see Supported Meta Tags below for available values) -->",
+            "<!-- Has no effect unless you have the previous meta tag -->",
+            "<meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\">"
+        ],
+        "url": [
+            {
+                "label": "Configuring Web Applications",
+                "url": "https://developer.apple.com/library/content/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html"
+            },
+            {
+                "label": "Supported Meta Tags",
+                "url": "https://developer.apple.com/library/content/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html"
+            }
+        ]
+    },
+    {
+        "name": "Windows Tiles",
+        "level": "Low",
+        "category": "Head",
+        "tags": ["Meta tag"],
+        "description": "Windows tiles are present and linked.",
+        "html": ["<!-- Microsoft Tiles -->",
+            "<meta name=\"msapplication-config\" content=\"browserconfig.xml\" />",
+            "Minimum required xml markup for the `browserconfig.xml` file is as follows:",
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
+            "<browserconfig>",
+            "<msapplication>",
+            "<tile>",
+            "<square70x70logo src=\"small.png\"/>",
+            "<square150x150logo src=\"medium.png\"/>",
+            "<wide310x150logo src=\"wide.png\"/>",
+            "<square310x310logo src=\"large.png\"/>",
+            "</tile>",
+            "</msapplication>",
+            "</browserconfig>"
+        ],
+        "url": [{
+            "label": "Browser configuration schema reference",
+            "url": "https://msdn.microsoft.com/en-us/library/dn320426(v=vs.85).aspx"
+        }]
+    }, {
+        "name": "Canonical",
+        "level": "Medium",
+        "category": "Head",
+        "tags": ["Meta tag"],
+        "description": "Use `rel=\"canonical\"` to avoid duplicate content.",
+        "html": [
+            "<!-- Helps prevent duplicate content issues -->",
+            "<link rel=\"canonical\" href=\"http://example.com/2017/09/a-new-article-to-read.html\">"
+        ],
+        "url": [{
+                "label": "Use canonical URLs - Search Console Help - Google Support",
+                "url": "https://support.google.com/webmasters/answer/139066?hl=en"
+            },
+            {
+                "label": "5 common mistakes with rel=canonical - Google Webmaster Blog",
+                "url": "https://webmasters.googleblog.com/2013/04/5-common-mistakes-with-relcanonical.html"
+            }
+        ]
+    },
+    { 
+        "name": "Language attribute", 
+        "level": "High", 
+        "category": "Head",
+        "tags": ["HTML tags"],
+        "description": "The `lang` attribute of your website is specified and related to the language of the current page.", 
+        "html": ["<html lang=\"en\">"]
+    },
+    { 
+        "name": "Direction attribute", 
+        "level": "Medium", 
+        "category": "Head",
+        "tags": ["HTML tags"],
+        "description": "The direction of lecture is specified on the html tag (It can be used on another HTML tag).", 
+        "html": ["<html dir=\"rtl\">"],
+        "url": [
+            { "label": "dir - HTML - MDN", "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/dir" }
+        ]
+    },
+    { 
+        "name": "Alternate language", 
+        "level": "Low", 
+        "category": "Head",
+        "tags": ["HTML tags"],
+        "description": "The language tag of your website is specified and related to the language of the current page.", 
+        "html": [
+            "<link rel=\"alternate\" href=\"https://es.example.com/\" hreflang=\"es\">"
+        ]
+    },
+    { 
+        "name": "x-default", 
+        "level": "Low", 
+        "category": "Head",
+        "tags": ["HTML tags"],
+        "description": "The language tag of your website for international landing pages.", 
+        "html": [
+            "<link rel=\"alternate\" href=\"https://example.com/\" hreflang=\"x-default\" />"
+        ],
+        "url": [
+            { "label": "x-default - Google", "url": "https://webmasters.googleblog.com/2013/04/x-default-hreflang-for-international-pages.html" }
+        ]
+    },
+    { 
+        "name": "Conditional comments", 
+        "level": "Low", 
+        "category": "Head",
+        "tags": ["HTML tags"],
+        "description": "Conditional comments are present for IE if needed.",
+        "url": [
+            { "label": "About conditional comments (Internet Explorer) - MSDN - Microsoft", "url": "https://msdn.microsoft.com/en-us/library/ms537512(v=vs.85).aspx" }
+        ]
+    },
+    {   
+        "name": "RSS feed", 
+        "level": "Low", 
+        "category": "Head",
+        "tags": ["HTML tags"],
+        "description": "If your project is a blog or has articles, an RSS link was provided."
+    },
+    { 
+        "name": "CSS Critical", 
+        "level": "Medium", 
+        "category": "Head",
+        "tags": ["HTML tags"],
+        "description": "The CSS critical (or \"above the fold\") collects all the CSS used to render the visible portion of the page. It is embedded before your principal CSS call and between `<style></style>` in a single line (minified).",
+        "url": [
+            { "label": "Critical by Addy Osmani on GitHub", "url": "https://github.com/addyosmani/critical) automates this." }
+        ]
+    },
+    { 
+        "name": "CSS order", 
+        "level": "High", 
+        "category": "Head",
+        "tags": ["HTML tags"],
+        "description": "All CSS files are loaded before any JavaScript files in the `<head>`. (Except the case where sometimes JS files are loaded asynchronously on top of your page)."
+    },
+    { 
+        "name": "Facebook Open Graph", 
+        "level": "Low", 
+        "category": "Head",
+        "tags": ["Social meta"],
+        "description": "All Facebook Open Graph (OG) are tested and no one is missing or with false information. Images need to be at least 600 x 315 pixels, although 1200 x 630 pixels is recommended.", 
+        "html": [
+            "<meta property=\"og:type\" content=\"website\">",
+            "<meta property=\"og:url\" content=\"https://example.com/page.html\">",
+            "<meta property=\"og:title\" content=\"Content Title\">",
+            "<meta property=\"og:image\" content=\"https://example.com/image.jpg\">",
+            "<meta property=\"og:description\" content=\"Description Here\">",
+            "<meta property=\"og:site_name\" content=\"Site Name\">",
+            "<meta property=\"og:locale\" content=\"en_US\">",
+            "<!-- Next tags are optional but recommended -->",
+            "<meta property=\"og:image:width\" content=\"1200\">",
+            "<meta property=\"og:image:height\" content=\"630\">"
+        ],
+        "url": [
+            { "label": "A Guide to Sharing for Webmasters", "url": "https://developers.facebook.com/docs/sharing/webmasters/" },
+            { "label": "Best Practices - Sharing", "url": "https://developers.facebook.com/docs/sharing/best-practices/" },
+            { "label": "Facebook OG testing", "url": "https://developers.facebook.com/tools/debug/" }
+        ]
+    },
+    { 
+        "name": "Twitter Card", 
+        "level": "Low", 
+        "category": "Head",
+        "tags": ["Social meta"],
+        "html": [
+            "<meta name=\"twitter:card\" content=\"summary\">",
+            "<meta name=\"twitter:site\" content=\"@site_account\">",
+            "<meta name=\"twitter:creator\" content=\"@individual_account\">",
+            "<meta name=\"twitter:url\" content=\"https://example.com/page.html\">",
+            "<meta name=\"twitter:title\" content=\"Content Title\">",
+            "<meta name=\"twitter:description\" content=\"Content description less than 200 characters\">",
+            "<meta name=\"twitter:image\" content=\"https://example.com/image.jpg\">"
+        ],
+        "url": [
+            { "label": "Getting started with cards — Twitter Developers", "url": "https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started" },
+            { "label": "Twitter card validator", "url": "https://cards-dev.twitter.com/validator" }
+        ]
+    }
+]
+
+
+
+
+
+
+---
+
+## HTML
+
+### Best practices
+
+{ "name": "HTML5 Semantic Elements", "level": "High", "description": "HTML5 Semantic Elements are used appropriately (header, section, footer, main...).
+
+{ "label": "HTML Reference", "url": "http://htmlreference.io/" },
+
+{ "name": "Error pages", "level": "High", "description": "Error 404 page and 5xx exist. Remember that the 5xx error pages need to have their CSS integrated (no external call on the current server).
+
+{ "name": "Noopener", "level": "Medium", "description": "In case you are using external links with `target="_blank"`, your link should have a `rel="noopener"` attribute to prevent tab nabbing. If you need to support older versions of Firefox, use `rel="noopener noreferrer"`.
+
+{ "label": "About rel=noopener", "url": "https://mathiasbynens.github.io/rel-noopener/" },
+
+{ "name": "Clean up comments", "level": "Low", "description": "Unnecessary code needs to be removed before sending the page to production.
+
+### HTML testing
+
+{ "name": "W3C compliant", "level": "High", "description": "All pages need to be tested with the W3C validator to identify possible issues in the HTML code.
+
+{ "label": "W3C validator", "url": "https://validator.w3.org/" },
+
+{ "name": "HTML Lint", "level": "High", "description": "I use tools to help me analyze any issues I could have on my HTML code.
+
+{ "label": "Dirty markup", "url": "https://www.10bestdesign.com/dirtymarkup/" },
+
+{ "label": "webhint", "url": "https://webhint.io/" },
+
+{ "name": "Link checker", "level": "High", "description": "There are no broken links in my page, verify that you don't have any 404 error.
+
+{ "label": "W3C Link Checker", "url": "https://validator.w3.org/checklink" },
+
+{ "name": "Adblockers test", "level": "Medium", "description": "Your website shows your content correctly with adblockers enabled (You can provide a message encouraging people to disable their adblocker).
+
+{ "label": "Use AdBlocking in your Dev Environment", "url": "https://andreicioara.com/use-adblocking-in-your-dev-environment-48db500d9b86" },
+
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## Webfonts
+
+{ "label": "Google Technical considerations about webfonts", "url": "https://developers.google.com/fonts/docs/technical_considerations" },
+
+{ "name": "Webfont format", "level": "High", "description": "WOFF, WOFF2 and TTF are supported by all modern browsers.
+
+{ "label": "WOFF - Web Open Font Format - Caniuse", "url": "https://caniuse.com/#feat=woff).
+{ "label": "WOFF 2.0 - Web Open Font Format - Caniuse", "url": "https://caniuse.com/#feat=woff2).
+{ "label": "TTF/OTF - TrueType and OpenType font support", "url": "https://caniuse.com/#feat=ttf" },
+{ "label": "Using @font-face - CSS-Tricks", "url": "https://css-tricks.com/snippets/css/using-font-face/" },
+
+{ "name": "Webfont size", "level": "High", "description": "Webfont sizes don't exceed 2 MB (all variants included).
+
+{ "name": "Webfont loader", "level": "Low", "description": "Control loading behavior with a webfont loader
+
+{ "label": "Typekit Web Font Loader", "url": "https://github.com/typekit/webfontloader" },
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## CSS
+
+{ "label": "CSS guidelines", "url": "https://cssguidelin.es/) and [Sass Guidelines", "url": "https://sass-guidelin.es/) followed by most  Front-End developers. If you have a doubt about CSS properties, you can visit [CSS Reference", "url": "http://cssreference.io/). There is also a short [Code Guide", "url": "http://codeguide.co/) for consistency.
+
+{ "name": "Responsive Web Design", "level": "High", "description": "The website is using responsive web design.
+{ "name": "CSS Print", "level": "Medium", "description": "A print stylesheet is provided and is correct on each page.
+{ "name": "Preprocessors", "level": "Low", "description": "Your project is using a CSS preprocessor (e.g [Sass", "url": "http://sass-lang.com/), [Less", "url": "http://lesscss.org/), [Stylus", "url": "http://stylus-lang.com/)).
+{ "name": "Unique ID", "level": "High", "description": "If IDs are used, they are unique to a page.
+{ "name": "Reset CSS", "level": "High", "description": "A CSS reset (reset, normalize or reboot) is used and up to date. *(If you are using a CSS Framework like Bootstrap or Foundation, a Normalize is already included into it.)*
+
+{ "label": "Reset.css", "url": "https://meyerweb.com/eric/tools/css/reset/" },
+{ "label": "Normalize.css", "url": "https://necolas.github.io/normalize.css/" },
+{ "label": "Reboot", "url": "https://getbootstrap.com/docs/4.0/content/reboot/" },
+
+{ "name": "JS prefix", "level": "Low", "description": "All classes (or id- used in JavaScript files) begin with **js-** and are not styled into the CSS files.", "html": ["<div id="js-slider" class="my-slider">
+<!-- Or -->
+<div id="id-used-by-cms" class="js-slider my-slider">
+```
+
+{ "name": "embedded or inline CSS", "level": "High", "description": "Avoid at all cost embedding CSS in `<style>` tags or using inline CSS: only use for valid reasons (e.g. background-image for slider, critical CSS).
+{ "name": "Vendor prefixes", "level": "High", "description": "CSS vendor prefixes are used and are generated accordingly with your browser support compatibility.
+
+{ "label": "Autoprefixer CSS online", "url": "https://autoprefixer.github.io/" },
+
+### Performance
+
+{ "name": "Concatenation", "level": "High", "description": "CSS files are concatenated in a single file *(Not for HTTP/2)*.
+{ "name": "Minification", "level": "High", "description": "All CSS files are minified.
+{ "name": "Non-blocking", "level": "Medium", "description": "CSS files need to be non-blocking to prevent the DOM from taking time to load.
+
+{ "label": "loadCSS by filament group", "url": "https://github.com/filamentgroup/loadCSS" },
+{ "label": "Example of preload CSS using loadCSS", "url": "https://gist.github.com/thedaviddias/c24763b82b9991e53928e66a0bafc9bf" },
+
+{ "name": "Unused CSS", "level": "Low", "description": "Remove unused CSS.
+
+{ "label": "UnCSS Online", "url": "https://uncss-online.com/" },
+{ "label": "PurifyCSS", "url": "https://github.com/purifycss/purifycss" },
+{ "label": "PurgeCSS", "url": "https://github.com/FullHuman/purgecss" },
+{ "label": "Chrome DevTools Coverage", "url": "https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage" },
+
+
+### CSS testing
+
+{ "name": "Stylelint", "level": "High", "description": "All CSS or SCSS files are without any errors.
+
+{ "label": "stylelint, a CSS linter", "url": "https://stylelint.io/" },
+{ "label": "Sass guidelines", "url": "https://sass-guidelin.es/" },
+
+{ "name": "Responsive web design", "level": "High", "description": "All pages were tested at the following breakpoints: 320px, 768px, 1024px (can be more / different according to your analytics).
+**Responsive Checker -**
+{ "label": "Am I Responsive?", "url": "http://ami.responsivedesign.is/" },
+{ "label": "Mobile Friendly Test", "url": "https://search.google.com/test/mobile-friendly" },
+{ "label": "Responsive Website Design Tester", "url": "https://responsivedesignchecker.com/" },
+{ "label": "Responsinator", "url": "https://www.responsinator.com/" },
+{ "label": "XRespond", "url": "https://xrespond.com/" },
+
+
+{ "name": "CSS Validator", "level": "Medium", "description": "The CSS was tested and pertinent errors were corrected.
+
+{ "label": "CSS Validator", "url": "https://jigsaw.w3.org/css-validator/" },
+
+{ "name": "Desktop Browsers", "level": "High", "description": "All pages were tested on all current desktop browsers (Safari, Firefox, Chrome, Internet Explorer, EDGE...).
+{ "name": "Mobile Browsers:**  ![High", "description": "All pages were tested on all current mobile browsers (Native browser, Chrome, Safari...).
+{ "name": "OS:**  ![High", "description": "All pages were tested on all current OS (Windows, Android, iOS, Mac...).
+
+{ "name": "Design fidelity", "level": "Low", "description": "Depending on the project and the quality of the creatives, you may be asked to be close to the design. You can use some tools to compare creatives with your code implementation and ensure consistency.
+
+> [Pixel Perfect - Chrome Extension", "url": "https://chrome.google.com/webstore/detail/perfectpixel-by-welldonec/dkaagdgjmgdmbnecmcefdhjekcoceebi?hl=en" },
+
+{ "name": "Reading direction", "level": "High", "description": "All pages need to be tested for LTR and RTL languages if they need to be supported.
+
+{ "label": "Building RTL-Aware Web Apps & Websites: Part 1 - Mozilla Hacks", "url": "https://hacks.mozilla.org/2015/09/building-rtl-aware-web-apps-and-websites-part-1/" },
+{ "label": "Building RTL-Aware Web Apps & Websites: Part 2 - Mozilla Hacks", "url": "https://hacks.mozilla.org/2015/10/building-rtl-aware-web-apps-websites-part-2/" },
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## Images
+
+{ "label": "Essential Image Optimization", "url": "https://images.guide/)** from Addy Osmani.
+
+### Best practices
+
+{ "name": "Optimization", "level": "High", "description": "All images are optimized to be rendered in the browser. WebP format could be used for critical pages (like Homepage).
+
+{ "label": "Imagemin", "url": "https://github.com/imagemin/imagemin" },
+{ "label": "ImageOptim", "url": "https://imageoptim.com/) to optimise your images for free.
+{ "label": "KeyCDN Image Processing", "url": "https://www.keycdn.com/support/image-processing) for image optimization in real time.
+{ "label": "Kraken.io", "url": "https://kraken.io/web-interface) awesome alternative for both png and jpg optimization. Up to 1mb per files on free plan.
+{ "label": "TinyPNG", "url": "https://tinypng.com/) losslessly optimises png, apng (animated png) and jpg images. Free and paid version available.
+{ "label": "ZorroSVG", "url": "http://quasimondo.com/ZorroSVG/) jpg-like compression for transparent images using svg masking.
+{ "label": "SVGO", "url": "https://github.com/svg/svgo) a Nodejs-based tool for optimizing SVG vector graphics files.
+{ "label": "SVGOMG", "url": "https://jakearchibald.github.io/svgomg/) a web-based GUI version of SVGO for optimising your svgs online.
+
+
+{ "name": "Picture/Srcset", "level": "Medium", "description": "You use picture/srcset to provide the most appropriate image for the current viewport of the user.
+
+{ "label": "How to Build Responsive Images with srcset", "url": "https://www.sitepoint.com/how-to-build-responsive-images-with-srcset/" },
+
+{ "name": "Retina", "level": "Low", "description": "You provide layout images 2x or 3x, support retina display.
+{ "name": "Sprite", "level": "Medium", "description": "Small images are in a sprite file (in the case of icons, they can be in an SVG sprite image).
+{ "name": "Width and Height", "level": "High", "description": "Set `width` and `height` attributes on `<img>` if the final rendered image size is known (can be omitted for CSS sizing).
+{ "name": "Alternative text", "level": "High", "description": "All `<img>` have an alternative text which describes the image visually.
+
+{ "label": "Alt-texts: The Ultimate Guide", "url": "https://axesslab.com/alt-texts/" },
+
+{ "name": "Lazy loading", "level": "Medium", "description": "Images are lazyloaded (A noscript fallback is always provided).
+{ "label": "Native lazy loading polyfill", "url": "https://github.com/mfranzke/loading-attribute-polyfill/" },
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## JavaScript
+
+### Best practices
+
+{ "name": "JavaScript Inline", "level": "High", "description": "You don't have any JavaScript code inline (mixed with your HTML code).
+{ "name": "Concatenation", "level": "High", "description": "JavaScript files are concatenated.
+{ "name": "Minification", "level": "High", "description": "JavaScript files are minified (you can add the `.min` suffix).
+
+{ "label": "Minify Resources (HTML, CSS, and JavaScript)", "url": "https://developers.google.com/speed/docs/insights/MinifyResources" },
+
+{ "name": "JavaScript security", "level": "High][high_img]
+
+{ "label": "Guidelines for Developing Secure Applications Utilizing JavaScript", "url": "https://www.owasp.org/index.php/DOM_based_XSS_Prevention_Cheat_Sheet#Guidelines_for_Developing_Secure_Applications_Utilizing_JavaScript" },
+
+{ "name": "`noscript` tag", "level": "Medium", "description": "Use `<noscript>` tag in the HTML body if a script type on the page is unsupported or if scripting is currently turned off in the browser. This will be helpful in client-side rendering heavy apps such as React.js, see [examples", "url": "https://webdesign.tutsplus.com/tutorials/quick-tip-dont-forget-the-noscript-element--cms-25498).", "html": ["<noscript>
+  You need to enable JavaScript to run this app.
+</noscript>
+```
+
+{ "name": "Non-blocking", "level": "Medium", "description": "JavaScript files are loaded asynchronously using `async` or deferred using `defer` attribute.
+
+{ "label": "Remove Render-Blocking JavaScript", "url": "https://developers.google.com/speed/docs/insights/BlockingJS" },
+
+{ "name": "Optimized and updated JS libraries", "level": "Medium", "description": "All JavaScript libraries used in your project are necessary (prefer Vanilla Javascript for simple functionalities), updated to their latest version and don't overwhelm your JavaScript with unnecessary methods.
+
+{ "label": "You may not need jQuery", "url": "http://youmightnotneedjquery.com/" },
+{ "label": "Vanilla JavaScript for building powerful web applications", "url": "https://plainjs.com/" },
+
+{ "name": "Modernizr", "level": "Low", "description": "If you need to target some specific features you can use a custom Modernizr to add classes in your `<html>` tag.
+
+{ "label": "Customize your Modernizr", "url": "https://modernizr.com/download?setclasses" },
+
+### JavaScript testing
+
+{ "name": "ESLint", "level": "High", "description": "No errors are flagged by ESLint (based on your configuration or standards rules).
+
+{ "label": "ESLint - The pluggable linting utility for JavaScript and JSX", "url": "https://eslint.org/" },
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## Security
+
+### Scan and check your web site
+
+{ "label": "securityheaders.io", "url": "https://securityheaders.io/" },
+{ "label": "Observatory by Mozilla", "url": "https://observatory.mozilla.org/" },
+
+### Best practices
+
+{ "name": "HTTPS", "level": "High", "description": "HTTPS is used on every page and for all external content (plugins, images...).
+
+{ "label": "Let's Encrypt - Free SSL/TLS Certificates", "url": "https://letsencrypt.org/" },
+{ "label": "Free SSL Server Test", "url": "https://www.ssllabs.com/ssltest/index.html" },
+{ "label": "Strict Transport Security", "url": "http://caniuse.com/#feat=stricttransportsecurity" },
+
+{ "name": "HTTP Strict Transport Security (HSTS)", "level": "Medium", "description": "The HTTP header is set to 'Strict-Transport-Security'.
+
+{ "label": "Check HSTS preload status and eligibility", "url": "https://hstspreload.org/" },
+{ "label": "HTTP Strict Transport Security Cheat Sheet - OWASP", "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html" },
+{ "label": "Transport Layer Protection Cheat Sheet - OWASP", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html" },
+
+{ "name": "Cross Site Request Forgery (CSRF)", "level": "High", "description": "You ensure that requests made to your server-side are legitimate and originate from your website / app to prevent CSRF attacks.
+
+{ "label": "Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet  - OWASP", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" },
+
+{ "name": "Cross Site Scripting (XSS)", "level": "High", "description": "Your page or website is free from XSS possible issues.
+
+{ "label": "XSS (Cross Site Scripting) Prevention Cheat Sheet  - OWASP", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" },
+{ "label": "DOM based XSS Prevention Cheat Sheet  - OWASP", "url": "https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" },
+
+{ "name": "Content Type Options", "level": "Medium", "description": "Prevents Google Chrome and Internet Explorer from trying to mime-sniff the content-type of a response away from the one being declared by the server.
+
+{ "label": "X-Content-Type-Options - Scott Helme", "url": "https://scotthelme.co.uk/hardening-your-http-response-headers/#x-content-type-options" },
+
+{ "name": "X-Frame-Options (XFO)", "level": "Medium", "description": "Protects your visitors against clickjacking attacks.
+
+{ "label": "X-Frame-Options - Scott Helme", "url": "https://scotthelme.co.uk/hardening-your-http-response-headers/#x-frame-options" },
+{ "label": "RFC7034 - HTTP Header Field X-Frame-Options", "url": "https://tools.ietf.org/html/rfc7034" },
+
+{ "name": "Content Security Policy", "level": "Medium", "description": "Defines how content is loaded on your site and from where it is permitted to be loaded. Can also be used to protect against clickjacking attacks.
+
+{ "label": "Content Security Policy - An Introduction - Scott Helme", "url": "https://scotthelme.co.uk/content-security-policy-an-introduction/" },
+{ "label": "CSP Cheat Sheet - Scott Helme", "url": "https://scotthelme.co.uk/csp-cheat-sheet/" },
+{ "label": "CSP Cheat Sheet - OWASP", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html" },
+{ "label": "Content Security Policy Reference", "url": "https://content-security-policy.com/" },
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## Performance
+
+### Best practices
+
+{ "name": "Goals to achieve", "level": "Medium", "description": "Your pages should reach these goals:
+  * First Meaningful Paint under 1 second
+  * Time To Interactive under 5 seconds for the "average" configuration (a $200 Android on a slow 3G network with 400ms RTT and 400kbps transfer speed) and under 2 seconds for repeat visits
+  * Critical file size under 170Kb gzipped
+
+{ "label": "Website Page Analysis", "url": "https://tools.pingdom.com" },
+{ "label": "WebPageTest", "url": "https://www.webpagetest.org/" },
+{ "label": "Size Limit: Make the Web lighter", "url": "https://evilmartians.com/chronicles/size-limit-make-the-web-lighter" },
+
+{ "name": "Minified HTML", "level": "Medium", "description": "Your HTML is minified.
+
+{ "name": "Lazy loading", "level": "Medium", "description": "Images, scripts and CSS need to be lazy loaded to improve the response time of the current page (See details in their respective sections).
+
+{ "name": "Cookie size", "level": "Medium", "description": "If you are using cookies be sure each cookie doesn't exceed 4096 bytes and your domain name doesn't have more than 20 cookies.
+
+{ "label": "Cookie specification: RFC 6265", "url": "https://tools.ietf.org/html/rfc6265" },
+{ "label": "Cookies", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" },
+{ "label": "Browser Cookie Limits", "url": "http://browsercookielimits.squawky.net/" },
+
+{ "name": "Third party components", "level": "Medium", "description": "Third party iframes or components relying on external JS (like sharing buttons) are replaced by static components when possible, thus limiting calls to external APIs and keeping your user's activity private.
+
+{ "label": "Simple sharing buttons generator", "url": "https://simplesharingbuttons.com/" },
+
+### Preparing upcoming requests
+
+{ "label": "Explanation of the following techniques", "url": "https://css-tricks.com/prefetching-preloading-prebrowsing/" },
+
+{ "name": "DNS resolution", "level": "Low", "description": "DNS of third-party services that may be needed are resolved in advance during idle time using `dns-prefetch`.", "html": ["<link rel="dns-prefetch" href="https://example.com">
+```
+
+{ "name": "Preconnection", "level": "Low", "description": "DNS lookup, TCP handshake and TLS negotiation with services that will be needed soon is done in advance during idle time using `preconnect`.", "html": ["<link rel="preconnect" href="https://example.com">
+```
+
+{ "name": "Prefetching", "level": "Low", "description": "Resources that will be needed soon (e.g. lazy loaded images) are requested in advance during idle time using `prefetch`.", "html": ["<link rel="prefetch" href="image.png">
+```
+
+{ "name": "Preloading", "level": "Low", "description": "Resources needed in the current page (e.g. scripts placed at the end of `<body>`) in advance using `preload`.", "html": ["<link rel="preload" href="app.js">"
+],
+"url": [
+{ "label": "Difference between prefetch and preload", "url": "https://medium.com/reloading/preload-prefetch-and-priorities-in-chrome-776165961bbf" },
+
+### Performance testing
+
+{ "name": "Google PageSpeed", "level": "High", "description": "All your pages were tested (not only the homepage) and have a score of at least 90/100.
+
+{ "label": "Google PageSpeed", "url": "https://developers.google.com/speed/pagespeed/insights/" },
+{ "label": "Test your mobile speed with Google", "url": "https://testmysite.withgoogle.com" },
+{ "label": "WebPagetest - Website Performance and Optimization Test", "url": "https://www.webpagetest.org/" },
+{ "label": "GTmetrix - Website speed and performance optimization", "url": "https://gtmetrix.com/" },
+{ "label": "Speedrank - Improve the performance of your website", "url": "https://speedrank.app/" },
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## Accessibility
+
+{ "label": "A11ycasts with Rob Dodson", "url": "https://www.youtube.com/playlist?list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g) 📹
+
+### Best practices
+
+{ "name": "Progressive enhancement", "level": "Medium", "description": "Major functionality like main navigation and search should work without JavaScript enabled.
+
+{ "label": "Enable / Disable JavaScript in Chrome Developer Tools", "url": "https://www.youtube.com/watch?v=kBmvq2cE0D8" },
+
+{ "name": "Color contrast", "level": "Medium", "description": "Color contrast should at least pass WCAG AA (AAA for mobile).
+
+{ "label": "Contrast ratio", "url": "https://leaverou.github.io/contrast-ratio/" },
+
+#### Headings
+
+{ "name": "H1", "level": "High", "description": "All pages have an H1 which is not the title of the website.
+{ "name": "Headings", "level": "High", "description": "Headings should be used properly and in the right order (H1 to H6).
+
+{ "label": "Why headings and landmarks are so important -- A11ycasts #18", "url": "https://www.youtube.com/watch?v=vAAzdi1xuUY&index=9&list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g" },
+
+### Semantics
+
+{ "name": "Specific HTML5 input types are used", "level": "Medium", "description": "This is especially important for mobile devices that show customized keypads and widgets for different types.
+
+{ "label": "Mobile Input Types", "url": "http://mobileinputtypes.com/" },
+
+### Form
+
+{ "name": "Label", "level": "High", "description": "A label is associated with each input form element. In case a label can't be displayed, use `aria-label` instead.
+
+{ "label": "Using the aria-label attribute - MDN", "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute" },
+
+### Accessibility testing
+
+{ "name": "Accessibility standards testing", "level": "High", "description": "Use the WAVE tool to test if your page respects the accessibility standards.
+
+{ "label": "Wave testing", "url": "http://wave.webaim.org/" },
+
+{ "name": "Keyboard navigation", "level": "High", "description": "Test your website using only your keyboard in a previsible order. All interactive elements are reachable and usable.
+{ "name": "Screen-reader", "level": "Medium", "description": "All pages were tested in a screen-reader (VoiceOver, ChromeVox, NVDA or Lynx).
+{ "name": "Focus style", "level": "High", "description": "If the focus is disabled, it is replaced by visible state in CSS.
+
+{ "label": "Managing Focus - A11ycasts #22", "url": "https://www.youtube.com/watch?v=srLRSQg6Jgg&index=5&list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g" },
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## SEO
+
+{ "name": "Google Analytics", "level": "Low", "description": "Google Analytics is installed and correctly configured.
+
+{ "label": "Google Analytics", "url": "https://analytics.google.com/analytics/web/" },
+{ "label": "GA Checker (and others)", "url": "http://www.gachecker.com/" },
+
+{ "name": "Search Console", "level": "Low", "description": "Search Console is installed and correctly configured. It is a free service offered by Google that helps you monitor, maintain, and troubleshoot your site's presence in Google Search results.
+
+{ "label": "Search Console", "url": "https://search.google.com/search-console/about" },
+
+{ "name": "Headings logic", "level": "Medium", "description": "Heading text helps to understand the content in the current page.
+
+{ "label": "Tota11y, tab Headings", "url": "http://khan.github.io/tota11y/#Try-it" },
+
+{ "name": "sitemap.xml", "level": "High", "description": "A sitemap.xml exists and was submitted to Google Search Console (previously Google Webmaster Tools).
+
+{ "label": "Sitemap generator", "url": "https://websiteseochecker.com/html-sitemap-generator/" },
+
+{ "name": "robots.txt", "level": "High", "description": "The robots.txt is not blocking webpages.
+
+{ "label": "The robots.txt file", "url": "https://varvy.com/robottxt.html" },
+{ "label": "Google Robots Testing Tool", "url": "https://www.google.com/webmasters/tools/robots-testing-tool" },
+
+{ "name": "Structured Data", "level": "High", "description": "Pages using structured data are tested and are without errors. Structured data helps crawlers understand the content in the current page.
+
+{ "label": "Introduction to Structured Data - Search - Google Developers", "url": "https://developers.google.com/search/docs/guides/intro-structured-data" },
+{ "label": "JSON-LD", "url": "https://json-ld.org/" },
+{ "label": "Microdata", "url": "https://www.w3.org/TR/microdata/" },
+{ "label": "Rich Restults Test", "url": "https://search.google.com/test/rich-results" },
+{ "label": "Schema.org Full Hierarchy", "url": "http://schema.org/docs/full.html" },
+
+{ "name": "Sitemap HTML", "level": "Medium", "description": "An HTML sitemap is provided and is accessible via a link in the footer of your website.
+
+{ "label": "Sitemap guidelines - Google Support", "url": "https://support.google.com/webmasters/answer/183668?hl=en" },
+
+{ "name": "Pagination link tags", "level": "Medium", "description": "Provide `rel="prev"` and `rel="next"` to indicate paginated content.
+
+{ "label": "Pagination (rel="prev/next") Testing Tool", "url": "https://technicalseo.com/seo-tools/rel-prev-next/" },
+
+{ "label": "Pagination guidelines - Google Support", "url": "https://support.google.com/webmasters/answer/1663744?hl=en)", "html": ["<!-- Example: Pagination link tags for page 2 of a paginated list -->
+<link rel="prev" href="https://example.com/?page=1">
+<link rel="next" href="https://example.com/?page=3">
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## Translations
+
+The Front-End Checklist is also available in other languages. Thanks for all translators and their awesome work!
+
+* 🇯🇵 Japanese: [miya0001/Front-End-Checklist", "url": "https://github.com/miya0001/Front-End-Checklist" },
+* 🇪🇸 Spanish: [eoasakura/Front-End-Checklist-ES", "url": "https://github.com/eoasakura/Front-End-Checklist-ES" },
+* 🇨🇳 Chinese: [JohnsenZhou/Front-End-Checklist", "url": "https://github.com/JohnsenZhou/Front-End-Checklist" },
+* 🇰🇷 Korean: [kesuskim/Front-End-Checklist", "url": "https://github.com/kesuskim/Front-End-Checklist" },
+* 🇧🇷 Portuguese: [jcezarms/Front-End-Checklist", "url": "https://github.com/jcezarms/Front-End-Checklist" },
+* 🇻🇳 Vietnamese: [euclid1990/Front-End-Checklist", "url": "https://github.com/euclid1990/Front-End-Checklist" },
+* 🇹🇼 Traditional Chinese: [EngineLin/Front-End-Checklist", "url": "https://github.com/EngineLin/Front-End-Checklist" },
+* 🇫🇷 French: [ynizon/Front-End-Checklist", "url": "https://github.com/ynizon/Front-End-Checklist" },
+* 🇷🇺 Russian: [ungear/Front-End-Checklist", "url": "https://github.com/ungear/Front-End-Checklist" },
+* 🇹🇷 Turkish: [eraycetinay/Front-End-Checklist", "url": "https://github.com/eraycetinay/Front-End-Checklist" },
+* 🇩🇪 German: [xfuture603/Front-End-Checklist", "url": "https://github.com/xFuture603/Front-End-Checklist" },
+* 🇵🇱 Polish: [mbiesiad/Front-End-Checklist", "url": "https://github.com/mbiesiad/Front-End-Checklist" },
+
+---
+
+## Front-End Checklist Badge
+
+If you want to show you are following the rules of the Front-End Checklist, put this badge on your README file!
+
+➔ [![Front‑End_Checklist followed", "url": "https://img.shields.io/badge/Front‑End_Checklist-followed-brightgreen.svg)", "url": "https://github.com/thedaviddias/Front-End-Checklist/" },
+
+```md
+[![Front‑End_Checklist followed", "url": "https://img.shields.io/badge/Front‑End_Checklist-followed-brightgreen.svg)", "url": "https://github.com/thedaviddias/Front-End-Checklist/" },
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## Contributing
+
+**Open an issue or a pull request to suggest changes or additions.**
+
+### Guide
+
+The **Front-End Checklist** repository consists of two branches:
+
+#### 1. `master`
+
+This branch consists of the `README.md` file that is automatically reflected on the [Front-End Checklist", "url": "https://frontendchecklist.io) website.
+
+#### 2. `develop`
+
+This branch will be used to make some significant changes to the structure, content if needed. It is preferable to use the master branch to fix small errors or add a new item.
+
+## Support
+
+If you have any question or suggestion, don't hesitate to use Gitter or Twitter:
+
+* [Chat on Gitter", "url": "https://gitter.im/Front-End-Checklist/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link" },
+* [Facebook", "url": "https://www.facebook.com/frontendchecklist/" },
+* [Twitter", "url": "https://twitter.com/thedaviddias" },
+
+## Author
+
+**[David Dias", "url": "https://github.com/thedaviddias)**
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute]](.github/CONTRIBUTING.md).
+<a href="https://github.com/thedaviddias/Front-End-Checklist/graphs/contributors"><img src="https://opencollective.com/front-end-checklist/contributors.svg?width=890" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer", "url": "https://opencollective.com/front-end-checklist#backer)]
+
+<a href="https://opencollective.com/front-end-checklist#backers" target="_blank"><img src="https://opencollective.com/front-end-checklist/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor", "url": "https://opencollective.com/front-end-checklist#sponsor)]
+
+<a href="https://opencollective.com/front-end-checklist/sponsor/0/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/front-end-checklist/sponsor/1/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/front-end-checklist/sponsor/2/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/front-end-checklist/sponsor/3/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/front-end-checklist/sponsor/4/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/front-end-checklist/sponsor/5/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/front-end-checklist/sponsor/6/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/front-end-checklist/sponsor/7/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/front-end-checklist/sponsor/8/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/front-end-checklist/sponsor/9/website" target="_blank"><img src="https://opencollective.com/front-end-checklist/sponsor/9/avatar.svg"></a>
+
+## License
+
+[![CC0", "url": "https://i.creativecommons.org/p/zero/1.0/88x31.png)", "url": "https://creativecommons.org/publicdomain/zero/1.0/" },
+
+**[⬆ back to top](#table-of-contents)**
+
+[low_img]: data/images/priority/low.svg
+[medium_img]: data/images/priority/medium.svg
+[high_img]: data/images/priority/high.svg

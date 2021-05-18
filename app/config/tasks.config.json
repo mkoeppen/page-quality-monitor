@@ -1,6 +1,6 @@
 {
     "doctype": {
-        "title": "Doctype2",
+        "title": "Doctype",
         "description": "The Doctype is HTML5 and is at the top of all your HTML pages.",
         "howto": "<code><!-- Doctype HTML5 -->\n<!doctype html></code>",
         "tags": ["META TAG"],
@@ -23,6 +23,14 @@
         "priority": "high",
         "category":  "head"
     },
+    "title": {
+        "title": "Title",
+        "description": "A title is used on all pages",
+        "howto": "<code><!-- Document Title --><title>Page Title less than 55 characters</title></code>",
+        "tags": ["META TAG"],
+        "priority": "high",
+        "category":  "head"
+    },
     "description": {
         "title": "Description",
         "description": "A meta description is provided, it is unique and doesn't possess more than 150 characters.",
@@ -35,6 +43,14 @@
         "title": "Favicons",
         "description": "Each favicon has been created and displays correctly.",
         "howto": "<p>If you have only a favicon.ico, put it at the root of your site. Normally you won't need to use any markup. However, it's still good practice to link to it using the example below. Today, PNG format is recommended over .ico format (dimensions: 32x32px).</p><code><!-- Standard favicon -->\n<link rel=\"icon\" type=\"image/x-icon\" href=\"https://example.com/favicon.ico\">\n<!-- Recommended favicon format -->\n<link rel=\"icon\" type=\"image/png\" href=\"https://example.com/favicon.png\"></code>",
+        "tags": ["META TAG"],
+        "priority": "medium",
+        "category":  "head"
+    },
+    "apple_web_app_meta": {
+        "title": "Apple Web App Meta",
+        "description": "Apple meta-tags are present.",
+        "howto": "<code><!-- Apple Touch Icon (at least 200x200px) --><link rel=\"apple-touch-icon\" href=\"/custom-icon.png\">\n<!-- To run web application in full-screen -->\n<meta name=\"apple-mobile-web-app-capable\" content=\"yes\"><!-- Status Bar Style (see Supported Meta Tags below for available values) --><!-- Has no effect unless you have the previous meta tag --><meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\"></code>",
         "tags": ["META TAG"],
         "priority": "medium",
         "category":  "head"
