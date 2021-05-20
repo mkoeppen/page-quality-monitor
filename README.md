@@ -21,7 +21,7 @@
 - add loading spinner on page table 
 - create dev documentation
 - create better readme
-
+- test slim base image
 
 
 
