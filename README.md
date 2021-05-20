@@ -9,6 +9,7 @@
 - remove parentId on childs for deleted parents
 - remove all reports for deleted elements
 - move delete and edit to details page
+- initial db import if empty
 
 
 # beta
