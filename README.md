@@ -1,7 +1,6 @@
 # alpha
 
 ## 0.1.0
-- extend tasklist
 - fix node dev mode
 - Docker Hub Image
 - create dev documentation

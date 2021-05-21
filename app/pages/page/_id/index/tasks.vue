@@ -33,52 +33,63 @@
       </v-card>
     </v-dialog>
 
-    <v-data-table
-      dense
-      :single-expand="false"
-      :expanded.sync="expanded"
-      :show-expand="true"
-      :headers="headers"
-      :items="tasks"
-      class="m-tasks__table"
-    >
-      <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
-        <v-btn dark @click="expand(true)" v-if="item.howto && !isExpanded"><v-icon>mdi-chevron-down</v-icon></v-btn>
-        <v-btn dark @click="expand(false)" v-if="item.howto && isExpanded"><v-icon>mdi-chevron-up</v-icon></v-btn>
-      </template>
+    <div class="m-task-group" v-for="(category, categoryIndex) in categories" :key="categoryIndex">
 
-      <template v-slot:expanded-item="{ headers, item }">
-        <td :colspan="headers.length">
-          <code>{{item.howto}}</code>
-        </td>
-      </template>
+      <h2 class="m-task-group__headline">{{category.name}}</h2>
 
-      <template v-slot:item.priority="props">        
-        <span 
-          :class="`m-tasks__priority-cell m-tasks__priority-cell--${(props.item.priority||'low').toLowerCase()}`" 
-          :title="props.item.priority" 
-          @click="openPriorityDialog(props.item)"
-          dark
-        >
-          <v-icon class="m-tasks__priority-cell-icon" dark>mdi-pencil</v-icon>
-        </span>
-      </template>
+      <v-data-table
+        dense
+        :single-expand="false"
+        :expanded.sync="category.expanded"
+        :custom-sort="customSort"
+        :sort-by="['priority']"
+        :show-expand="true"
+        :headers="headers"
+        :items="tasks.filter((t) => t.category === categoryIndex)"
+        hide-default-footer
+        disable-pagination
+        class="m-tasks__table"
+      >
+        <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
+          <v-btn dark @click="expand(true)" v-if="item.html && !isExpanded"><v-icon>mdi-chevron-down</v-icon></v-btn>
+          <v-btn dark @click="expand(false)" v-if="item.html && isExpanded"><v-icon>mdi-chevron-up</v-icon></v-btn>
+        </template>
 
-      <template v-slot:item.checked="props">
-        <CheckedTaskInput v-model="props.item.checked" :taskId="props.item.id" @change="onChecked"></CheckedTaskInput>
-      </template>
+        <template v-slot:expanded-item="{ headers, item }">
+          <td :colspan="headers.length">
+            <pre v-if="item.html && item.html.length > 0">{{ item.html.join('\n') }}</pre>
+          </td>
+        </template>
 
-      <template v-slot:item.title="props">
-        <div class="m-task__title-wrapper">
-          <strong class="m-task__title">{{props.item.title}}</strong>
-          <ul class="m-tasks__tags">
-            <li v-for="(tag, index) in props.item.tags" :key="index" class="m-tasks__tag">{{tag}}</li>
-          </ul>
-        </div>
-        <p class="m-task__description">{{props.item.description}}</p>
-      </template>
+        <template v-slot:item.priority="props">        
+          <span 
+            :class="`m-tasks__priority-cell m-tasks__priority-cell--${(props.item.priority||'low').toLowerCase()}`" 
+            :title="props.item.priority" 
+            @click="openPriorityDialog(props.item)"
+            dark
+          >
+            <v-icon class="m-tasks__priority-cell-icon" dark>mdi-pencil</v-icon>
+          </span>
+        </template>
 
-    </v-data-table>
+        <template v-slot:item.checked="props">
+          <CheckedTaskInput v-model="props.item.checked" :taskId="props.item.id" @change="onChecked"></CheckedTaskInput>
+        </template>
+
+        <template v-slot:item.title="props">
+          <div class="m-task__title-wrapper">
+            <strong class="m-task__title">{{props.item.title}}</strong>
+            <ul class="m-tasks__tags">
+              <li v-for="(tag, index) in props.item.tags" :key="index" class="m-tasks__tag">{{tag}}</li>
+            </ul>
+          </div>
+          <p class="m-task__description">{{props.item.description}}</p>
+        </template>
+
+      </v-data-table>
+    </div>
+
+    
 
   </v-container>
 </template>
@@ -97,7 +108,6 @@ export default {
       priorityChange: false,
       priorityChangeTaskItem: null,
       priorityChangeTaskPriority: null,
-      expanded: [],
       headers: [
         { text: '', value: 'priority', cellClass: 'pa-0', class: 'pa-0', width: 24 },
         { text: '', value: 'checked' },
@@ -112,10 +122,9 @@ export default {
     const taskDefinitions = await $axios.$get(`/api/task-list/${id}`);
     const tasksOverwrite = await $axios.$get(`/api/task-list-overwrites/${id}`) || [];
 
-    console.log('tasksOverwrite', tasksOverwrite);
     let tasks = [];
 
-    for (const [taskId, task] of Object.entries(taskDefinitions)) {
+    for (const [taskId, task] of Object.entries(taskDefinitions.tasks)) {
       const overwrite = tasksOverwrite.find((to) => to.task_id === taskId) || {};
       task.id = taskId;
       task.checked = overwrite.checked || false;
@@ -127,11 +136,32 @@ export default {
     
     return {
       tasks,
+      categories: taskDefinitions.categories,
       pageId: id
     }
   },
 
   methods: {
+    customSort(items, index, isDesc) {
+      items.sort((a, b) => {
+        if (index[0] === "priority") {
+          const aPriority = a.priority.toLowerCase() === 'high' ? 3 : (a.priority.toLowerCase() === 'medium' ? 2 : 1);
+          const bPriority = b.priority.toLowerCase() === 'high' ? 3 : (b.priority.toLowerCase() === 'medium' ? 2 : 1);
+          if (!isDesc[0]) {
+            return aPriority < bPriority ? -1 : 1;
+          } else {
+            return bPriority < aPriority ? -1 : 1;
+          }
+        } else {
+          if (!isDesc[0]) {
+            return a[index[0]] < b[index[0]] ? -1 : 1;
+          } else {
+            return b[index[0]] < a[index[0]] ? -1 : 1;
+          }
+        }
+      });
+      return items;
+    },
     openPriorityDialog(item) {
       this.priorityChangeTaskItem = item;
       this.priorityChange = true;
@@ -210,5 +240,14 @@ export default {
 
   .m-task__title {
     font-size: 20px;
+  }
+
+  .m-task-group {
+    margin-bottom: 60px;
+  }
+
+  .m-task-group__headline {
+    font-size: 50px;
+    color: #ff9800;
   }
 </style>
