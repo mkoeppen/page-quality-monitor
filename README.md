@@ -1,6 +1,7 @@
 # alpha
 
 ## 0.1.0
+- hover effect on task row
 - fix node dev mode
 - Docker Hub Image
 - cronjob should get reports every week (setting on page)

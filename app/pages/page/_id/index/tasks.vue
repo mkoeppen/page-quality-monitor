@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="pa-0">
+  <v-container fluid class="pa-0 mt-10">
 
     <v-dialog v-model="priorityChange" max-width="500px">
       <v-card v-if="priorityChangeTaskItem">
@@ -46,6 +46,7 @@
         :show-expand="true"
         :headers="headers"
         :items="tasks.filter((t) => t.category === categoryIndex)"
+        :item-class= "rowClasses" 
         hide-default-footer
         disable-pagination
         class="m-tasks__table"
@@ -110,9 +111,9 @@ export default {
       priorityChangeTaskPriority: null,
       headers: [
         { text: '', value: 'priority', cellClass: 'pa-0', class: 'pa-0', width: 24 },
-        { text: '', value: 'checked' },
+        { text: '', value: 'checked', width: 56 },
         { text: 'Task', value: 'title' },
-        { text: '', value: 'data-table-expand' },
+        { text: '', value: 'data-table-expand', width: 100 },
       ],
     }
   },
@@ -161,6 +162,13 @@ export default {
         }
       });
       return items;
+    },
+    rowClasses(item) {
+      let classList = `m-tasks--${item.priority.toLowerCase()}`;
+        if (item.checked) {
+          classList = `m-task--checked ${classList}`;
+        }
+        return classList;
     },
     openPriorityDialog(item) {
       this.priorityChangeTaskItem = item;
@@ -213,6 +221,31 @@ export default {
     }
   }
 
+  .m-tasks {
+    &--high:not(.m-task--checked) {
+      background: #ffe3e3;
+    }
+    &--medium:not(.m-task--checked) {
+      background: rgb(255, 240, 212);
+    }
+    &--low:not(.m-task--checked) {
+      background: rgb(218, 255, 218);
+    }
+  }
+
+  .m-task__title-wrapper {
+    margin-top: 8px;
+  }
+
+  .v-application p.m-task__description {
+    margin-bottom: 8px;
+    max-width: 1060px;
+  }
+
+  .m-tasks__table tbody td {
+    min-height: 70px;
+  }
+
   .m-tasks__tags {
     display: flex;
     flex-wrap: wrap;
@@ -249,5 +282,19 @@ export default {
   .m-task-group__headline {
     font-size: 50px;
     color: #ff9800;
+  }
+
+  .v-data-table > .v-data-table__wrapper tbody tr.v-data-table__expanded__content {
+    box-shadow: none;
+
+    pre {   
+      padding: 50px 30px;
+    }
+
+    td {
+      background: #f3f3f3;
+      border-left: 1px solid #e5e5e5;
+      border-right: 1px solid #e5e5e5;
+    }
   }
 </style>
