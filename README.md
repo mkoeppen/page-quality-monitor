@@ -2,14 +2,19 @@
 
 ## 0.1.0
 - hover effect on task row
-- fix node dev mode
+- initial db import if empty
 - Docker Hub Image
 - cronjob should get reports every week (setting on page)
+
+
+## 0.2.0
+
+- fix node dev mode
 - fix page save response (currently all report data go missing)
 - remove parentId on childs for deleted parents
 - remove all reports for deleted elements
 - move delete and edit to details page
-- initial db import if empty
+
 
 
 # beta
