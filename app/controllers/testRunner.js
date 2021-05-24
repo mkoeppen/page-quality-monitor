@@ -20,7 +20,7 @@ module.exports = class {
             return false;
         }
         this.isRunning = true;
-        console.log('TestRunner Start', this.initDate);
+        console.log('TestRunner start at', new Date());
 
         let nextTest;
         let nextTestResponse;
@@ -32,6 +32,7 @@ module.exports = class {
             }
 
             nextTest = nextTestResponse[0];
+            console.log(`TestRunner generate Report for: Project ID=${nextTest.id} and URL: ${nextTest.url}`);
 
             const report = await this.generate(nextTest.url);
             const currentDate = new Date();

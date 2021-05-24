@@ -1,11 +1,8 @@
 # alpha
 
 ## 0.1.0
-- hover effect on task row
 - initial db import if empty
 - Docker Hub Image
-- cronjob should get reports every week (setting on page)
-- generate manually should trigger function direct (not via cronjob)
 
 
 ## 0.2.0

@@ -60,7 +60,8 @@ async function start () {
 
   app.get("/api/page/:id/generate-report", (req, res) => {
     db.generatePageReport(req.params.id).then((data) => {
-        res.end(JSON.stringify(data));
+      testRunner.start();
+      res.end(JSON.stringify(data));
     });
   })
 
@@ -138,8 +139,7 @@ async function start () {
   app.use(nuxt.render)
 
   // Cron Job
-  cron.schedule("*/10 * * * * *", function() {
-    console.log("running a task 10 seconds");
+  cron.schedule("*/1 * * * *", function() {
     testRunner.start();
   });
 

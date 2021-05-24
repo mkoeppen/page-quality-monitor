@@ -43,6 +43,7 @@
         :expanded.sync="category.expanded"
         :custom-sort="customSort"
         :sort-by="['priority']"
+        :sort-desc="true"
         :show-expand="true"
         :headers="headers"
         :items="tasks.filter((t) => t.category === categoryIndex)"
@@ -229,6 +230,19 @@ export default {
       background: rgb(255, 240, 212);
     }
     &--low:not(.m-task--checked) {
+      background: rgb(218, 255, 218);
+    }
+  }
+
+  .theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+    box-shadow: inset 0 -200px 0 0 rgba(204, 204, 204, .26);
+    &.m-tasks--high:not(.m-task--checked) {
+      background: #ffe3e3;
+    }
+    &.m-tasks--medium:not(.m-task--checked) {
+      background: rgb(255, 240, 212);
+    }
+    &.m-tasks--low:not(.m-task--checked) {
       background: rgb(218, 255, 218);
     }
   }

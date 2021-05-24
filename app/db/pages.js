@@ -132,7 +132,7 @@ exports.delete = function(db, id) {
   
 exports.getNextTest = function(db) {
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM `pages` WHERE `forceReport` = 1 LIMIT 1', (err, res) => {
+        db.query('SELECT * FROM `pages` WHERE `forceReport` = 1 or `lastReportDate` < NOW() - INTERVAL 1 WEEK LIMIT 1', (err, res) => {
             if(err) throw err;
             resolve(res)
         });
