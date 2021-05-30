@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const pages = require('./pages');
 const reports = require('./reports');
+const migration = require('./migration');
 const tasksPageRelations = require('./tasksPageRelations');
 
 const db = mysql.createConnection({
@@ -9,13 +10,22 @@ const db = mysql.createConnection({
   user: "pagequalitymonitor",
   password: "qpmpass",
   database: "pagequalitymonitor",
+  multipleStatements: true
 });
 
+exports.connect = function() {
+  return new Promise(async (resolve, reject) => {
+    db.connect(async function(err) {
+      if (err) throw err;      
+    
+      await migration.checkMigration(db);
+    
+      console.log("Connected!");
+      resolve();
+    });
+  })
+}
 
-db.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
 
 exports.get = function() {
   return db;

@@ -35,6 +35,8 @@ async function start () {
     await nuxt.ready()
   }
 
+  await db.connect();
+
   app.use(bodyParser.json());
 
   /**
