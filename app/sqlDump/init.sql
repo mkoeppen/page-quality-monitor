@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Erstellungszeit: 09. Mai 2021 um 16:12
+-- Erstellungszeit: 30. Mai 2021 um 15:14
 -- Server-Version: 5.7.29
 -- PHP-Version: 7.4.1
 
@@ -37,13 +37,6 @@ CREATE TABLE `pages` (
   `forceReport` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `pages`
---
-
-INSERT INTO `pages` (`id`, `url`, `pagename`, `parentId`, `lastReportDate`, `forceReport`) VALUES
-(1, 'https://www.unitb.de/', 'Unitb', NULL, '2021-05-06 20:54:43', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -68,6 +61,24 @@ CREATE TABLE `reports` (
   `fid_score` decimal(10,2) DEFAULT NULL,
   `cls_score` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `settings`
+--
+
+CREATE TABLE `settings` (
+  `name` varchar(100) NOT NULL,
+  `value` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `settings`
+--
+
+INSERT INTO `settings` (`name`, `value`) VALUES
+('migration_version', '1');
 
 -- --------------------------------------------------------
 
@@ -100,6 +111,12 @@ ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indizes für die Tabelle `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`name`);
+
+--
 -- Indizes für die Tabelle `tasks_page_relation`
 --
 ALTER TABLE `tasks_page_relation`
@@ -113,13 +130,13 @@ ALTER TABLE `tasks_page_relation`
 -- AUTO_INCREMENT für Tabelle `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT für Tabelle `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
