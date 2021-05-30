@@ -1,14 +1,12 @@
 # alpha
 
 ## 0.1.0
-- initial db import if empty
 - Docker Hub Image
-
+- fix dev mode report file creation
 
 ## 0.2.0
 
 - fix node dev mode
-- fix page save response (currently all report data go missing)
 - remove parentId on childs for deleted parents
 - remove all reports for deleted elements
 - move delete and edit to details page

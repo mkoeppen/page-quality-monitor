@@ -39,16 +39,25 @@
                       v-model="editedItem.pagename"
                       label="Name"
                     ></v-text-field>
-                    <v-text-field
-                      v-model="editedItem.url"
-                      label="url"
-                    ></v-text-field>
+                    <div class="d-flex">
+                      <v-select
+                        class="m-page-edit__protocol"
+                        :items="['https://', 'http://']"
+                        v-model="editedItem.protocol"
+                        label="Parent"
+                      ></v-select>
+                      <v-text-field
+                        class="flex-grow-1"
+                        v-model="editedItem.url"
+                        label="url"
+                      ></v-text-field>
+                    </div>
                     <v-select
                       :items="possibleParents"
                       item-text="pagename"
                       item-value="id"
                       v-model="editedItem.parentId"
-                      label="Standard"
+                      label="Parent"
                     ></v-select>
                   </v-container>
                 </v-card-text>
@@ -213,6 +222,7 @@ export default {
         id: undefined,
         url: '',
         pagename: '',
+        protocol: 'https://',
         parentId: null
       },
       defaultItem: {
@@ -273,13 +283,16 @@ export default {
     },
 
     editItem (item) {
-      this.editedIndex = this.pages.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+      this.editedIndex = this.preparedPages.indexOf(item);
+      const clone = Object.assign({}, item);
+      clone.protocol = clone.url.indexOf('http://') >= 0 ? 'http://' : 'https://';
+      clone.url = clone.url.replace(/^http(s)?:\/\//, '');
+      this.editedItem = clone;
+      this.dialog = true;
     },
 
     deleteItem (item) {
-      this.editedIndex = this.pages.indexOf(item)
+      this.editedIndex = this.preparedPages.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
@@ -290,7 +303,7 @@ export default {
 
     async deleteItemConfirm () {
       await this.$axios.$delete(`/api/page/${this.editedItem.id}`);
-      this.pages.splice(this.editedIndex, 1)
+      this.preparedPages.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -334,20 +347,21 @@ export default {
     },
 
     async save () {      
-      await this.$axios.$post(`/api/page`, {
+      const savedItem = await this.$axios.$post(`/api/page`, {
         id: this.editedItem.id,
-        url: this.editedItem.url,
+        url: this.editedItem.protocol + this.editedItem.url,
         pagename: this.editedItem.pagename,
         parentId: this.editedItem.parentId
       });
-      this.pages = await this.$axios.$get(`/api/pages`);
+      this.preparedPages = await this.$axios.$get(`/api/pages-with-scores`);
+      this.generateReport(savedItem);
 
       this.close()
     },
 
     generatePreparedPages() {
 
-      let preparedPages = this.pages || [];
+      let preparedPages = this.pages ? this.pages.slice() : [];
 
       console.log('prepare pages 1 ', this.isNested, preparedPages.length);
 
@@ -475,6 +489,11 @@ export default {
   }
   .v-input--switch.v-input--dense > .v-input__control > .v-input__slot {
     margin-bottom: 0;
+  }
+
+  .m-page-edit__protocol {
+    width: 90px;
+    flex: none;
   }
 
 </style>
