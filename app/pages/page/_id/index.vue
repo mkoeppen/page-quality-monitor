@@ -103,7 +103,7 @@ export default {
     const { id } = route.params
     const page = await $axios.$get(`/api/page/${id}`);
     const pages = await $axios.$get(`/api/pages`);
-    console.log('page.parentId', page);
+    
     return {
       id: id,
       pagename: page.pagename,

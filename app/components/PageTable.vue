@@ -119,7 +119,7 @@
       </template>
 
       <template v-slot:item.marked="props">
-        <MarkedPageStarInput v-model="props.item.marked" :pageId="props.item.id" @change="markedPageChange"></MarkedPageStarInput>        
+        <MarkedPageStarInput v-model="props.item.marked" :pageId="props.item.id"></MarkedPageStarInput>        
       </template>      
       <template v-slot:item.score_average="props">
         <ScoreCircle :percentage="props.item.score_average"></ScoreCircle>
@@ -295,10 +295,6 @@ export default {
       this.editedIndex = this.preparedPages.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
-    },
-
-    markedPageChange: function(e, id) {
-      console.log('markedPageChange',e, id)
     },
 
     async deleteItemConfirm () {
