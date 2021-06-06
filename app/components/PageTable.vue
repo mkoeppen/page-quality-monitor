@@ -44,7 +44,7 @@
                         class="m-page-edit__protocol"
                         :items="['https://', 'http://']"
                         v-model="editedItem.protocol"
-                        label="Parent"
+                        label="Protocol"
                       ></v-select>
                       <v-text-field
                         class="flex-grow-1"
