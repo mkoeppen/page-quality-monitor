@@ -10,9 +10,14 @@
 export default {
  async asyncData({ $axios, $config, route }) {
     const { id } = route.params
-    const reportHtml = await $axios.$get(`/api/last-report-for-page/${id}`);
+    let reportHtml;
+    try {
+      reportHtml = await $axios.$get(`/api/last-report-for-page/${id}`);
+    } catch(e) {
+
+    }
     return {
-      reportHtml: "data:text/html;charset=utf-8," + encodeURIComponent(reportHtml)
+      reportHtml: reportHtml ? "data:text/html;charset=utf-8," + encodeURIComponent(reportHtml) : null
     }
   }
 }

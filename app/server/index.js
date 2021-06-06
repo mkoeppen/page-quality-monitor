@@ -13,6 +13,9 @@ const path = require('path');
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
 
+console.log('+++++++++++++++ config.dev', config.dev);
+console.log('+++++++++++++++ process.env.NODE_ENV', process.env.NODE_ENV);
+
 async function start () {
   // Init Nuxt.js
   const nuxt = new Nuxt(config);
@@ -44,23 +47,27 @@ async function start () {
    */
 
   app.get("/api/pages", (req, res) => {
+    console.log('####### 1');
     db.getPages().then((data) => {
         res.end(JSON.stringify(data));
     });
   })
   app.get("/api/pages-with-scores", (req, res) => {
+    console.log('####### 2');
     db.getPagesWithScores().then((data) => {
         res.end(JSON.stringify(data));
     });
   })
 
   app.get("/api/page/:id", (req, res) => {
+    console.log('####### 3');
     db.getPageById(req.params.id).then((data) => {
         res.end(JSON.stringify(data && data.length > 0 ? data[0] : data));
     });
   })
 
   app.get("/api/page/:id/generate-report", (req, res) => {
+    console.log('####### 4');
     db.generatePageReport(req.params.id).then((data) => {
       testRunner.start();
       res.end(JSON.stringify(data));
@@ -68,24 +75,28 @@ async function start () {
   })
 
   app.post("/api/page/:pageId/uncheck-task/:taskId", (req, res) => {
+    console.log('####### 5');
     db.changeCheckedState(req.params.pageId, req.params.taskId, false).then((data) => {
         res.end(JSON.stringify(data));
     });
   })
 
   app.post("/api/page/:pageId/check-task/:taskId", (req, res) => {
+    console.log('####### 6');
     db.changeCheckedState(req.params.pageId, req.params.taskId, true).then((data) => {
         res.end(JSON.stringify(data));
     });
   })
 
   app.post("/api/page/:pageId/change-task-priority/:taskId/:priority", (req, res) => {
+    console.log('####### 7');
     db.changeTaskPriority(req.params.pageId, req.params.taskId, req.params.priority).then((data) => {
         res.end(JSON.stringify(data));
     });
   })
 
   app.get("/api/last-report-for-page/:id", (req, res) => {
+    console.log('####### 8');
     db.getLastReportForPage(req.params.id).then((data) => {
       let filepath = '';
       if(data && data[0].html_path) {
@@ -103,18 +114,22 @@ async function start () {
   })
 
   app.get("/api/task-list/:id", (req, res) => {  
-    let filepath = config.dev ? `${__dirname }/../config/tasks.config.json` : '/usr/share/app/config/tasks.config.json';
+    console.log('####### 9');
+    let filepath = config.dev ? `${__dirname }/../config/tasks.config.json` : '/usr/src/app/config/tasks.config.json';
+    console.log('####### 9 end', path.resolve(filepath));
 
     res.sendFile(path.resolve(filepath));
   })
 
   app.get("/api/task-list-overwrites/:id", (req, res) => {
+    console.log('####### 10');
     db.getTasksRelationsForPageId(req.params.id).then((data) => {
       res.end(JSON.stringify(data));
     });
   })
 
   app.post("/api/page", (req, res) => {
+    console.log('####### 11');
     db.savePage(req.body).then((data) => {
         res.end(JSON.stringify({
           id: data.insertId
@@ -122,6 +137,7 @@ async function start () {
     });
   })
   app.delete("/api/page/:id", (req, res) => {
+    console.log('####### 12');
     db.deletePage(req.params.id).then((data) => {
         res.end(JSON.stringify({}));
     });
@@ -133,6 +149,7 @@ async function start () {
   // })
 
   app.get('/control/run', function(req, res) {
+    console.log('/api/pages');
     testRunner.start();
     res.send('Test Runner started')
   })

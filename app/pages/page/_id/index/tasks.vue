@@ -120,9 +120,21 @@ export default {
   },
 
  async asyncData({ $axios, $config, route }) {
-    const { id } = route.params
-    const taskDefinitions = await $axios.$get(`/api/task-list/${id}`);
-    const tasksOverwrite = await $axios.$get(`/api/task-list-overwrites/${id}`) || [];
+    const { id } = route.params;
+    let taskDefinitions;
+    let tasksOverwrite
+    try {
+      taskDefinitions = await $axios.$get(`/api/task-list/${id}`);
+    } catch(e) {
+      taskDefinitions = {
+        tasks: []
+      };
+    }
+    try {
+      tasksOverwrite = await $axios.$get(`/api/task-list-overwrites/${id}`) || [];
+    } catch (error) {
+      tasksOverwrite = [];
+    }
 
     let tasks = [];
 
