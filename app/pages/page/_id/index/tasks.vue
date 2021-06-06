@@ -212,6 +212,10 @@ export default {
     display: flex;
     background: gray;
 
+    .v-icon.m-tasks__priority-cell-icon {
+      display: none;
+    }
+
     &:hover {
       cursor: pointer;
       width: 24px;
