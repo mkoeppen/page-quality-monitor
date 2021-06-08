@@ -1,11 +1,11 @@
-FROM node:16-buster AS builder
+FROM node:16-buster-slim AS builder
 WORKDIR /usr/src/app
 COPY ./app /usr/src/app
 RUN rm /usr/src/app/package-lock.json
 RUN npm install
 RUN npm run build
 
-FROM node:16-buster
+FROM node:16-buster-slim
 
 RUN apt-get update && \
     apt-get install -y chromium

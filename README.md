@@ -11,6 +11,7 @@
 - remove all reports for deleted elements
 - move delete and edit to details page
 - LCP, FID, CLS Info bubbles
+- remove http/https on pasted urls
 
 
 
