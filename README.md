@@ -10,6 +10,7 @@
 - remove parentId on childs for deleted parents
 - remove all reports for deleted elements
 - move delete and edit to details page
+- LCP, FID, CLS Info bubbles
 
 
 

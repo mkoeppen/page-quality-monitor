@@ -1,5 +1,3 @@
-const colors = require('vuetify/es5/util/colors');
-
 module.exports = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {

@@ -5,7 +5,7 @@ const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const db = require('../db');
 const cron = require("node-cron");
-const TestRunnerClass = require('../controllers/testRunner');
+const TestRunnerClass = require('./testRunner');
 const testRunner = new TestRunnerClass();
 const path = require('path');
 
