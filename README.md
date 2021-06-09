@@ -24,6 +24,7 @@
 - [ ] create item > new item is visible > click "show nested" twice > new item is hidden
 - [x] show task priority edit icon on row hover
 - [ ] show task progress on page table
+- [ ] Allow Parents without url
 
 
 # beta
