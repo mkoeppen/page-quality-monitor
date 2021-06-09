@@ -8,7 +8,7 @@
 - [ ] remove http/https on pasted urls
 - [ ] Favicon
 - [x] rename "Nested Childs" to "Show childs nested"
-- [ ] round report values
+- [x] round report values
 - [ ] BUG: nested childs hidden in firefox
 - [ ] disable PWA Score if it is disabled in lighthouse report
 - [ ] Title attribute for all Icon-Buttons 

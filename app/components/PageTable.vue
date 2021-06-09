@@ -375,6 +375,13 @@ export default {
         ];
         page.score_average = Math.round(scoreValues.reduce((a,b) => a + b) / scoreValues.length * 100) / 100;
 
+        // round scores
+        page.score_performance = Math.round(page.score_performance * 100) / 100;
+        page.score_accessibility = Math.round(page.score_accessibility * 100) / 100;
+        page.score_best_practices = Math.round(page.score_best_practices * 100) / 100;
+        page.score_seo = Math.round(page.score_seo * 100) / 100;
+        page.score_pwa = Math.round(page.score_pwa * 100) / 100;
+
         // MARKED
         page.marked = markedPages.indexOf(page.id) >= 0;
 
