@@ -15,7 +15,13 @@ services:
       - lighthouse-shm:/dev/shm
     environment:
       - NODE_ENV=prod
-      - NODE_PORT=3000
+      - NODE_PORT=3000      
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_PASSWORD=pqmrootpass
+      - MYSQL_DATABASE=pagequalitymonitor
+      - MYSQL_USER=pagequalitymonitor
+      - MYSQL_PASSWORD=qpmpass
       - HOST=0.0.0.0
     command: npm run start
     depends_on:
