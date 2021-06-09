@@ -35,7 +35,7 @@ export default {
     },
 
     getScorePercentage(score) {
-      return score === null ? '-' : `${score * 100}%`;
+      return score === null ? '-' : `${parseInt(score * 100)}%`;
     },
   }
 
