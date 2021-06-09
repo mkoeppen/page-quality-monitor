@@ -216,7 +216,7 @@ export default {
       display: none;
     }
 
-    &:hover {
+    tr:hover & {
       cursor: pointer;
       width: 24px;
 

@@ -95,15 +95,15 @@
 
             <v-spacer></v-spacer>
 
-              <v-switch dense v-model="nestedChilds" label="Nested Childs" @change="changeNestedChildSwitch"></v-switch>
-              <v-switch dense v-model="showOnlyMarked" label="Show Only Marked" @change="changeShowOnlyMarkedSwitch" class="pl-10"></v-switch>
+              <v-switch dense v-model="nestedChilds" label="Show childs nested" @change="changeNestedChildSwitch"></v-switch>
+              <v-switch dense v-model="showOnlyMarked" label="Show Marked Only" @change="changeShowOnlyMarkedSwitch" class="pl-10"></v-switch>
         </v-toolbar>
       </template>
             
       <template v-slot:item.pagename="props">
         <div class="m-page__name-wrapper">
           <strong class="m-page__name">{{props.item.pagename}}</strong>
-          <span class="m-page__url" :title="props.item.url">{{props.item.url}}</span>
+          <a class="m-page__url" :href="props.item.url" target="_blank" rel="noopener noreferrer" :title="props.item.url">{{props.item.url}}</a>
         </div>
       </template>
 
@@ -457,6 +457,7 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    width: 25rem;
   }
 
   
