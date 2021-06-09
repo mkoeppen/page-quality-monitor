@@ -5,11 +5,11 @@ const migration = require('./migration');
 const tasksPageRelations = require('./tasksPageRelations');
 
 const db = mysql.createConnection({
-  host: process.env.MYSQL_HOST ?? 'localhost',
-  port: process.env.MYSQL_PORT,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
+  host: process.env.MYSQL_HOST || 'localhost',
+  port: process.env.MYSQL_PORT || 3306,
+  user: process.env.MYSQL_USER || 'pagequalitymonitor',
+  password: process.env.MYSQL_PASSWORD || 'qpmpass',
+  database: process.env.MYSQL_DATABASE || 'pagequalitymonitor',
   multipleStatements: true
 });
 
