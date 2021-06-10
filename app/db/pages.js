@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 exports.insertOrUpdate = function(db, page) {
 
     const pageDetails = {
@@ -117,11 +119,63 @@ exports.getById = function(db, id) {
         });
     })    
 }
+
+async function deleteFiles(db, id) {    
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT html_path FROM reports WHERE page_id = ${id} UNION SELECT json_path FROM reports WHERE page_id = ${id}`, async (err, res) => {
+            if(err) throw err;
+
+            const fileDeletePromises = [];
+
+            for (let index = 0; index < res.length; index++) {
+                let filePath = res[index].html_path || res[index].json_path;
+
+                if(process.env.NODE_ENV !== 'production') {
+                    filePath = filePath.replace('/usr/share/reports', `${__dirname }/../../reports`);
+                }
+
+                fileDeletePromises.push(new Promise((r) => {
+                    fs.unlink(filePath, function(err){
+                        if(err) return console.log(err);
+                        r();
+                    }); 
+                }).catch(e => undefined))
+            }
+
+            await Promise.all(fileDeletePromises);
+
+            db.query(`DELETE FROM reports WHERE page_id = ${id}`, (err, res) => {
+                if(err) throw err;
+                resolve(res)
+            });
+        });
+    });
+}
+
+function deleteParentReferenceByParentId(db, id) {
+    return new Promise((resolve, reject) => {
+        db.query(`UPDATE pages SET parentId = NULL WHERE parentId = ${id}`, (err, res) => {
+            if(err) throw err;
+            resolve(res)
+        });
+    })    
+}
+function deleteTaskPageRelationById(db, id) {
+    return new Promise((resolve, reject) => {
+        db.query(`DELETE FROM tasks_page_relation WHERE page_id = ${id}`, (err, res) => {
+            if(err) throw err;
+            resolve(res)
+        });
+    })    
+}
   
 exports.delete = function(db, id) {
-    return new Promise((resolve, reject) => {
-
+    return new Promise(async (resolve, reject) => {
         if(!id) reject()
+
+        await deleteFiles(db, id);
+        await deleteParentReferenceByParentId(db, id);
+        await deleteTaskPageRelationById(db, id);
 
         db.query(`DELETE FROM pages WHERE id = ${id}`, (err, res) => {
             if(err) throw err;

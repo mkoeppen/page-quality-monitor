@@ -1,8 +1,8 @@
 ## 0.2.0
 
 - [x] fix node dev mode
-- [ ] remove parentId on childs for deleted parents
-- [ ] remove all reports for deleted elements
+- [x] remove parentId on childs for deleted parents
+- [x] remove all reports for deleted elements
 - [ ] move delete and edit to details page
 - [ ] LCP, FID, CLS Info bubbles
 - [ ] remove http/https on pasted urls
