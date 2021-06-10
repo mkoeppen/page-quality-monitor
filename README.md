@@ -27,6 +27,7 @@
 - [ ] Allow Parents without url
 - [ ] make Parent Select searchable
 - [ ] sort items in parent select
+- [ ] save table sorting in local storage
 
 
 # beta
