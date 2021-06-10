@@ -25,6 +25,8 @@
 - [x] show task priority edit icon on row hover
 - [ ] show task progress on page table
 - [ ] Allow Parents without url
+- [ ] make Parent Select searchable
+- [ ] sort items in parent select
 
 
 # beta
