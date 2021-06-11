@@ -28,6 +28,7 @@
 - [ ] make Parent Select searchable
 - [ ] sort items in parent select
 - [ ] save table sorting in local storage
+- [ ] LCP, FID, CLS sort by number not by string
 
 
 # beta
