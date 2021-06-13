@@ -22,6 +22,7 @@ services:
       - MYSQL_DATABASE=pagequalitymonitor
       - MYSQL_USER=pagequalitymonitor
       - MYSQL_PASSWORD=qpmpass
+      - BROWSER_BASE_URL=http://localhost:3000/
       - HOST=0.0.0.0
     command: npm run start
     depends_on:

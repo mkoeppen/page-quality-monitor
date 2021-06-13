@@ -49,6 +49,7 @@
                       <v-text-field
                         class="flex-grow-1"
                         v-model="editedItem.url"
+                        @paste="onUrlPaste"
                         label="url"
                       ></v-text-field>
                     </div>
@@ -275,6 +276,17 @@ export default {
   },
 
   methods: {
+    onUrlPaste(event) {
+
+      event.preventDefault();
+      var clipboard = event.clipboardData,
+      text = clipboard.getData('Text');
+      console.log(text);
+      event.target.value = text.replace(/^http(s)?:\/\//, '');
+
+      // console.log('##################### e', e);
+      // object.addEventListener("paste", myScript);
+    },
     changeNestedChildSwitch(e) {
       localStorage.setItem('PageSetting.NestedChilds', this.nestedChilds);
     },
