@@ -3,9 +3,8 @@
 - [x] fix node dev mode
 - [x] remove parentId on childs for deleted parents
 - [x] remove all reports for deleted elements
-- [ ] move delete and edit to details page
-- [ ] LCP, FID, CLS Info bubbles
-- [ ] remove http/https on pasted urls
+- [x] LCP, FID, CLS Info bubbles
+- [x] remove http/https on pasted urls
 - [ ] Favicon
 - [x] rename "Nested Childs" to "Show childs nested"
 - [x] round report values

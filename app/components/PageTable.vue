@@ -150,6 +150,45 @@
         <v-chip :class="getCwvClass(props.item.cls_score)">{{props.item.cls_display_value === null ? '-' : props.item.cls_display_value}}</v-chip>
       </template>
 
+      <template v-slot:header.lcp_score="{ header }">
+        <v-flex class="m-score-header__cwv">
+          {{ header.text }}
+          <v-tooltip bottom :max-width="460">
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon class="m-page__info" title="" v-bind="attrs" v-on="on">mdi-information</v-icon>
+            </template>
+            <h3>Largest Contentful Paint</h3>
+            <p>The amount of time to render the largest content element visible in the viewport, from when the user requests the URL. The largest element is typically an image or video, or perhaps a large block-level text element. This is important because it tells the reader that the URL is actually loading.</p>
+          </v-tooltip>
+        </v-flex>
+      </template>
+
+      <template v-slot:header.fid_score="{ header }">
+        <v-flex class="m-score-header__cwv">
+          {{ header.text }}
+          <v-tooltip bottom :max-width="460">
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon class="m-page__info" title="" v-bind="attrs" v-on="on">mdi-information</v-icon>
+            </template>
+            <h3>First Input Delay</h3>
+            <p>The time from when a user first interacts with your page (when they clicked a link, tapped on a button, and so on) to the time when the browser responds to that interaction. This measurement is taken from whatever interactive element that the user first clicks. This is important on pages where the user needs to do something, because this is when the page has become interactive.</p>
+          </v-tooltip>
+        </v-flex>
+      </template>
+
+      <template v-slot:header.cls_score="{ header }">
+        <v-flex class="m-score-header__cwv">
+          {{ header.text }}
+          <v-tooltip bottom :max-width="460">
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon class="m-page__info" title="" v-bind="attrs" v-on="on">mdi-information</v-icon>
+            </template>
+            <h3>Comulative Layout Shift</h3>
+            <p>CLS measures the sum total of all individual layout shift scores for every unexpected layout shift that occurs during the entire lifespan of the page. The score is zero to any positive number, where zero means no shifting and the larger the number, the more layout shift on the page. This is important because having pages elements shift while a user is trying to interact with it is a bad user experience. If you can't seem to find the reason for a high value, try interacting with the page to see how that affects the score.</p>
+          </v-tooltip>
+        </v-flex>
+      </template>
+
       <template v-slot:item.actions="{ item }">
         
         <v-btn dark class="teal darken-4" :href="`/page/${item.id}`" title="Report"><v-icon>mdi-clipboard-text-search</v-icon></v-btn>
@@ -282,10 +321,10 @@ export default {
       var clipboard = event.clipboardData,
       text = clipboard.getData('Text');
       console.log(text);
-      event.target.value = text.replace(/^http(s)?:\/\//, '');
-
-      // console.log('##################### e', e);
-      // object.addEventListener("paste", myScript);
+      if(text.indexOf('http://') >= 0) {
+        this.editedItem.protocol = 'http://';
+      }
+      this.editedItem.url = text.replace(/^http(s)?:\/\//, '');
     },
     changeNestedChildSwitch(e) {
       localStorage.setItem('PageSetting.NestedChilds', this.nestedChilds);
@@ -453,6 +492,23 @@ export default {
     display: inline-flex;
     flex-direction: column;
     max-width: calc(100% - 18px);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .m-score-header > .m-score-header__cwv {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .m-score-header__cwv {
+    padding-left: 28px;
+    padding-right: 8px;
+
+    i {
+      margin-left: 4px;
+    }
   }
 
   .m-score-header span {
