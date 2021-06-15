@@ -568,4 +568,8 @@ export default {
     flex: none;
   }
 
+  .v-data-table--dense > .v-data-table__wrapper > table > tbody > tr.v-data-table__expanded > td {
+    height: auto; // fix firefox nested problem
+  }
+
 </style>

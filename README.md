@@ -8,7 +8,7 @@
 - [ ] Favicon
 - [x] rename "Nested Childs" to "Show childs nested"
 - [x] round report values
-- [ ] BUG: nested childs hidden in firefox
+- [x] BUG: nested childs hidden in firefox
 - [ ] disable PWA Score if it is disabled in lighthouse report
 - [ ] Title attribute for all Icon-Buttons 
 - [ ] loading icon for report generation
